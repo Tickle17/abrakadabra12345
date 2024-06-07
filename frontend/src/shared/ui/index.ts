@@ -34,3 +34,4 @@ export {
   DropdownMenuTrigger,
 } from './dropdown-menu';
 export { Toaster } from './sonner';
+export { Checkbox } from './checkbox';
