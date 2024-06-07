@@ -1,6 +1,6 @@
 import { DESKTOP_BREAKPOINT } from '@/shared/consts';
 import { useWindowWidth } from '@react-hook/window-size';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export const AnimationWrapper = ({
   visible,
@@ -17,13 +17,16 @@ export const AnimationWrapper = ({
           {visible && (
             <motion.div
               initial={{ y: '-100%', opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
+              animate={{
+                y: 0,
+                opacity: 1,
+                transition: { duration: 0.75, type: 'spring', delay: 0.75 },
+              }}
               exit={{
-                y: '125%',
+                y: '100%',
                 opacity: 0,
                 transition: { duration: 0.75, type: 'spring' },
               }}
-              transition={{ duration: 0.75, type: 'spring', delay: 0.75 }}
               className="flex flex-col w-full max-w-[500px] h-[675px] md:border md:border-slate-950 md:rounded-[2px] md:bg-white px-10 md:p-10"
             >
               {children}
@@ -31,6 +34,7 @@ export const AnimationWrapper = ({
           )}
         </AnimatePresence>
       )}
+
       {!isDesktop && visible && (
         <div className="flex flex-col w-full max-w-[500px] h-[675px] md:border md:border-slate-950 md:rounded-[2px] md:bg-white px-10 md:p-10">
           {children}

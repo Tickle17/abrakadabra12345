@@ -14,8 +14,10 @@ export const AuthLayout: FC<PAuthLayout> = ({ children }) => {
       <Toaster />
       <div
         className={clsx(
-          'w-full h-screen flex justify-center items-center gap-5 p-5 py-2 font-montserrat overflow-hidden',
-          selectedTheme === 'light' ? 'bg-slate-100' : 'bg-slate-950'
+          'w-full h-screen flex flex-col-reverse lg:flex-row justify-center items-center gap-2 md:gap-5 p-3 md:p-5 md:py-2 font-montserrat overflow-hidden',
+          selectedTheme === 'light'
+            ? 'bg-white md:bg-slate-100'
+            : 'bg-slate-950'
         )}
       >
         {children}
