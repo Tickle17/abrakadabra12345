@@ -1,0 +1,431 @@
+openapi: "3.1.0"
+info:
+  title: "hachaton24 API"
+  description: "hachaton24 API"
+  version: "1.0.0"
+servers:
+  - url: "https://hachaton24"
+paths:
+  /json/kotlinx-serialization:
+    get:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Map_String"
+  /:
+    get:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "Hello World!"
+  /login:
+    post:
+      description: ""
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: "string"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+                format: "uuid"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "User not found"
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "Invalid login"
+  /users:
+    post:
+      description: "Create user"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateUser"
+        required: true
+      responses:
+        "201":
+          description: "Created"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+                format: "uuid"
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  description: ""
+                  value: "null"
+  /users/{id}:
+    delete:
+      description: "Delete user"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+    get:
+      description: "Read user"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/User"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+    put:
+      description: "Update user"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateUser"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/UpdateUser"
+  /business:
+    post:
+      description: "Create user"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Business"
+        required: true
+      responses:
+        "201":
+          description: "Created"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+                format: "uuid"
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  description: ""
+                  value: "null"
+  /business/{id}:
+    delete:
+      description: "Delete user"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+    get:
+      description: "Read user"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Business"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+    put:
+      description: "Update user"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Business"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Business"
+  /loginBusiness:
+    post:
+      description: ""
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: "string"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+                format: "uuid"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "User not found"
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "Invalid login"
+components:
+  schemas:
+    Map:
+      type: "object"
+      properties: { }
+    Map_String:
+      type: "string"
+    CreateUser:
+      type: "object"
+      properties:
+        login:
+          type: "string"
+        password:
+          type: "string"
+      required:
+        - "login"
+        - "password"
+    User:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        login:
+          type: "string"
+        password:
+          type: "string"
+        photoUrl:
+          type: "string"
+        fullName:
+          type: "string"
+        age:
+          type: "integer"
+          format: "int32"
+        stackTech:
+          type: "string"
+        projects:
+          type: "string"
+        gitlabUrl:
+          type: "string"
+        githubUrl:
+          type: "string"
+        aboutUser:
+          type: "string"
+        targetsInfo:
+          type: "string"
+        price:
+          type: "integer"
+          format: "int32"
+        criterionsJob:
+          type: "string"
+        phone:
+          type: "string"
+        createdAt:
+          type: "string"
+          format: "date-time"
+        updatedAt:
+          type: "string"
+          format: "date-time"
+        deletedAt:
+          type: "string"
+          format: "date-time"
+      required:
+        - "login"
+        - "password"
+        - "createdAt"
+        - "updatedAt"
+    UpdateUser:
+      type: "object"
+      properties:
+        photoUrl:
+          type: "string"
+        fullName:
+          type: "string"
+        age:
+          type: "integer"
+          format: "int32"
+        stackTech:
+          type: "string"
+        projects:
+          type: "string"
+        gitlabUrl:
+          type: "string"
+        githubUrl:
+          type: "string"
+        aboutUser:
+          type: "string"
+        targetsInfo:
+          type: "string"
+        price:
+          type: "integer"
+          format: "int32"
+        criterionsJob:
+          type: "string"
+        phone:
+          type: "string"
+    Table:
+      type: "object"
+      properties:
+        tableName:
+          type: "string"
+        primaryKey:
+          $ref: "#/components/schemas/PrimaryKey"
+      required:
+        - "tableName"
+    IColumnType:
+      type: "object"
+      properties: { }
+    ForeignKeyConstraint:
+      type: "object"
+      properties:
+        references:
+          type: "object"
+        target:
+          type: "object"
+        targetTable:
+          $ref: "#/components/schemas/Table"
+        from:
+          type: "object"
+        fromTable:
+          $ref: "#/components/schemas/Table"
+      required:
+        - "references"
+        - "target"
+        - "targetTable"
+        - "from"
+        - "fromTable"
+    Column:
+      type: "object"
+      properties:
+        table:
+          $ref: "#/components/schemas/Table"
+        name:
+          type: "string"
+        columnType:
+          $ref: "#/components/schemas/IColumnType"
+        foreignKey:
+          $ref: "#/components/schemas/ForeignKeyConstraint"
+        defaultValueFun:
+          type: "object"
+      required:
+        - "table"
+        - "name"
+        - "columnType"
+    PrimaryKey:
+      type: "object"
+      properties:
+        columns:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/Column"
+    Business:
+      type: "object"
+      properties:
+        tableName:
+          type: "string"
+        primaryKey:
+          $ref: "#/components/schemas/PrimaryKey"
+      required:
+        - "tableName"
