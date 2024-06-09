@@ -35,17 +35,14 @@ class UserService(private val database: Database) {
         )
     }
 
-
-    data class UserRole(val id: UUID, val role: String)
-
-    suspend fun readByLoginAndPassword(login: String, password: String): UserRole? {
+    suspend fun readByLoginAndPassword(login: String, password: String): UserIdRole? {
         return dbQuery {
             Users.select { (Users.login eq login) and (Users.password eq password) }
                 .singleOrNull()
-                ?.let { UserRole(it[Users.id], it[Users.role]) }
+                ?.let { UserIdRole(it[Users.id], it[Users.role]) }
                 ?: Business.select { (Business.login eq login) and (Business.password eq password) }
                     .singleOrNull()
-                    ?.let { UserRole(it[Business.id], it[Business.role]) }
+                    ?.let { UserIdRole(it[Business.id], it[Business.role]) }
         }
     }
 
