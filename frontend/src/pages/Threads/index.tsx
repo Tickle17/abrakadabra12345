@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AppLayout } from '@/shared/layouts';
 import { Recommendations, ThredList } from '@/widgets';
 import {
@@ -17,6 +17,43 @@ type FiltersType = {
   role: string;
   level: string;
   contentSearch: string;
+};
+
+type ArticleDetails = {
+  type_of: string;
+  id: number;
+  title: string;
+  description: string;
+  readable_publish_date: string;
+  slug: string;
+  path: string;
+  url: string;
+  comments_count: number;
+  public_reactions_count: number;
+  collection_id: null | number;
+  published_timestamp: string;
+  positive_reactions_count: number;
+  cover_image: null | string;
+  social_image: string;
+  canonical_url: string;
+  created_at: string;
+  edited_at: null | string;
+  crossposted_at: null | string;
+  published_at: string;
+  last_comment_at: string;
+  reading_time_minutes: number;
+  tag_list: string[];
+  tags: string;
+  user: {
+    name: string;
+    username: string;
+    twitter_username: null | string;
+    github_username: string;
+    user_id: number;
+    website_url: null | string;
+    profile_image: string;
+    profile_image_90: string;
+  };
 };
 
 const Filters = ({
@@ -115,6 +152,12 @@ export const Threads = () => {
     contentSearch: '',
   });
 
+  /*
+  useEffect(() => {
+    console.log(articles);
+  }, [articles]);
+  */
+
   const filteredPosts = POST_ARRAY.filter(post => {
     const roleMatch =
       filters.role !== 'All' ? post.author.role === filters.role : true;
@@ -132,7 +175,7 @@ export const Threads = () => {
       <Filters filters={filters} setFilters={setFilters} />
       <div className="col-span-6 grid grid-cols-1 grid-rows-12 gap-4 bg-card">
         <div className="row-span-12">
-          <ThredList data={filteredPosts} />
+          <ThredList data={[]} />
         </div>
       </div>
       <Recommendations />

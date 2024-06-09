@@ -6,7 +6,30 @@ import {
   SubmitButton,
   SignInControlls,
 } from './components';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z as zod } from 'zod';
+/*
+const formSchema = zod.object({
+  email: zod.string().email(),
+  password: zod.string()
+    .min(8, { message: "Password is too short" })
+    .max(20, { message: "Password is too long" }),
+});
+*/
+/*
+export const SignInForm = () => {
+  const form = useForm<zod.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      username: "",
+    },
+  })
+  return (
 
+  );
+};
+*/
 export const SignInCard = ({
   visible,
   setAuthStage,
