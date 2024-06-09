@@ -48,3 +48,6 @@ data class User(
     @Contextual val updatedAt: LocalDateTime,
     @Contextual val deletedAt: LocalDateTime?
 )
+
+@Serializable
+data class UserIdRole(@Contextual val id: UUID?, val role: String)

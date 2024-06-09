@@ -67,8 +67,8 @@ suspend fun PipelineContext<Unit, ApplicationCall>.create(
 ) {
     try {
         val user = call.receive<CreateUser>()
-        val id = userService.create(user)
-        call.respond(HttpStatusCode.Created, id)
+        val idNRole = userService.create(user)
+        call.respond(HttpStatusCode.Created, idNRole)
     } catch (e: Throwable) {
         val errorMessage = "Error occurred: ${e.message}"
         call.respond(HttpStatusCode.BadRequest, errorMessage)

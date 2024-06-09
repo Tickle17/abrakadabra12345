@@ -8,6 +8,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import simple_it.models.business.businessDTO.Business
 import simple_it.models.business.businessDTO.BusinessDTO
 import simple_it.models.business.businessDTO.CreateBusiness
+import simple_it.models.users.usersDTO.UserIdRole
 import java.util.*
 
 class BusinessService(private val database: Database) {
@@ -21,20 +22,18 @@ class BusinessService(private val database: Database) {
     suspend fun <T> dbQuery(block: suspend () -> T): T =
         newSuspendedTransaction(Dispatchers.IO) { block() }
 
-    suspend fun create(user: CreateBusiness): UUID = dbQuery {
-        Business.insert {
+    suspend fun create(user: CreateBusiness): UserIdRole = dbQuery {
+        val insertStatement = Business.insert {
             requireNotNull(user.login) { "Login must not be null" }
             requireNotNull(user.password) { "Password must not be null" }
             it[login] = user.login
             it[password] = user.password
-        }[Business.id]
-    }
-
-    suspend fun readByLoginAndPassword(login: String, password: String): UUID? {
-        return dbQuery {
-            Business.select { (Business.login eq login) and (Business.password eq password) }
-                .singleOrNull()?.get(Business.id)
         }
+        val result = insertStatement.resultedValues?.firstOrNull()
+        UserIdRole(
+            id = result?.get(Business.id) ?: throw Exception("Failed to retrieve inserted user ID"),
+            role = result.get(Business.role)
+        )
     }
 
     suspend fun update(id: UUID, user: BusinessDTO) {

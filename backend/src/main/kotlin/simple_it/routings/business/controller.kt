@@ -10,9 +10,6 @@ fun Application.businessRout(businessService: BusinessService) {
         post("/business") {
             create(businessService)
         }
-        post("/loginBusiness") {
-            loginBusiness(businessService)
-        }
         // Update user
         put("/business/{id}") {
             editModel(businessService)

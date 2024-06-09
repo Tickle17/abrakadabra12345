@@ -4,7 +4,7 @@ import io.ktor.server.application.*
 import io.ktor.server.routing.*
 import simple_it.models.vacancy.vacancyDAO.VacancyService
 
-fun Application.vacancy(vacancyService: VacancyService) {
+fun Application.vacancyRout(vacancyService: VacancyService) {
     routing {
         // Create user
         post("/vacancy") {

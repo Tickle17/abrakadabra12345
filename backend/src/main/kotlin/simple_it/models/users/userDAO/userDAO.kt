@@ -5,10 +5,8 @@ import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.transactions.transaction
-import simple_it.models.users.usersDTO.CreateUser
-import simple_it.models.users.usersDTO.UpdateUser
-import simple_it.models.users.usersDTO.User
-import simple_it.models.users.usersDTO.Users
+import simple_it.models.business.businessDTO.Business
+import simple_it.models.users.usersDTO.*
 import java.util.*
 
 class UserService(private val database: Database) {
@@ -22,21 +20,35 @@ class UserService(private val database: Database) {
     suspend fun <T> dbQuery(block: suspend () -> T): T =
         newSuspendedTransaction(Dispatchers.IO) { block() }
 
-    suspend fun create(user: CreateUser): UUID = dbQuery {
-        Users.insert {
+
+    suspend fun create(user: CreateUser): UserIdRole = dbQuery {
+        val insertStatement = Users.insert {
             requireNotNull(user.login) { "Login must not be null" }
             requireNotNull(user.password) { "Password must not be null" }
             it[login] = user.login
             it[password] = user.password
-        }[Users.id]
+        }
+        val result = insertStatement.resultedValues?.firstOrNull()
+        UserIdRole(
+            id = result?.get(Users.id) ?: throw Exception("Failed to retrieve inserted user ID"),
+            role = result.get(Users.role)
+        )
     }
 
-    suspend fun readByLoginAndPassword(login: String, password: String): UUID? {
+
+    data class UserRole(val id: UUID, val role: String)
+
+    suspend fun readByLoginAndPassword(login: String, password: String): UserRole? {
         return dbQuery {
             Users.select { (Users.login eq login) and (Users.password eq password) }
-                .singleOrNull()?.get(Users.id)
+                .singleOrNull()
+                ?.let { UserRole(it[Users.id], it[Users.role]) }
+                ?: Business.select { (Business.login eq login) and (Business.password eq password) }
+                    .singleOrNull()
+                    ?.let { UserRole(it[Business.id], it[Business.role]) }
         }
     }
+
 
     suspend fun update(id: UUID, user: UpdateUser) {
         dbQuery {

@@ -4,7 +4,9 @@ import io.ktor.server.application.*
 import org.jetbrains.exposed.sql.Database
 import simple_it.models.business.businessDAO.BusinessService
 import simple_it.models.users.userDAO.UserService
+import simple_it.models.vacancy.vacancyDAO.VacancyService
 import simple_it.routings.business.businessRout
+import simple_it.routings.business.createVacancy.vacancyRout
 import simple_it.routings.users.userRout
 
 fun Application.configureDatabases() {
@@ -17,7 +19,9 @@ fun Application.configureDatabases() {
 
     val userService = UserService(database)
     val businessService = BusinessService(database)
+    val vacancyService = VacancyService(database)
     userRout(userService)
     businessRout(businessService)
+    vacancyRout(vacancyService)
 }
 
