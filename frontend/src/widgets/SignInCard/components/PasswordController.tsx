@@ -45,6 +45,9 @@ export const PasswordController = ({
                   <EyeIcon className="mr-3 w-5 h-5 hover:cursor-pointer hover:opacity-50 transition-all" />
                 </div>
               </FormControl>
+              <FormDescription>
+                {form.formState.errors.password?.message}
+              </FormDescription>
             </FormItem>
           )}
         />

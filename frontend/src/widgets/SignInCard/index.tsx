@@ -6,6 +6,7 @@ import {
   SubmitButton,
   SignInControlls,
 } from './components';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z as zod } from 'zod';
@@ -13,21 +14,7 @@ import { Form } from '@/shared/ui/form';
 
 const formSchema = zod.object({
   email: zod.string().email(),
-  password: zod
-    .string()
-    .min(8, { message: 'Password is too short' })
-    .includes(' ', { message: 'Password must not contain spaces' })
-    .regex(/[A-Z]/, {
-      message: 'Password must contain at least one uppercase letter',
-    })
-    .regex(/[a-z]/, {
-      message: 'Password must contain at least one lowercase letter',
-    })
-    .regex(/[0-9]/, { message: 'Password must contain at least one number' })
-    .regex(/[^A-Za-z0-9]/, {
-      message: 'Password must contain at least one special character',
-    })
-    .max(20, { message: 'Password is too long' }),
+  password: zod.string().min(8, { message: 'Password is too short' }),
 });
 
 export const SignInForm = ({
@@ -35,6 +22,7 @@ export const SignInForm = ({
 }: {
   setAuthStage: React.Dispatch<React.SetStateAction<'signIn' | 'signUp'>>;
 }) => {
+  const navigate = useNavigate();
   const form = useForm<zod.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -44,7 +32,7 @@ export const SignInForm = ({
   });
 
   function onSubmit(values: zod.infer<typeof formSchema>) {
-    fetch('http://localhost:8080/login', {
+    fetch('https://backendhackaton.onrender.com/login', {
       method: 'POST',
       body: JSON.stringify(values),
     })
@@ -53,7 +41,7 @@ export const SignInForm = ({
           res.json().then(data => {
             localStorage.setItem('token', data);
           });
-        window.location.reload();
+        navigate('/');
       })
       .catch(err => {
         console.log(err);

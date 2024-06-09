@@ -39,6 +39,9 @@ export const EmailController = ({
                 {...field}
               />
             </FormControl>
+            <FormDescription>
+              {form.formState.errors.email?.message}
+            </FormDescription>
           </FormItem>
         )}
       />
