@@ -1,18 +1,53 @@
 import { Input, Checkbox } from '@/shared/ui';
+import {
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormDescription,
+  FormMessage,
+} from '@/shared/ui/form';
 import { EyeIcon } from 'lucide-react';
+import { UseFormReturn } from 'react-hook-form';
 
-export const PasswordController = () => {
+export const PasswordController = ({
+  form,
+}: {
+  form: UseFormReturn<
+    {
+      email: string;
+      password: string;
+    },
+    unknown,
+    undefined
+  >;
+}) => {
   return (
     <div className="w-full flex flex-col gap-4">
       <div className="w-full flex flex-col gap-2">
-        <p className="text-slate-950 text-sm font-light">Password</p>
-        <div className="flex items-center gap-1 border border-slate-950 rounded-md">
-          <Input
-            className="w-full h-11 border-0 border-slate-950 focus-visible:ring-0 focus-visible:ring-offset-0"
-            placeholder="Enter your password"
-          />
-          <EyeIcon className="mr-3 w-5 h-5 hover:cursor-pointer hover:opacity-50 transition-all" />
-        </div>
+        {/*<p className="text-slate-950 text-sm font-light">Password</p>*/}
+
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-slate-950 text-sm font-light">
+                Password
+              </FormLabel>
+              <FormControl>
+                <div className="flex items-center gap-1 border border-slate-950 rounded-md">
+                  <Input
+                    className="w-full border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+                    placeholder="Enter your password"
+                    {...field}
+                  />
+                  <EyeIcon className="mr-3 w-5 h-5 hover:cursor-pointer hover:opacity-50 transition-all" />
+                </div>
+              </FormControl>
+            </FormItem>
+          )}
+        />
       </div>
       <div className="flex justify-between items-center">
         <div className="flex gap-1 items-center">
