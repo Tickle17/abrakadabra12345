@@ -6,7 +6,7 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.transactions.transaction
 import simple_it.models.business.businessDTO.Business
-import simple_it.models.enum.HardSkills
+import simple_it.models.vacancy.vacancyDAO.helpers.*
 import simple_it.models.vacancy.vacancyDTO.Vacancy
 import simple_it.models.vacancy.vacancyDTO.VacancyDTO
 import java.util.*
@@ -15,20 +15,6 @@ class VacancyService(private val database: Database) {
     init {
         transaction(database) {
             SchemaUtils.create(Vacancy)
-        }
-    }
-
-    fun toHardSkillsString(hardskills: List<HardSkills>?): String? {
-        return hardskills?.joinToString(separator = ",") { it.name }
-    }
-
-    fun fromHardSkillsString(hardskillsString: String?): List<HardSkills>? {
-        return hardskillsString?.split(",")?.mapNotNull {
-            try {
-                HardSkills.valueOf(it)
-            } catch (e: IllegalArgumentException) {
-                null
-            }
         }
     }
 
@@ -52,6 +38,7 @@ class VacancyService(private val database: Database) {
             it[status] = vacancies.status
             it[hardSkills] = toHardSkillsString(vacancies.hardSkills)
             it[this.businessId] = vacancies.businessId
+            it[calendarId] = vacancies.calendarId
         }[Vacancy.id]
     }
 
@@ -61,13 +48,20 @@ class VacancyService(private val database: Database) {
                 .map { row ->
                     VacancyDTO(
                         id = row[Vacancy.id],
-                        vacancy = row[Vacancy.vacancy],
                         status = row[Vacancy.status],
+                        position = row[Vacancy.position],
+                        workFormat = row[Vacancy.workFormat],
+                        specialization = row[Vacancy.specialization],
+                        experience = row[Vacancy.experience],
+                        vacancy = row[Vacancy.vacancy],
+                        address = row[Vacancy.address],
+                        softSkills = fromSoftSkillsString(row[Vacancy.softSkills]),
+                        hardSkills = fromHardSkillsString(row[Vacancy.hardSkills]),
                         businessId = row[Vacancy.businessId],
+                        calendarId = row[Vacancy.calendarId],
                         createdAt = row[Vacancy.createdAt],
                         updatedAt = row[Vacancy.updatedAt],
                         deletedAt = row[Vacancy.deletedAt],
-                        hardSkills = fromHardSkillsString(row[Vacancy.hardSkills])
                     )
                 }
                 .singleOrNull()
@@ -77,11 +71,16 @@ class VacancyService(private val database: Database) {
     suspend fun update(id: UUID, vacancies: VacancyDTO) {
         dbQuery {
             Vacancy.update({ Vacancy.id eq id }) {
-                it[vacancy] = vacancies.vacancy
                 it[status] = vacancies.status
-                it[businessId] = vacancies.businessId
+                it[position] = vacancies.position
+                it[workFormat] = vacancies.workFormat
+                it[specialization] = vacancies.specialization
+                it[experience] = vacancies.experience
+                it[vacancy] = vacancies.vacancy
+                it[address] = vacancies.address
+                it[softSkills] = toSoftSkillsString(vacancies.softSkills)
                 it[hardSkills] = toHardSkillsString(vacancies.hardSkills)
-
+                it[businessId] = vacancies.businessId
             }
         }
     }
@@ -90,18 +89,6 @@ class VacancyService(private val database: Database) {
         return dbQuery {
             Vacancy.selectAll().map { rowToVacancyDTO(it) }
         }
-    }
-
-    private fun rowToVacancyDTO(row: ResultRow): VacancyDTO {
-        return VacancyDTO(
-            id = row[Vacancy.id],
-            vacancy = row[Vacancy.vacancy],
-            businessId = row[Vacancy.businessId],
-            createdAt = row[Vacancy.createdAt],
-            updatedAt = row[Vacancy.updatedAt],
-            deletedAt = row[Vacancy.deletedAt],
-            hardSkills = fromHardSkillsString(row[Vacancy.hardSkills])
-        )
     }
 
     suspend fun delete(id: UUID) {

@@ -23,12 +23,6 @@ object Business : Table() {
 }
 
 @Serializable
-data class CreateBusiness(
-    val login: String,
-    val password: String
-)
-
-@Serializable
 data class BusinessDTO(
     @Contextual val id: UUID? = null,
     val login: String? = null,
@@ -40,3 +34,10 @@ data class BusinessDTO(
     @Contextual val updatedAt: LocalDateTime? = null,
     @Contextual val deletedAt: LocalDateTime? = null
 )
+
+@Serializable
+data class CreateBusiness(
+    val login: String,
+    val password: String
+)
+
