@@ -6,16 +6,6 @@ info:
 servers:
   - url: "https://hachaton24"
 paths:
-  /json/kotlinx-serialization:
-    get:
-      description: ""
-      responses:
-        "200":
-          description: "OK"
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/Map_String"
   /:
     get:
       description: ""
@@ -44,8 +34,7 @@ paths:
           content:
             '*/*':
               schema:
-                type: "string"
-                format: "uuid"
+                $ref: "#/components/schemas/UserIdRole"
         "404":
           description: "Not Found"
           content:
@@ -79,8 +68,7 @@ paths:
           content:
             '*/*':
               schema:
-                type: "string"
-                format: "uuid"
+                $ref: "#/components/schemas/UserIdRole"
         "400":
           description: "Bad Request"
           content:
@@ -156,7 +144,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Business"
+              $ref: "#/components/schemas/CreateBusiness"
         required: true
       responses:
         "201":
@@ -164,8 +152,7 @@ paths:
           content:
             '*/*':
               schema:
-                type: "string"
-                format: "uuid"
+                $ref: "#/components/schemas/UserIdRole"
         "400":
           description: "Bad Request"
           content:
@@ -206,7 +193,7 @@ paths:
           content:
             '*/*':
               schema:
-                $ref: "#/components/schemas/Business"
+                $ref: "#/components/schemas/BusinessDTO"
         "404":
           description: "Not Found"
           content:
@@ -225,7 +212,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Business"
+              $ref: "#/components/schemas/BusinessDTO"
         required: true
       responses:
         "200":
@@ -233,33 +220,36 @@ paths:
           content:
             '*/*':
               schema:
-                $ref: "#/components/schemas/Business"
-  /loginBusiness:
-    post:
+                $ref: "#/components/schemas/BusinessDTO"
+  /vacancies:
+    get:
       description: ""
-      requestBody:
-        content:
-          text/plain:
-            schema:
-              type: "string"
-        required: true
       responses:
         "200":
           description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/VacancyDTO"
+  /vacancy:
+    post:
+      description: "Create user"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VacancyDTO"
+        required: true
+      responses:
+        "201":
+          description: "Created"
           content:
             '*/*':
               schema:
                 type: "string"
                 format: "uuid"
-        "404":
-          description: "Not Found"
-          content:
-            '*/*':
-              schema:
-                type: "string"
-              examples:
-                Example#1:
-                  value: "User not found"
         "400":
           description: "Bad Request"
           content:
@@ -268,14 +258,404 @@ paths:
                 type: "string"
               examples:
                 Example#1:
-                  value: "Invalid login"
+                  description: ""
+                  value: "null"
+  /vacancy/{id}:
+    delete:
+      description: "Delete user"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+    get:
+      description: "Read user"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/VacancyDTO"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+    put:
+      description: "Update user"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VacancyDTO"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/VacancyDTO"
+  /calendar:
+    post:
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateVacancyCalendar"
+        required: true
+      responses:
+        "201":
+          description: "Created"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/VacancyCalendarDTO"
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  description: ""
+                  value: "null"
+  /calendar/{id}:
+    delete:
+      description: ""
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "Calendar deleted successfully"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "Calendar not found"
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  description: ""
+                  value: "null"
+    get:
+      description: ""
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/VacancyCalendarDTO"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "Calendar not found"
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  description: ""
+                  value: "null"
+    put:
+      description: ""
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateVacancyCalendar"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "Calendar updated successfully"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "Calendar not found"
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  description: ""
+                  value: "null"
+  /calendars:
+    get:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/VacancyCalendarDTO"
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  description: ""
+                  value: "null"
+  /slot:
+    post:
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateVacancySlotCalendar"
+        required: true
+      responses:
+        "201":
+          description: "Created"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/VacancySlotDTO"
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  description: ""
+                  value: "null"
+  /slot/{id}:
+    delete:
+      description: ""
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "Slot deleted successfully"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "Slot not found"
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  description: ""
+                  value: "null"
+    get:
+      description: ""
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/VacancySlotDTO"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "Slot not found"
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  description: ""
+                  value: "null"
+    put:
+      description: ""
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateVacancySlotCalendar"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "Slot updated successfully"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "Slot not found"
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  description: ""
+                  value: "null"
+  /slots:
+    get:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/VacancySlotDTO"
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  description: ""
+                  value: "null"
 components:
   schemas:
-    Map:
+    UserIdRole:
       type: "object"
-      properties: { }
-    Map_String:
-      type: "string"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        role:
+          type: "string"
+      required:
+        - "role"
     CreateUser:
       type: "object"
       properties:
@@ -365,67 +745,263 @@ components:
           type: "string"
         phone:
           type: "string"
-    Table:
+    CreateBusiness:
       type: "object"
       properties:
-        tableName:
+        login:
           type: "string"
-        primaryKey:
-          $ref: "#/components/schemas/PrimaryKey"
-      required:
-        - "tableName"
-    IColumnType:
-      type: "object"
-      properties: { }
-    ForeignKeyConstraint:
-      type: "object"
-      properties:
-        references:
-          type: "object"
-        target:
-          type: "object"
-        targetTable:
-          $ref: "#/components/schemas/Table"
-        from:
-          type: "object"
-        fromTable:
-          $ref: "#/components/schemas/Table"
-      required:
-        - "references"
-        - "target"
-        - "targetTable"
-        - "from"
-        - "fromTable"
-    Column:
-      type: "object"
-      properties:
-        table:
-          $ref: "#/components/schemas/Table"
-        name:
+        password:
           type: "string"
-        columnType:
-          $ref: "#/components/schemas/IColumnType"
-        foreignKey:
-          $ref: "#/components/schemas/ForeignKeyConstraint"
-        defaultValueFun:
-          type: "object"
       required:
-        - "table"
-        - "name"
-        - "columnType"
-    PrimaryKey:
+        - "login"
+        - "password"
+    BusinessDTO:
       type: "object"
       properties:
-        columns:
+        id:
+          type: "string"
+          format: "uuid"
+        login:
+          type: "string"
+        password:
+          type: "string"
+        fullName:
+          type: "string"
+        photoUrl:
+          type: "string"
+        description:
+          type: "string"
+        createdAt:
+          type: "string"
+          format: "date-time"
+        updatedAt:
+          type: "string"
+          format: "date-time"
+        deletedAt:
+          type: "string"
+          format: "date-time"
+    VacancyDTO:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        status:
+          type: "string"
+        position:
+          type: "string"
+        workFormat:
+          type: "string"
+        specialization:
+          type: "string"
+        experience:
+          type: "string"
+        vacancy:
+          type: "string"
+        address:
+          type: "string"
+        softSkills:
           type: "array"
           items:
-            $ref: "#/components/schemas/Column"
-    Business:
+            type: "string"
+            enum:
+              - "Stress"
+              - "PRIDE"
+              - "GREED"
+              - "WRATH"
+              - "ENVY"
+              - "LUST"
+              - "GLUTTONY"
+              - "SLOTH"
+        hardSkills:
+          type: "array"
+          items:
+            type: "string"
+            enum:
+              - "REACT"
+              - "CSS"
+              - "JS"
+              - "KOTLIN"
+              - "HTML"
+              - "POSTGRESQL"
+              - "WEBPACK"
+              - "JAVA"
+              - "PYTHON"
+              - "DOCKER"
+              - "GIT"
+              - "TYPESCRIPT"
+        businessId:
+          type: "string"
+          format: "uuid"
+        calendarId:
+          type: "string"
+          format: "uuid"
+        createdAt:
+          type: "string"
+          format: "date-time"
+        updatedAt:
+          type: "string"
+          format: "date-time"
+        deletedAt:
+          type: "string"
+          format: "date-time"
+      required:
+        - "businessId"
+        - "calendarId"
+    WorkingDay:
       type: "object"
       properties:
-        tableName:
+        day:
           type: "string"
-        primaryKey:
-          $ref: "#/components/schemas/PrimaryKey"
+          enum:
+            - "MONDAY"
+            - "TUESDAY"
+            - "WEDNESDAY"
+            - "THURSDAY"
+            - "FRIDAY"
+            - "SATURDAY"
+            - "SUNDAY"
       required:
-        - "tableName"
+        - "day"
+    CreateVacancyCalendar:
+      type: "object"
+      properties:
+        duration:
+          type: "integer"
+          format: "int32"
+        freeTime:
+          type: "integer"
+          format: "int32"
+        dayStart:
+          type: "integer"
+          format: "int32"
+        dayEnd:
+          type: "integer"
+          format: "int32"
+        maxReservDays:
+          type: "integer"
+          format: "int32"
+        workingDays:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/WorkingDay"
+        businessId:
+          type: "string"
+          format: "uuid"
+      required:
+        - "workingDays"
+        - "businessId"
+    VacancyCalendarDTO:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        duration:
+          type: "integer"
+          format: "int32"
+        freeTime:
+          type: "integer"
+          format: "int32"
+        dayStart:
+          type: "integer"
+          format: "int32"
+        dayEnd:
+          type: "integer"
+          format: "int32"
+        slots:
+          type: "integer"
+          format: "int32"
+        maxReservDays:
+          type: "integer"
+          format: "int32"
+        workingDays:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/WorkingDay"
+        businessId:
+          type: "string"
+          format: "uuid"
+      required:
+        - "workingDays"
+    CreateVacancySlotCalendar:
+      type: "object"
+      properties:
+        slot:
+          type: "integer"
+          format: "int32"
+        free:
+          type: "boolean"
+        userId:
+          type: "string"
+          format: "uuid"
+        communication:
+          type: "string"
+        acceptingByUser:
+          type: "boolean"
+        calendarId:
+          type: "string"
+          format: "uuid"
+        vacancyId:
+          type: "string"
+          format: "uuid"
+        dayOfWeek:
+          type: "string"
+          enum:
+            - "MONDAY"
+            - "TUESDAY"
+            - "WEDNESDAY"
+            - "THURSDAY"
+            - "FRIDAY"
+            - "SATURDAY"
+            - "SUNDAY"
+        date:
+          type: "string"
+      required:
+        - "communication"
+        - "calendarId"
+        - "vacancyId"
+        - "dayOfWeek"
+        - "date"
+    VacancySlotDTO:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        slot:
+          type: "integer"
+          format: "int32"
+        free:
+          type: "boolean"
+        userId:
+          type: "string"
+          format: "uuid"
+        communication:
+          type: "string"
+        acceptingByUser:
+          type: "boolean"
+        calendarId:
+          type: "string"
+          format: "uuid"
+        vacancyId:
+          type: "string"
+          format: "uuid"
+        dayOfWeek:
+          type: "string"
+          enum:
+            - "MONDAY"
+            - "TUESDAY"
+            - "WEDNESDAY"
+            - "THURSDAY"
+            - "FRIDAY"
+            - "SATURDAY"
+            - "SUNDAY"
+        date:
+          type: "string"
+      required:
+        - "communication"
+        - "calendarId"
+        - "vacancyId"
+        - "dayOfWeek"
+        - "date"
