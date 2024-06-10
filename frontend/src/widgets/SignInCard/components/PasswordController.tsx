@@ -19,7 +19,7 @@ export const PasswordController = ({
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   return (
-    <div className="w-full flex flex-col gap-4">
+    <div className="w-full flex flex-col gap-2">
       <div className="w-full flex flex-col gap-2">
         <FormField
           control={form.control}

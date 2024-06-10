@@ -21,15 +21,21 @@ export const SignUpCard = ({
   return (
     <AnimationWrapper visible={visible}>
       <CardHeader signUpStep={signUpStep} />
-      <StepFirstContent visible={signUpStep === 1} />
-      <StepSecondContent visible={signUpStep === 2} />
+      <StepFirstContent
+        visible={signUpStep === 1}
+        setSignUpStep={setSignUpStep}
+      />
+      <StepSecondContent
+        visible={signUpStep === 2}
+        setSignUpStep={setSignUpStep}
+      />
       <StepThirdContent visible={signUpStep === 3} />
 
-      <div className="w-full h-[125px] flex-shrink-0 flex flex-col gap-3">
-        <FormButton signUpStep={signUpStep} setSignUpStep={setSignUpStep} />
+      <div className="w-full h-[75px] flex-shrink-0 flex flex-col gap-3">
         <ChangeAuthStageButton
           signUpStep={signUpStep}
           setAuthStage={setAuthStage}
+          setSignUpStep={setSignUpStep}
         />
         <SignUpStepController
           signUpStep={signUpStep}
