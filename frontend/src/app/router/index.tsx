@@ -8,7 +8,19 @@ import {
   Chat,
   AuthPage,
 } from '@/pages';
-import { createBrowserRouter } from 'react-router-dom';
+import { Navigate, createBrowserRouter } from 'react-router-dom';
+import { useAuthStore } from '../store';
+
+interface PrivateRouteProps {
+  element: React.ComponentType;
+}
+
+// eslint-disable-next-line react/prop-types, react-refresh/only-export-components
+const PrivateRoute: React.FC<PrivateRouteProps> = ({ element: Element }) => {
+  const { isLoggedIn } = useAuthStore();
+
+  return isLoggedIn ? <Element /> : <Navigate to="/auth" />;
+};
 
 export const router = createBrowserRouter([
   {
@@ -18,27 +30,27 @@ export const router = createBrowserRouter([
   },
   {
     path: '/',
-    element: <RootPage />,
+    element: <PrivateRoute element={RootPage} />,
     errorElement: <ErrorPage />,
   },
   {
     path: 'profile',
-    element: <Profile />,
+    element: <PrivateRoute element={Profile} />,
   },
   {
     path: 'joblist',
-    element: <JobList />,
+    element: <PrivateRoute element={JobList} />,
   },
   {
     path: 'threads',
-    element: <Threads />,
+    element: <PrivateRoute element={Threads} />,
   },
   {
     path: 'settings',
-    element: <Settings />,
+    element: <PrivateRoute element={Settings} />,
   },
   {
     path: 'messages',
-    element: <Chat />,
+    element: <PrivateRoute element={Chat} />,
   },
 ]);

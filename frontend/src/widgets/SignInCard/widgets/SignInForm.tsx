@@ -12,6 +12,7 @@ import { Form } from '@/shared/ui/form';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { formSchema } from '../types';
+import { useAuthStore } from '@/app/store';
 
 export const SignInForm = ({
   setAuthStage,
@@ -21,6 +22,7 @@ export const SignInForm = ({
   const [loginStage, setLoginStageState] = useState<
     'none' | 'loading' | 'success' | 'error'
   >('none');
+  const { setIsLoggedIn } = useAuthStore();
   const navigate = useNavigate();
   const form = useForm<zod.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -47,7 +49,10 @@ export const SignInForm = ({
 
         setLoginStageState(res.ok ? 'success' : 'error');
         if (res.ok) {
-          navigate('/');
+          res.json().then(data => {
+            setIsLoggedIn(true);
+            data.role === 'Admin' ? navigate('/admin') : navigate('/');
+          });
         }
         if (!res.ok) {
           toast('Something went wrong');

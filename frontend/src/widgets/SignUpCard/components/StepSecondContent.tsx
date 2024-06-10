@@ -11,13 +11,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import {
   CheckIcon,
   Cross1Icon,
+  EyeClosedIcon,
   EyeOpenIcon,
   VercelLogoIcon,
 } from '@radix-ui/react-icons';
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate, useNavigation } from 'react-router-dom';
 import { toast } from 'sonner';
 import { z as zod } from 'zod';
 
@@ -65,7 +65,8 @@ export const StepSecondContent = ({
   const [authStage, setAuthStageState] = useState<
     'initial' | 'loading' | 'success' | 'error'
   >('initial');
-  const { email, username } = useAuthStore();
+  const [showPassword, setShowPassword] = useState(false);
+  const { email } = useAuthStore();
   const form = useForm<zod.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -103,7 +104,7 @@ export const StepSecondContent = ({
   };
 
   useEffect(() => {
-    if (authStage === 'success') {
+    if (authStage === 'success' || authStage === 'error') {
       const timeOut = setTimeout(() => {
         setAuthStageState('initial');
         setSignUpStep(3);
@@ -142,13 +143,26 @@ export const StepSecondContent = ({
                         >
                           <FormControl>
                             <Input
-                              type="password"
+                              type={showPassword ? 'text' : 'password'}
                               {...field}
                               className="w-full h-11 border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                               placeholder="Enter your password"
                             />
                           </FormControl>
-                          <EyeOpenIcon className="mr-3 w-5 h-5 hover:cursor-pointer hover:opacity-50 transition-all" />
+                          {showPassword && (
+                            <EyeClosedIcon
+                              onClick={() => setShowPassword(false)}
+                              className="mr-3 w-5 h-5 hover:cursor-pointer hover:opacity-50 transition-all"
+                            />
+                          )}
+                          {!showPassword && (
+                            <EyeOpenIcon
+                              onClick={() => {
+                                setShowPassword(true);
+                              }}
+                              className="mr-3 w-5 h-5 hover:cursor-pointer hover:opacity-50 transition-all"
+                            />
+                          )}
                         </div>
                       </FormItem>
                     )}
@@ -174,13 +188,26 @@ export const StepSecondContent = ({
                           >
                             <FormControl>
                               <Input
-                                type="password"
+                                type={showPassword ? 'text' : 'password'}
                                 {...field}
                                 className="w-full h-11 border-0 border-slate-950 focus-visible:ring-0 focus-visible:ring-offset-0"
                                 placeholder="Repeat your password"
                               />
                             </FormControl>
-                            <EyeOpenIcon className="mr-3 w-5 h-5 hover:cursor-pointer hover:opacity-50 transition-all" />
+                            {showPassword && (
+                              <EyeClosedIcon
+                                onClick={() => setShowPassword(false)}
+                                className="mr-3 w-5 h-5 hover:cursor-pointer hover:opacity-50 transition-all"
+                              />
+                            )}
+                            {!showPassword && (
+                              <EyeOpenIcon
+                                onClick={() => {
+                                  setShowPassword(true);
+                                }}
+                                className="mr-3 w-5 h-5 hover:cursor-pointer hover:opacity-50 transition-all"
+                              />
+                            )}
                           </div>
                         </FormItem>
                       )}

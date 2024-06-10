@@ -49,7 +49,6 @@ export const StepFirstContent = ({
     mode: 'all',
   });
   const onSubmit = (values: zod.infer<typeof formSchema>) => {
-    console.log(values);
     setEmail(values.email);
     setUsername(values.username);
     setSignUpStep(2);
