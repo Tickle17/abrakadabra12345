@@ -2,6 +2,7 @@ import { create } from 'zustand';
 
 export type TAuthStore = {
   isLoggedIn: boolean;
+  getLoggedInToken: () => boolean;
   setIsLoggedIn: (isLoggedIn: boolean) => void;
   password: string;
   setPassword: (password: string) => void;
@@ -15,6 +16,7 @@ export type TAuthStore = {
 
 export const useAuthStore = create<TAuthStore>((set, get) => ({
   isLoggedIn: false,
+  getLoggedInToken: () => localStorage.getItem('token') !== null,
   setIsLoggedIn: isLoggedIn => set({ isLoggedIn }),
   password: '',
   setPassword: password => set({ password }),

@@ -20,6 +20,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z as zod } from 'zod';
+import axios, { AxiosResponse } from 'axios';
 
 export const formSchema = zod
   .object({
@@ -81,21 +82,23 @@ export const StepSecondContent = ({
       login: email,
       password: values.password,
     };
-    fetch('https://backendhackaton.onrender.com/users', {
-      method: 'POST',
-      body: JSON.stringify(data),
-    })
-      .then(res => {
-        res.ok &&
-          res.json().then(data => {
-            localStorage.setItem('token', data);
-          });
 
-        setAuthStageState(res.ok ? 'success' : 'error');
-        if (!res.ok) {
+    interface ResponseData {
+      role: string;
+      username: string;
+    }
+
+    axios
+      .post<ResponseData>('/api/users', data, {})
+      .then((response: AxiosResponse<ResponseData>) => {
+        if (response.status === 200 || response.status === 201) {
+          localStorage.setItem('token', 'true');
+          setAuthStageState('success');
+        } else {
+          setAuthStageState('error');
           toast('Something went wrong');
         }
-      })
+      }) // @ts-ignore
       .catch(err => {
         toast('Something went wrong');
         console.error(err);
@@ -104,9 +107,10 @@ export const StepSecondContent = ({
   };
 
   useEffect(() => {
-    if (authStage === 'success' || authStage === 'error') {
+    if (authStage === 'success') {
       const timeOut = setTimeout(() => {
         setAuthStageState('initial');
+        localStorage.setItem('token', 'true');
         setSignUpStep(3);
       }, 2000);
 

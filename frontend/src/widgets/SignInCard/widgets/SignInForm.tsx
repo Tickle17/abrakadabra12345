@@ -13,12 +13,14 @@ import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { formSchema } from '../types';
 import { useAuthStore } from '@/app/store';
+import axios from 'axios';
 
 export const SignInForm = ({
   setAuthStage,
 }: {
   setAuthStage: React.Dispatch<React.SetStateAction<'signIn' | 'signUp'>>;
 }) => {
+  const [userRole, setUserRole] = useState<undefined | 'Admin' | 'User'>();
   const [loginStage, setLoginStageState] = useState<
     'none' | 'loading' | 'success' | 'error'
   >('none');
@@ -37,30 +39,19 @@ export const SignInForm = ({
     if (loginStage !== 'none') return;
 
     setLoginStageState('loading');
-    fetch('https://backendhackaton.onrender.com/login', {
-      method: 'POST',
-      body: JSON.stringify(values),
-    })
-      .then(res => {
-        res.ok &&
-          res.json().then(data => {
-            localStorage.setItem('token', data);
-          });
 
-        setLoginStageState(res.ok ? 'success' : 'error');
-        if (res.ok) {
-          res.json().then(data => {
-            setIsLoggedIn(true);
-            data.role === 'Admin' ? navigate('/admin') : navigate('/');
-          });
-        }
-        if (!res.ok) {
-          toast('Something went wrong');
-        }
+    const { email, password } = values;
+    const data = { login: email, password };
+
+    axios
+      .post('/api/login', data)
+      .then(response => {
+        setLoginStageState(response.status === 200 ? 'success' : 'error');
+        response.status === 200 && setUserRole(response.data.role);
       })
-      .catch(err => {
+      .catch(error => {
         toast('Something went wrong');
-        console.error(err);
+        console.error(error);
         setLoginStageState('error');
       });
   }
@@ -75,6 +66,19 @@ export const SignInForm = ({
       };
     }
   }, [loginStage, setAuthStage]);
+
+  useEffect(() => {
+    if (loginStage === 'success') {
+      const timeout = setTimeout(() => {
+        setIsLoggedIn(true);
+        userRole === 'Admin' ? navigate('/admin') : navigate('/');
+        localStorage.setItem('token', 'true');
+      }, 2000);
+      return () => {
+        clearTimeout(timeout);
+      };
+    }
+  });
 
   return (
     <Form {...form}>

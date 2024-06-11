@@ -1,14 +1,14 @@
 import {
-  RootPage,
-  ErrorPage,
-  Profile,
-  JobList,
-  Threads,
-  Settings,
-  Chat,
   AuthPage,
+  Chat,
+  ErrorPage,
+  JobList,
+  Profile,
+  RootPage,
+  Settings,
+  Threads,
 } from '@/pages';
-import { Navigate, createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { useAuthStore } from '../store';
 
 interface PrivateRouteProps {
@@ -17,20 +17,27 @@ interface PrivateRouteProps {
 
 // eslint-disable-next-line react/prop-types, react-refresh/only-export-components
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ element: Element }) => {
-  const { isLoggedIn } = useAuthStore();
+  const { isLoggedIn, getLoggedInToken } = useAuthStore();
+  const token = getLoggedInToken();
 
-  return isLoggedIn ? <Element /> : <Navigate to="/auth" />;
+  return isLoggedIn || token ? <Element /> : <Navigate to="/auth" />;
 };
 
+// eslint-disable-next-line react/prop-types, react-refresh/only-export-components
+const AuthRoute = () => {
+  const { isLoggedIn, getLoggedInToken } = useAuthStore();
+  const token = getLoggedInToken();
+  return !isLoggedIn && !token ? <AuthPage /> : <Navigate to="/" />;
+};
 export const router = createBrowserRouter([
-  {
-    path: '/auth',
-    element: <AuthPage />,
-    errorElement: <ErrorPage />,
-  },
   {
     path: '/',
     element: <PrivateRoute element={RootPage} />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: 'auth',
+    element: <AuthRoute />,
     errorElement: <ErrorPage />,
   },
   {
