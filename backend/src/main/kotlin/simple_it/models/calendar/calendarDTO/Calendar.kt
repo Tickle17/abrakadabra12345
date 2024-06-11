@@ -10,10 +10,10 @@ import java.util.*
 
 object VacancyCalendar : Table() {
     val id = uuid("id").autoGenerate()
-    val duration = integer("duration")
-    val freeTime = integer("freeTime")
-    val dayStart = integer("dayStart")
-    val dayEnd = integer("dayEnd")
+    val duration = decimal("duration", 10, 2)
+    val freeTime = decimal("freeTime", 10, 2)
+    val dayStart = decimal("dayStart", 10, 2)
+    val dayEnd = decimal("dayEnd", 10, 2)
     val slots = integer("slots")
 
     //    val freeSlots = varchar("freeSlots", length = 10000).nullable()
@@ -27,10 +27,10 @@ object VacancyCalendar : Table() {
 @Serializable
 data class VacancyCalendarDTO(
     @Contextual val id: UUID? = null,
-    val duration: Int,
-    val freeTime: Int,
-    val dayStart: Int,
-    val dayEnd: Int,
+    val duration: Double,
+    val freeTime: Double,
+    val dayStart: Double,
+    val dayEnd: Double,
     val slots: Int,
 //    val freeSlots: List<VacancySlotDTO>,
     val maxReservDays: Int,
@@ -40,10 +40,10 @@ data class VacancyCalendarDTO(
 
 @Serializable
 data class CreateVacancyCalendar(
-    val duration: Int,
-    val freeTime: Int,
-    val dayStart: Int,
-    val dayEnd: Int,
+    val duration: Double,
+    val freeTime: Double,
+    val dayStart: Double,
+    val dayEnd: Double,
 //    val freeSlots: List<VacancySlotDTO>,
     val maxReservDays: Int,
     val workingDays: List<WorkingDay>,
