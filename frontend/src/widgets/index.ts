@@ -6,3 +6,6 @@ export { ChatPreferences } from './ChatPreferences';
 export { ChatWindow } from './ChatWindow';
 export { ChatSettings } from './ChatSettings';
 export { ImageModal } from './ImageModal';
+export { SignInCard } from './SignInCard';
+export { AuthLogo } from './AuthLogo';
+export { SignUpCard } from './SignUpCard';
