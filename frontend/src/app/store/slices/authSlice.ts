@@ -14,7 +14,7 @@ export type TAuthStore = {
   setUsername: (username: string) => void;
 };
 
-export const useAuthStore = create<TAuthStore>((set, get) => ({
+export const useAuthStore = create<TAuthStore>(set => ({
   isLoggedIn: false,
   getLoggedInToken: () => localStorage.getItem('token') !== null,
   setIsLoggedIn: isLoggedIn => set({ isLoggedIn }),

@@ -1,10 +1,8 @@
 import clsx from 'clsx';
 
 export const SignUpStepController = ({
-  setSignUpStep,
   signUpStep,
 }: {
-  setSignUpStep: React.Dispatch<React.SetStateAction<1 | 2 | 3>>;
   signUpStep: 1 | 2 | 3;
 }) => {
   return (

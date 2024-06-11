@@ -5,7 +5,6 @@ import {
   StepFirstContent,
   StepSecondContent,
   StepThirdContent,
-  FormButton,
   ChangeAuthStageButton,
   SignUpStepController,
 } from './components';
@@ -37,10 +36,7 @@ export const SignUpCard = ({
           setAuthStage={setAuthStage}
           setSignUpStep={setSignUpStep}
         />
-        <SignUpStepController
-          signUpStep={signUpStep}
-          setSignUpStep={setSignUpStep}
-        />
+        <SignUpStepController signUpStep={signUpStep} />
       </div>
     </AnimationWrapper>
   );

@@ -7,14 +7,7 @@ import {
   Share2Icon,
 } from '@radix-ui/react-icons';
 import { Link } from 'react-router-dom';
-import {
-  RefObject,
-  forwardRef,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { RefObject, forwardRef, useEffect, useState } from 'react';
 
 type ArticleDetails = {
   type_of: string;
@@ -121,7 +114,7 @@ export const Post = forwardRef<HTMLDivElement, PostProps>(({ post }, ref) => {
 
 Post.displayName = 'Post';
 
-const ThredList = ({ data }: { data: ArticleDetails[] }) => {
+const ThredList = () => {
   const [articles, setArticles] = useState<ArticleDetails[]>([]);
   const [, setIsLoading] = useState(false);
 
@@ -148,7 +141,7 @@ const ThredList = ({ data }: { data: ArticleDetails[] }) => {
               (item, index, self) =>
                 index === self.findIndex(t => t.id === item.id)
             )
-            .map((post, index) => {
+            .map(post => {
               return <Post key={`${post.id}`} post={post} />;
             })}
         </div>
