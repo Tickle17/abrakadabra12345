@@ -1,6 +1,8 @@
 import {
   AuthPage,
+  Calendar,
   Chat,
+  CreateVacancy,
   ErrorPage,
   JobList,
   Profile,
@@ -59,5 +61,13 @@ export const router = createBrowserRouter([
   {
     path: 'messages',
     element: <PrivateRoute element={Chat} />,
+  },
+  {
+    path: 'create-vacancy',
+    element: <PrivateRoute element={CreateVacancy} />,
+  },
+  {
+    path: 'calendar',
+    element: <PrivateRoute element={Calendar} />,
   },
 ]);

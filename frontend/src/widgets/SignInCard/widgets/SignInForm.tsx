@@ -44,7 +44,7 @@ export const SignInForm = ({
     const data = { login: email, password };
 
     axios
-      .post('/api/login', data)
+      .post('https://backendhackaton.onrender.com/login', data)
       .then(response => {
         setLoginStageState(response.status === 200 ? 'success' : 'error');
         response.status === 200 && setUserRole(response.data.role);

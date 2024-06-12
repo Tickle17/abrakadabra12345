@@ -89,7 +89,11 @@ export const StepSecondContent = ({
     }
 
     axios
-      .post<ResponseData>('/api/users', data, {})
+      .post<ResponseData>(
+        'https://backendhackaton.onrender.com/users',
+        data,
+        {}
+      )
       .then((response: AxiosResponse<ResponseData>) => {
         if (response.status === 200 || response.status === 201) {
           localStorage.setItem('token', 'true');

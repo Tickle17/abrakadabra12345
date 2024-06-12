@@ -4,3 +4,4 @@ export { useChatStore } from './slices/chatSlice';
 export { useImageModalStore } from './slices/imageModalSlice';
 export { useUserStore } from './slices/userSlice';
 export { useAuthStore } from './slices/authSlice';
+export { useVacancyStore } from './slices/vacancySlice';

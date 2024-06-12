@@ -9,3 +9,5 @@ export { ImageModal } from './ImageModal';
 export { SignInCard } from './SignInCard';
 export { AuthLogo } from './AuthLogo';
 export { SignUpCard } from './SignUpCard';
+export { VacancyCreationHeader } from './VacancyCreationHeader';
+export { VacancyCreationForm } from './VacancyCreationForm';

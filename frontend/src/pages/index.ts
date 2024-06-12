@@ -6,3 +6,5 @@ export { Threads } from './Threads';
 export { Settings } from './Settings';
 export { Chat } from './Chat';
 export { AuthPage } from './Auth';
+export { CreateVacancy } from './CreateVacancy';
+export { Calendar } from './Calendar';
