@@ -84,8 +84,8 @@ export const StepSecondContent = ({
     };
 
     interface ResponseData {
+      id: string;
       role: string;
-      username: string;
     }
 
     axios
@@ -97,12 +97,13 @@ export const StepSecondContent = ({
       .then((response: AxiosResponse<ResponseData>) => {
         if (response.status === 200 || response.status === 201) {
           localStorage.setItem('token', 'true');
+          localStorage.setItem('id', response.data.id);
           setAuthStageState('success');
         } else {
           setAuthStageState('error');
           toast('Something went wrong');
         }
-      }) // @ts-ignore
+      })
       .catch(err => {
         toast('Something went wrong');
         console.error(err);

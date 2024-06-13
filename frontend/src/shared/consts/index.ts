@@ -5,47 +5,123 @@ export const DESKTOP_BREAKPOINT = 1024;
 
 export const hardSkillItems = [
   {
-    value: 'next.js',
+    value: 'NEXT.JS',
     label: 'Next.js',
   },
   {
-    value: 'svelte',
+    value: 'SVELTE',
     label: 'Svelte',
   },
   {
-    value: 'vue',
+    value: 'VUE',
     label: 'Vue',
   },
   {
-    value: 'solid',
+    value: 'SOLID',
     label: 'Solid',
   },
   {
-    value: 'astro',
+    value: 'ASTRO',
     label: 'Astro',
+  },
+  {
+    value: 'REACT',
+    label: 'React',
+  },
+  {
+    value: 'CSS',
+    label: 'CSS',
+  },
+  {
+    value: 'JS',
+    label: 'JavaScript',
+  },
+  {
+    value: 'KOTLIN',
+    label: 'Kotlin',
+  },
+  {
+    value: 'HTML',
+    label: 'HTML',
+  },
+  {
+    value: 'POSTGRESQL',
+    label: 'PostgreSQL',
+  },
+  {
+    value: 'WEBPACK',
+    label: 'Webpack',
+  },
+  {
+    value: 'JAVA',
+    label: 'Java',
+  },
+  {
+    value: 'PYTHON',
+    label: 'Python',
+  },
+  {
+    value: 'DOCKER',
+    label: 'Docker',
+  },
+  {
+    value: 'GIT',
+    label: 'Git',
+  },
+  {
+    value: 'TYPESCRIPT',
+    label: 'TypeScript',
   },
 ];
 
 export const softSkillItems = [
   {
-    value: 'communication',
+    value: 'COMMUNICATION',
     label: 'Effective Communication',
   },
   {
-    value: 'problem_solving',
+    value: 'PROBLEM_SOLVING',
     label: 'Problem Solving',
   },
   {
-    value: 'teamwork',
+    value: 'TEAMWORK',
     label: 'Teamwork & Collaboration',
   },
   {
-    value: 'adaptability',
+    value: 'ADAPTABILITY',
     label: 'Adaptability',
   },
   {
-    value: 'time_management',
+    value: 'TIME_MANAGEMENT',
     label: 'Time Management',
+  },
+  {
+    value: 'STRESS',
+    label: 'Stress Management',
+  },
+  {
+    value: 'PRIDE',
+    label: 'Pride',
+  },
+  {
+    value: 'GREED',
+    label: 'Greed',
+  },
+  {
+    value: 'WRATH',
+    label: 'Wrath',
+  },
+  {
+    value: 'ENVY',
+    label: 'Envy',
+  },
+  {
+    value: 'GLUTTONY',
+    label: 'Gluttony',
+  },
+  {
+    value: 'SLOTH',
+    label: 'Sloth',
   },
 ];
 
