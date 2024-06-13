@@ -24,6 +24,29 @@ import { toast } from 'sonner';
 import { useState } from 'react';
 import { useAuthStore } from '@/app/store';
 
+export type ResponseData = {
+  id: string | undefined | null; // UUID
+  login: string | undefined | null;
+  password: string | undefined | null;
+  photoUrl: string | undefined | null;
+  fullName: string | undefined | null;
+  age: number | undefined | null; // int32
+  stackTech: string | undefined | null;
+  projects: string | undefined | null;
+  gitlabUrl: string | undefined | null;
+  githubUrl: string | undefined | null;
+  aboutUser: string | undefined | null;
+  targetsInfo: string | undefined | null;
+  price: number | undefined | null; // int32
+  criterionsJob: string | undefined | null;
+  phone: string | undefined | null;
+  softSkills: [] | undefined | null;
+  hardSkills: [] | undefined | null;
+  createdAt: Date | undefined | null; // date-time
+  updatedAt: Date | undefined | null; // date-time
+  deletedAt: Date | undefined | null; // date-time
+};
+
 export const Profile = () => {
   const { profileData, setProfileData } = useProfileStore();
   const [editMenu, setEditMenu] = useState<boolean>(false);
@@ -44,9 +67,6 @@ export const Profile = () => {
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     setProfileData(data);
-    type ResponseData = {
-      id: string;
-    };
     axios
       .put<ResponseData>(
         `https://backendhackaton.onrender.com/users/${userId}`,
