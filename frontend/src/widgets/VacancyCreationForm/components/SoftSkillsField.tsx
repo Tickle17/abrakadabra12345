@@ -18,6 +18,7 @@ export const SoftSkillsField = ({
   control: Control<stepFirstValues>;
   errors: FieldErrors;
 }) => {
+  console.log(errors);
   return (
     <FormField
       name="softSkills"

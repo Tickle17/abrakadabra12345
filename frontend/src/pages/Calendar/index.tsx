@@ -1,36 +1,37 @@
 import { AppLayout } from '@/shared/layouts';
 import { formSchema } from './schema.ts';
 import { z } from 'zod';
-import { useFieldArray, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { DayOfWeek } from '@/pages/Calendar/types.ts';
-import React from 'react';
 import { Input } from '@/shared/ui/input.tsx';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/shared/ui/select';
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/shared/ui/form';
+import { Form, FormControl, FormField, FormItem } from '@/shared/ui/form';
 import { Button } from '@/shared/ui/button.tsx';
 import { Checkbox } from '@/shared/ui/checkbox.tsx';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 type FormSchema = z.infer<typeof formSchema>;
+
+export const days = [
+  'MONDAY',
+  'TUESDAY',
+  'WEDNESDAY',
+  'THURSDAY',
+  'FRIDAY',
+  'SATURDAY',
+  'SUNDAY',
+] as const;
 
 export function FormComponent() {
   const onSubmit = (data: FormSchema) => {
     console.log(data);
+    if (
+      !data.duration ||
+      !data.freeTime ||
+      !data.dayStart ||
+      !data.dayEnd ||
+      !data.workingDays
+    )
+      return;
     const result = {
       duration: parseFloat(data.duration),
       freeTime: parseFloat(data.freeTime),
@@ -62,10 +63,10 @@ export function FormComponent() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      duration: 0,
-      freeTime: 0,
-      dayStart: 0,
-      dayEnd: 0,
+      duration: '0',
+      freeTime: '0',
+      dayStart: '0',
+      dayEnd: '0',
       MONDAY: false,
       TUESDAY: false,
       WEDNESDAY: false,
@@ -73,12 +74,10 @@ export function FormComponent() {
       FRIDAY: false,
       SATURDAY: false,
       SUNDAY: false,
-      workingDays: 0,
+      workingDays: '0',
       businessId: '',
     },
   });
-
-  const duration = form.watch('freeTime');
 
   return (
     <Form {...form}>
@@ -91,7 +90,7 @@ export function FormComponent() {
               <FormControl>
                 <div>
                   <label>duration</label>
-                  <Input {...field} />
+                  <Input {...field} value={field.value || ''} />
                 </div>
               </FormControl>
             </FormItem>
@@ -105,7 +104,7 @@ export function FormComponent() {
               <FormControl>
                 <div>
                   <label>freeTime</label>
-                  <Input {...field} />
+                  <Input {...field} value={field.value || ''} />
                 </div>
               </FormControl>
             </FormItem>
@@ -119,7 +118,7 @@ export function FormComponent() {
               <FormControl>
                 <div>
                   <label>dayStart</label>
-                  <Input {...field} />
+                  <Input {...field} value={field.value || ''} />
                 </div>
               </FormControl>
             </FormItem>
@@ -133,7 +132,7 @@ export function FormComponent() {
               <FormControl>
                 <div>
                   <label>dayEnd</label>
-                  <Input {...field} />
+                  <Input {...field} value={field.value || ''} />
                 </div>
               </FormControl>
             </FormItem>
@@ -147,7 +146,7 @@ export function FormComponent() {
               <FormControl>
                 <div>
                   <label>workingDays</label>
-                  <Input {...field} />
+                  <Input {...field} value={field.value || ''} />
                 </div>
               </FormControl>
             </FormItem>
@@ -167,67 +166,29 @@ export function FormComponent() {
             </FormItem>
           )}
         />
-        {/*
-        <FormField
-          control={form.control}
-          name="maxReservDays"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <div>
-                  <label>maxReservDays</label>
-                  <Select {...field}>
-                    <SelectTrigger className="w-[180px]">
-                      <SelectValue placeholder="maxReservDays">
-                        {field.value}
-                      </SelectValue>
-                    </SelectTrigger>
-                    <SelectContent>
-                      {Object.values(DayOfWeek).map(day => (
-                        <SelectItem key={day} value={day}>
-                          <div className="w-full flex items-center gap-3">
-                            <span>{day}</span>
-                            <Checkbox />
-                          </div>
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              </FormControl>
-            </FormItem>
-          )}
-        />
-        */}
-        {Object.values(DayOfWeek)
-          .filter(day => typeof day === 'string')
-          .map((day, index) => (
-            <FormField
-              key={index}
-              control={form.control}
-              name={`workingDays[${day}]`}
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <div className="flex items-center gap-3 w-full">
-                      <span>{day}</span>
-                      <Checkbox
-                        value={day}
-                        checked={field.value?.includes(day) || false}
-                        onCheckedChange={checked => {
-                          field.onChange(
-                            checked
-                              ? [...(field.value || []), day]
-                              : field.value?.filter(v => v !== day)
-                          );
-                        }}
-                      />
-                    </div>
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-          ))}
+        {days.map((day, index) => (
+          <FormField
+            key={index}
+            control={form.control}
+            name={day}
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <div className="flex items-center gap-3 w-full">
+                    <span>{day}</span>
+                    <Checkbox
+                      value={day}
+                      checked={field.value || false}
+                      onCheckedChange={checked => {
+                        field.onChange(checked ? false : true);
+                      }}
+                    />
+                  </div>
+                </FormControl>
+              </FormItem>
+            )}
+          />
+        ))}
         <Button type="submit">Submit</Button>
       </form>
     </Form>

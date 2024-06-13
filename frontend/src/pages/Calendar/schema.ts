@@ -1,10 +1,10 @@
 import { z } from 'zod';
-import { DayOfWeek } from './types';
+// import { DayOfWeek } from './types';
 
-const MyObjectSchema = z.object({
-  day: z.nativeEnum(DayOfWeek),
-  isWorking: z.boolean(),
-});
+// const MyObjectSchema = z.object({
+//   day: z.nativeEnum(DayOfWeek),
+//   isWorking: z.boolean(),
+// });
 
 export const formSchema = z.object({
   duration: z.string().nullable(),

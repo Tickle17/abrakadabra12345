@@ -13,6 +13,7 @@ export const WorkFormatField = ({
   control: Control<stepFirstValues>;
   errors: FieldErrors;
 }) => {
+  console.log(errors);
   return (
     <div className="w-full flex items-center gap-10">
       <div className="shrink-0 max-w-[175px] flex flex-col gap-1">

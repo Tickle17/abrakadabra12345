@@ -17,11 +17,7 @@ export const StepSecond = () => {
       idealCandidate: '',
     },
   });
-  const {
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = form;
+  const { handleSubmit, control } = form;
 
   useEffect(() => {
     if (!submitButtonRef.current) return;
