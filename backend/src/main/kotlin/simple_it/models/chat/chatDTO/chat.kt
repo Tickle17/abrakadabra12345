@@ -53,6 +53,15 @@ data class ReactionsVacancyResultDTO(
     val message: String
 )
 
+@Serializable
+data class ReactionsVacancyDetailsDTO(
+    @Contextual val reactionId: UUID,
+    @Contextual val businessId: UUID,
+    val vacancy: String,
+    val position: String
+)
+
+
 object Messages : Table() {
     val id = uuid("id").autoGenerate()
     val reactionsVacancyId = uuid("reactionsVacancy_id").references(ReactionsVacancy.id)

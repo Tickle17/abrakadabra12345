@@ -20,6 +20,9 @@ fun Application.chatRout(
         put("/reaction/{id}") {
             update(reactionsVacancyService)
         }
+        get("/reactions/{id}") {
+            getAllbyId(reactionsVacancyService)
+        }
         post("/message") {
             postMessage(messagesService)
         }
