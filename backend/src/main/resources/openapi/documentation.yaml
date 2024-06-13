@@ -917,6 +917,36 @@ components:
           type: "string"
         phone:
           type: "string"
+        softSkills:
+          type: "array"
+          items:
+            type: "string"
+            enum:
+            - "Stress"
+            - "PRIDE"
+            - "GREED"
+            - "WRATH"
+            - "ENVY"
+            - "LUST"
+            - "GLUTTONY"
+            - "SLOTH"
+        hardSkills:
+          type: "array"
+          items:
+            type: "string"
+            enum:
+            - "REACT"
+            - "CSS"
+            - "JS"
+            - "KOTLIN"
+            - "HTML"
+            - "POSTGRESQL"
+            - "WEBPACK"
+            - "JAVA"
+            - "PYTHON"
+            - "DOCKER"
+            - "GIT"
+            - "TYPESCRIPT"
         createdAt:
           type: "string"
           format: "date-time"
@@ -960,6 +990,36 @@ components:
           type: "string"
         phone:
           type: "string"
+        softSkills:
+          type: "array"
+          items:
+            type: "string"
+            enum:
+            - "Stress"
+            - "PRIDE"
+            - "GREED"
+            - "WRATH"
+            - "ENVY"
+            - "LUST"
+            - "GLUTTONY"
+            - "SLOTH"
+        hardSkills:
+          type: "array"
+          items:
+            type: "string"
+            enum:
+            - "REACT"
+            - "CSS"
+            - "JS"
+            - "KOTLIN"
+            - "HTML"
+            - "POSTGRESQL"
+            - "WEBPACK"
+            - "JAVA"
+            - "PYTHON"
+            - "DOCKER"
+            - "GIT"
+            - "TYPESCRIPT"
     CreateBusiness:
       type: "object"
       properties:
