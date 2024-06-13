@@ -5,20 +5,13 @@ import kotlinx.serialization.json.Json
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
-import org.jetbrains.exposed.sql.transactions.transaction
 import simple_it.models.enum.DayOfWeek
 import simple_it.models.slot.slotDTO.CreateVacancySlotCalendar
 import simple_it.models.slot.slotDTO.VacancySlot
 import simple_it.models.slot.slotDTO.VacancySlotDTO
 import java.util.*
 
-class CalendarSlotService(private val database: Database) {
-
-    init {
-        transaction(database) {
-            SchemaUtils.create(VacancySlot)
-        }
-    }
+class CalendarSlotService {
 
     suspend fun <T> dbQuery(block: suspend () -> T): T =
         newSuspendedTransaction(Dispatchers.IO) { block() }

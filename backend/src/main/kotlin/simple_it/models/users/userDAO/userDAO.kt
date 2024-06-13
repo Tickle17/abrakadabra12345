@@ -4,7 +4,6 @@ import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
-import org.jetbrains.exposed.sql.transactions.transaction
 import simple_it.models.business.businessDTO.Business
 import simple_it.models.users.usersDTO.*
 import simple_it.models.vacancy.vacancyDAO.helpers.fromHardSkillsString
@@ -13,13 +12,7 @@ import simple_it.models.vacancy.vacancyDAO.helpers.toHardSkillsString
 import simple_it.models.vacancy.vacancyDAO.helpers.toSoftSkillsString
 import java.util.*
 
-class UserService(private val database: Database) {
-
-    init {
-        transaction(database) {
-            SchemaUtils.create(Users)
-        }
-    }
+class UserService {
 
     suspend fun <T> dbQuery(block: suspend () -> T): T =
         newSuspendedTransaction(Dispatchers.IO) { block() }
