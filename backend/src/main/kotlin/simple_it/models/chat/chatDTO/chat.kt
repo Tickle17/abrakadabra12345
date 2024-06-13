@@ -56,7 +56,9 @@ data class ReactionsVacancyResultDTO(
 @Serializable
 data class ReactionsVacancyDetailsDTO(
     @Contextual val reactionId: UUID,
+    @Contextual val userId: UUID,
     @Contextual val businessId: UUID,
+    @Contextual val vacancyId: UUID,
     val vacancy: String,
     val position: String
 )
