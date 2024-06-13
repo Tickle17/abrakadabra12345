@@ -46,71 +46,35 @@ class ReactionsVacancyService {
         updatedRows > 0
     }
 
-    suspend fun findReactionsById(id: UUID): ReactionsVacancyDetailsDTO? = dbQuery {
+    suspend fun findReactionsById(id: UUID): List<ReactionsVacancyDetailsDTO> = dbQuery {
         val userExists = Users.select { Users.id eq id }.count() > 0
         val businessExists = Business.select { Business.id eq id }.count() > 0
 
-        if (userExists) {
-            val reaction = ReactionsVacancy
-                .select { ReactionsVacancy.userId eq id }
+        val reactions = if (userExists) {
+            ReactionsVacancy.select { ReactionsVacancy.userId eq id }
                 .map { it[ReactionsVacancy.id] to it[vacancyId] }
-                .firstOrNull()
-
-            if (reaction == null) {
-                return@dbQuery null
-            }
-
-            val (reactionId, vacancyId) = reaction
-
-            val vacancy = Vacancy
-                .select { Vacancy.id eq vacancyId }
-                .map { it[Vacancy.vacancy] to it[Vacancy.position] }
-                .firstOrNull()
-
-            if (vacancy == null) {
-                return@dbQuery null
-            }
-
-            val (vacancyName, position) = vacancy
-
-            return@dbQuery ReactionsVacancyDetailsDTO(
-                reactionId = reactionId,
-                businessId = id,
-                vacancy = vacancyName ?: "Unknown vacancy",
-                position = position ?: "Unknown position"
-            )
         } else if (businessExists) {
-            val reaction = ReactionsVacancy
-                .select { ReactionsVacancy.businessId eq id }
+            ReactionsVacancy.select { ReactionsVacancy.businessId eq id }
                 .map { it[ReactionsVacancy.id] to it[vacancyId] }
-                .firstOrNull()
-
-            if (reaction == null) {
-                return@dbQuery null
-            }
-
-            val (reactionId, vacancyId) = reaction
-
-            val vacancy = Vacancy
-                .select { Vacancy.id eq vacancyId }
-                .map { it[Vacancy.vacancy] to it[Vacancy.position] }
-                .firstOrNull()
-
-            if (vacancy == null) {
-                return@dbQuery null
-            }
-
-            val (vacancyName, position) = vacancy
-
-            return@dbQuery ReactionsVacancyDetailsDTO(
-                reactionId = reactionId,
-                businessId = id,
-                vacancy = vacancyName ?: "Unknown vacancy",
-                position = position ?: "Unknown position"
-            )
+        } else {
+            emptyList()
         }
 
-        return@dbQuery null
+        reactions.mapNotNull { (reactionId, vacancyId) ->
+            val vacancy = Vacancy
+                .select { Vacancy.id eq vacancyId }
+                .map { it[Vacancy.vacancy] to it[Vacancy.position] }
+                .firstOrNull()
+
+            vacancy?.let { (vacancyName, position) ->
+                ReactionsVacancyDetailsDTO(
+                    reactionId = reactionId,
+                    businessId = id,
+                    vacancy = vacancyName ?: "Unknown vacancy",
+                    position = position ?: "Unknown position"
+                )
+            }
+        }
     }
 }
 
