@@ -9,7 +9,6 @@ import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransacti
 import org.jetbrains.exposed.sql.update
 import simple_it.models.business.businessDTO.Business
 import simple_it.models.chat.chatDTO.*
-import simple_it.models.chat.chatDTO.ReactionsVacancy.vacancyId
 import simple_it.models.users.usersDTO.Users
 import simple_it.models.vacancy.vacancyDTO.Vacancy
 import java.util.*
@@ -52,15 +51,17 @@ class ReactionsVacancyService {
 
         val reactions = if (userExists) {
             ReactionsVacancy.select { ReactionsVacancy.userId eq id }
-                .map { it[ReactionsVacancy.id] to it[vacancyId] }
+                .map { it[ReactionsVacancy.id] to it[ReactionsVacancy.vacancyId] to it[ReactionsVacancy.businessId] }
         } else if (businessExists) {
             ReactionsVacancy.select { ReactionsVacancy.businessId eq id }
-                .map { it[ReactionsVacancy.id] to it[vacancyId] }
+                .map { it[ReactionsVacancy.id] to it[ReactionsVacancy.vacancyId] to it[ReactionsVacancy.userId] }
         } else {
             emptyList()
         }
 
-        reactions.mapNotNull { (reactionId, vacancyId) ->
+        reactions.mapNotNull { (reactionIdVacancyIdPair, relatedId) ->
+            val (reactionId, vacancyId) = reactionIdVacancyIdPair
+
             val vacancy = Vacancy
                 .select { Vacancy.id eq vacancyId }
                 .map { it[Vacancy.vacancy] to it[Vacancy.position] }
@@ -69,7 +70,8 @@ class ReactionsVacancyService {
             vacancy?.let { (vacancyName, position) ->
                 ReactionsVacancyDetailsDTO(
                     reactionId = reactionId,
-                    businessId = id,
+                    userId = if (userExists) id else relatedId,
+                    businessId = if (businessExists) id else relatedId,
                     vacancy = vacancyName ?: "Unknown vacancy",
                     position = position ?: "Unknown position"
                 )
