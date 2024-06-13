@@ -8,7 +8,6 @@ import {
   Profile,
   RootPage,
   Settings,
-  Threads,
 } from '@/pages';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { useAuthStore } from '../store';
@@ -51,10 +50,6 @@ export const router = createBrowserRouter([
   {
     path: 'joblist',
     element: <PrivateRoute element={JobList} />,
-  },
-  {
-    path: 'threads',
-    element: <PrivateRoute element={Threads} />,
   },
   {
     path: 'settings',
