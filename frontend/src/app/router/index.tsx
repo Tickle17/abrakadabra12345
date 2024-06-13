@@ -12,6 +12,7 @@ import {
 } from '@/pages';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { useAuthStore } from '../store';
+import { useFetchUserProfile } from '@/widgets/FetchData/fetchProfile.tsx';
 
 interface PrivateRouteProps {
   element: React.ComponentType;
@@ -21,7 +22,7 @@ interface PrivateRouteProps {
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ element: Element }) => {
   const { isLoggedIn, getLoggedInToken } = useAuthStore();
   const token = getLoggedInToken();
-
+  useFetchUserProfile();
   return isLoggedIn || token ? <Element /> : <Navigate to="/auth" />;
 };
 
@@ -29,6 +30,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ element: Element }) => {
 const AuthRoute = () => {
   const { isLoggedIn, getLoggedInToken } = useAuthStore();
   const token = getLoggedInToken();
+  useFetchUserProfile();
   return !isLoggedIn && !token ? <AuthPage /> : <Navigate to="/" />;
 };
 export const router = createBrowserRouter([

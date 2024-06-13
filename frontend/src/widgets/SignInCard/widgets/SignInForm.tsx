@@ -48,6 +48,7 @@ export const SignInForm = ({
       .then(response => {
         setLoginStageState(response.status === 200 ? 'success' : 'error');
         response.status === 200 && setUserRole(response.data.role);
+        localStorage.setItem('id', response.data.id);
       })
       .catch(error => {
         toast('Something went wrong');
