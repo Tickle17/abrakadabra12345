@@ -3,13 +3,12 @@ import {
   GearIcon,
   HomeIcon,
   PersonIcon,
-  ReaderIcon,
 } from '@radix-ui/react-icons';
 import { IconLinkWrapper } from '../components';
 
 export const NavBar = () => {
   return (
-    <div className="row-span-1 col-span-6 bg-white flex justify-center items-center gap-6">
+    <div className="row-span-1 col-span-4 bg-white flex justify-center items-center gap-6">
       <IconLinkWrapper path="/">
         <HomeIcon className="w-5 h-5 text-slate-900" />
       </IconLinkWrapper>
@@ -18,9 +17,6 @@ export const NavBar = () => {
       </IconLinkWrapper>
       <IconLinkWrapper path="/joblist">
         <BackpackIcon className="w-5 h-5 text-slate-900" />
-      </IconLinkWrapper>
-      <IconLinkWrapper path="/threads">
-        <ReaderIcon className="w-5 h-5 text-slate-900" />
       </IconLinkWrapper>
       <IconLinkWrapper path="/settings">
         <GearIcon className="w-5 h-5 text-slate-900" />

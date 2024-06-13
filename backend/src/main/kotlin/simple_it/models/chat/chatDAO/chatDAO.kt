@@ -7,7 +7,10 @@ import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.update
+import simple_it.models.business.businessDTO.Business
 import simple_it.models.chat.chatDTO.*
+import simple_it.models.users.usersDTO.Users
+import simple_it.models.vacancy.vacancyDTO.Vacancy
 import java.util.*
 
 class ReactionsVacancyService {
@@ -40,6 +43,45 @@ class ReactionsVacancyService {
             it[control] = reaction.control ?: false
         }
         updatedRows > 0
+    }
+
+    suspend fun findReactionsById(id: UUID): List<ReactionsVacancyDetailsDTO> = dbQuery {
+        val userExists = Users.select { Users.id eq id }.count() > 0
+        val businessExists = Business.select { Business.id eq id }.count() > 0
+
+        val reactions = if (userExists) {
+            ReactionsVacancy.select { ReactionsVacancy.userId eq id }
+                .map {
+                    Triple(
+                        it[ReactionsVacancy.id],
+                        it[ReactionsVacancy.vacancyId],
+                        it[ReactionsVacancy.businessId]
+                    )
+                }
+        } else if (businessExists) {
+            ReactionsVacancy.select { ReactionsVacancy.businessId eq id }
+                .map { Triple(it[ReactionsVacancy.id], it[ReactionsVacancy.vacancyId], it[ReactionsVacancy.userId]) }
+        } else {
+            emptyList()
+        }
+
+        reactions.mapNotNull { (reactionId, vacancyId, relatedId) ->
+            val vacancy = Vacancy
+                .select { Vacancy.id eq vacancyId }
+                .map { it[Vacancy.vacancy] to it[Vacancy.position] }
+                .firstOrNull()
+
+            vacancy?.let { (vacancyName, position) ->
+                ReactionsVacancyDetailsDTO(
+                    reactionId = reactionId,
+                    userId = if (userExists) id else relatedId,
+                    businessId = if (businessExists) id else relatedId,
+                    vacancyId = vacancyId,
+                    vacancy = vacancyName ?: "Unknown vacancy",
+                    position = position ?: "Unknown position"
+                )
+            }
+        }
     }
 }
 

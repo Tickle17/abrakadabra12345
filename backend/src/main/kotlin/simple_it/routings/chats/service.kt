@@ -45,6 +45,24 @@ suspend fun PipelineContext<Unit, ApplicationCall>.update(
     }
 }
 
+suspend fun PipelineContext<Unit, ApplicationCall>.getAllbyId(
+    reactionsVacancyService: ReactionsVacancyService
+) {
+    try {
+        val id: UUID = UUID.fromString(call.parameters["id"] ?: throw IllegalArgumentException("Invalid ID"))
+        val details = reactionsVacancyService.findReactionsById(id)
+        if (details != null) {
+            call.respond(HttpStatusCode.OK, details)
+        } else {
+            call.respond(HttpStatusCode.NotFound, "No matching records found")
+        }
+    } catch (e: Throwable) {
+        val errorMessage = "Error occurred: ${e.message}"
+        call.respond(HttpStatusCode.BadRequest, errorMessage)
+    }
+}
+
+
 suspend fun PipelineContext<Unit, ApplicationCall>.postMessage(
     messagesService: MessagesService
 ) {

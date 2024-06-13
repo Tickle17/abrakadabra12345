@@ -859,6 +859,43 @@ paths:
                 Example#1:
                   description: ""
                   value: "null"
+  /reactions/{id}:
+    get:
+      description: ""
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/ReactionsVacancyDetailsDTO"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "No matching records found"
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  description: ""
+                  value: "null"
 components:
   schemas:
     UserIdRole:
@@ -1415,3 +1452,29 @@ components:
           type: "boolean"
         control:
           type: "boolean"
+    ReactionsVacancyDetailsDTO:
+      type: "object"
+      properties:
+        reactionId:
+          type: "string"
+          format: "uuid"
+        userId:
+          type: "string"
+          format: "uuid"
+        businessId:
+          type: "string"
+          format: "uuid"
+        vacancyId:
+          type: "string"
+          format: "uuid"
+        vacancy:
+          type: "string"
+        position:
+          type: "string"
+      required:
+      - "reactionId"
+      - "userId"
+      - "businessId"
+      - "vacancyId"
+      - "vacancy"
+      - "position"

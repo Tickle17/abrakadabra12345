@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useImageModalStore } from '@/app/store';
 
 const backdrop = {
@@ -7,9 +7,9 @@ const backdrop = {
 };
 
 const modal = {
-  hidden: { y: "-100vh", opacity: 0, delay: 0.2 },
+  hidden: { y: '-100vh', opacity: 0, delay: 0.2 },
   visible: {
-    y: "0",
+    y: '0',
     opacity: 1,
     transition: { delay: 0.2 },
   },
@@ -35,13 +35,13 @@ export const ImageModal = () => {
             initial="hidden"
             animate="visible"
             exit="hidden"
-            onClick={(e) => e.stopPropagation()}
+            onClick={e => e.stopPropagation()}
           >
-            <img 
-                src={imageUrl} 
-                alt="Modal Image" 
-                onClick={() => setOpen(false)}
-                className="mb-4 max-w-full h-auto hover:cursor-pointer" 
+            <img
+              src={imageUrl}
+              alt="Modal Image"
+              onClick={() => setOpen(false)}
+              className="mb-4 max-w-full h-auto hover:cursor-pointer"
             />
           </motion.div>
         </motion.div>
