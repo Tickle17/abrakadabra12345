@@ -7,6 +7,10 @@ import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransacti
 import org.jetbrains.exposed.sql.transactions.transaction
 import simple_it.models.business.businessDTO.Business
 import simple_it.models.users.usersDTO.*
+import simple_it.models.vacancy.vacancyDAO.helpers.fromHardSkillsString
+import simple_it.models.vacancy.vacancyDAO.helpers.fromSoftSkillsString
+import simple_it.models.vacancy.vacancyDAO.helpers.toHardSkillsString
+import simple_it.models.vacancy.vacancyDAO.helpers.toSoftSkillsString
 import java.util.*
 
 class UserService(private val database: Database) {
@@ -62,6 +66,8 @@ class UserService(private val database: Database) {
                 it[price] = user.price
                 it[criterionsJob] = user.criterionsJob
                 it[phone] = user.phone
+                it[hardSkills] = toHardSkillsString(user.hardSkills)
+                it[softSkills] = toSoftSkillsString(user.softSkills)
             }
         }
     }
@@ -86,6 +92,8 @@ class UserService(private val database: Database) {
                         price = row[Users.price],
                         criterionsJob = row[Users.criterionsJob],
                         phone = row[Users.phone],
+                        softSkills = fromSoftSkillsString(row[Users.softSkills]),
+                        hardSkills = fromHardSkillsString(row[Users.hardSkills]),
                         createdAt = row[Users.createdAt],
                         updatedAt = row[Users.updatedAt],
                         deletedAt = row[Users.deletedAt]

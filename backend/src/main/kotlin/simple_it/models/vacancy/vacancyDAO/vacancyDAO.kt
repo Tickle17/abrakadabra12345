@@ -37,6 +37,7 @@ class VacancyService(private val database: Database) {
             it[vacancy] = vacancies.vacancy
             it[status] = vacancies.status
             it[hardSkills] = toHardSkillsString(vacancies.hardSkills)
+            it[softSkills] = toSoftSkillsString(vacancies.softSkills)
             it[this.businessId] = vacancies.businessId
             it[calendarId] = vacancies.calendarId
         }[Vacancy.id]

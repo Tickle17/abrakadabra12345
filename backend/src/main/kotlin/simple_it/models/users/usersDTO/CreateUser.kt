@@ -2,6 +2,8 @@ package simple_it.models.users.usersDTO
 
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
+import simple_it.models.enum.HardSkills
+import simple_it.models.enum.SoftSkills
 import java.time.LocalDateTime
 import java.util.*
 
@@ -24,7 +26,9 @@ data class UpdateUser(
     val targetsInfo: String? = null,
     val price: Int? = null,
     val criterionsJob: String? = null,
-    val phone: String? = null
+    val phone: String? = null,
+    val softSkills: List<SoftSkills>? = null,
+    val hardSkills: List<HardSkills>? = null,
 )
 
 @Serializable
@@ -44,6 +48,8 @@ data class User(
     val price: Int?,
     val criterionsJob: String?,
     val phone: String?,
+    val softSkills: List<SoftSkills>? = null,
+    val hardSkills: List<HardSkills>? = null,
     @Contextual val createdAt: LocalDateTime,
     @Contextual val updatedAt: LocalDateTime,
     @Contextual val deletedAt: LocalDateTime?

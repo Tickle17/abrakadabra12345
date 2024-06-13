@@ -23,6 +23,8 @@ object Users : Table() {
 
     //        val companyWorkerId = varchar("company_worker_id", length = 50).references(Company.id).nullable()
     val phone = varchar("phone", length = 20).nullable()
+    val softSkills = varchar("softSkills", 999999).nullable()
+    val hardSkills = varchar("hardskills", length = 99999).nullable()
     val createdAt = datetime("created_at").default(LocalDateTime.now())
     val updatedAt = datetime("updated_at").default(LocalDateTime.now())
     val deletedAt = datetime("deleted_at").nullable()
