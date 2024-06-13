@@ -51,17 +51,21 @@ class ReactionsVacancyService {
 
         val reactions = if (userExists) {
             ReactionsVacancy.select { ReactionsVacancy.userId eq id }
-                .map { it[ReactionsVacancy.id] to it[ReactionsVacancy.vacancyId] to it[ReactionsVacancy.businessId] }
+                .map {
+                    Triple(
+                        it[ReactionsVacancy.id],
+                        it[ReactionsVacancy.vacancyId],
+                        it[ReactionsVacancy.businessId]
+                    )
+                }
         } else if (businessExists) {
             ReactionsVacancy.select { ReactionsVacancy.businessId eq id }
-                .map { it[ReactionsVacancy.id] to it[ReactionsVacancy.vacancyId] to it[ReactionsVacancy.userId] }
+                .map { Triple(it[ReactionsVacancy.id], it[ReactionsVacancy.vacancyId], it[ReactionsVacancy.userId]) }
         } else {
             emptyList()
         }
 
-        reactions.mapNotNull { (reactionIdVacancyIdPair, relatedId) ->
-            val (reactionId, vacancyId) = reactionIdVacancyIdPair
-
+        reactions.mapNotNull { (reactionId, vacancyId, relatedId) ->
             val vacancy = Vacancy
                 .select { Vacancy.id eq vacancyId }
                 .map { it[Vacancy.vacancy] to it[Vacancy.position] }
@@ -72,6 +76,7 @@ class ReactionsVacancyService {
                     reactionId = reactionId,
                     userId = if (userExists) id else relatedId,
                     businessId = if (businessExists) id else relatedId,
+                    vacancyId = vacancyId,
                     vacancy = vacancyName ?: "Unknown vacancy",
                     position = position ?: "Unknown position"
                 )
