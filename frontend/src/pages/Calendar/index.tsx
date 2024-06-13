@@ -23,7 +23,7 @@ export const days = [
 
 export function FormComponent() {
   const onSubmit = (data: FormSchema) => {
-    console.log(data);
+    //console.log(data);
     if (
       !data.duration ||
       !data.freeTime ||

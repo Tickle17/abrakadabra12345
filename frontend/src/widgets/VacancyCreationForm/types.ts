@@ -1,7 +1,31 @@
-export type ThardSkillItems = 'next.js' | 'svelte' | 'vue' | 'solid' | 'astro';
+export type ThardSkillItems =
+  | 'NEXT.JS'
+  | 'SVELTE'
+  | 'VUE'
+  | 'SOLID'
+  | 'ASTRO'
+  | 'REACT'
+  | 'CSS'
+  | 'JS'
+  | 'KOTLIN'
+  | 'HTML'
+  | 'POSTGRESQL'
+  | 'WEBPACK'
+  | 'JAVA'
+  | 'PYTHON'
+  | 'DOCKER'
+  | 'GIT'
+  | 'TYPESCRIPT';
 export type TsoftSkillItems =
-  | 'communication'
-  | 'problem_solving'
-  | 'teamwork'
-  | 'adaptability'
-  | 'time_management';
+  | 'COMMUNICATION'
+  | 'PROBLEM_SOLVING'
+  | 'TEAMWORK'
+  | 'ADAPTABILITY'
+  | 'TIME_MANAGEMENT'
+  | 'STRESS'
+  | 'PRIDE'
+  | 'GREED'
+  | 'WRATH'
+  | 'ENVY'
+  | 'GLUTTONY'
+  | 'SLOTH';

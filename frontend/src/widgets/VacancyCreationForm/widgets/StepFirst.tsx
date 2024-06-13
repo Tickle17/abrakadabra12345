@@ -1,4 +1,4 @@
-import { Form } from '@/shared/ui';
+import { Button, Form } from '@/shared/ui';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { stepFirstValues, stepFirstSchema } from '../schema';
@@ -13,18 +13,24 @@ import { useVacancyStore } from '@/app/store';
 import { useEffect, useRef } from 'react';
 
 export const StepFirst = () => {
-  const { setFirstStepData, setSubmitButtonRef, activeStep, setActiveStep } =
-    useVacancyStore();
+  const {
+    firstStepData,
+    setFirstStepData,
+    setSubmitButtonRef,
+    activeStep,
+    setActiveStep,
+    setFirstStepFormValid,
+  } = useVacancyStore();
   const submitButtonRef = useRef<HTMLButtonElement>(null);
   const form = useForm<stepFirstValues>({
     resolver: zodResolver(stepFirstSchema),
     defaultValues: {
-      position: '',
-      salaryMin: 0,
-      salaryMax: 0,
-      workFormat: [],
-      hardSkills: [],
-      softSkills: [],
+      position: firstStepData.position,
+      salaryMin: firstStepData.salaryMin,
+      salaryMax: firstStepData.salaryMax,
+      workFormat: firstStepData.workFormat,
+      hardSkills: firstStepData.hardSkills,
+      softSkills: firstStepData.softSkills,
     },
   });
   const {
@@ -39,6 +45,7 @@ export const StepFirst = () => {
   }, [submitButtonRef, setSubmitButtonRef]);
 
   const onSubmit = (data: stepFirstValues) => {
+    setFirstStepFormValid(true);
     setFirstStepData(data);
     switch (activeStep) {
       case 'Job Information': {
@@ -56,24 +63,27 @@ export const StepFirst = () => {
     }
   };
 
+  // console.log('errors', errors);
+
   return (
     <Form {...form}>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="h-full w-full grid grid-cols-1 grid-rows-5 gap-7"
+        className="h-full w-full flex flex-col md:grid md:grid-cols-1 md:grid-rows-5 gap-7"
       >
         <PositionField control={control} errors={errors} />
         <WorkFormatField form={form} control={control} errors={errors} />
         <SalaryField control={control} errors={errors} />
         <SoftSkillsField control={control} errors={errors} />
         <HardSkillsField control={control} errors={errors} />
-        <button
-          type="submit"
-          className="invisible h-0 w-0 absolute"
-          ref={submitButtonRef}
-        >
-          Submit
-        </button>
+        <div className="w-full grid grid-cols-2 gap-3 lg:h-0 lg:w-0 lg:absolute lg:invisible">
+          <Button className="rounded-[2px]" disabled>
+            Back
+          </Button>
+          <Button className="rounded-[2px]" type="submit" ref={submitButtonRef}>
+            Next
+          </Button>
+        </div>
       </form>
     </Form>
   );

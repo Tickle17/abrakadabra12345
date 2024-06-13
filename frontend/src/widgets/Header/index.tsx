@@ -1,15 +1,15 @@
 import clsx from 'clsx';
 import { NavBar, NotificationsBar, SearchBar } from './widgets';
-import { useThemeStore } from '@/app/store';
+// import { useThemeStore } from '@/app/store';
 
 interface HeaderProps {
   className?: string;
 }
 
 export const Header = ({ className }: HeaderProps) => {
-  const { theme } = useThemeStore();
+  // const { theme } = useThemeStore();
 
-  console.log('theme', theme);
+  //console.log('theme', theme);
 
   return (
     <header

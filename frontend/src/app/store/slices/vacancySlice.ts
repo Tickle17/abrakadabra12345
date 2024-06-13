@@ -14,15 +14,40 @@ type stepFirstValues = {
     | null;
   softSkills:
     | (
-        | 'communication'
-        | 'problem_solving'
-        | 'teamwork'
-        | 'adaptability'
-        | 'time_management'
+        | 'COMMUNICATION'
+        | 'PROBLEM_SOLVING'
+        | 'TEAMWORK'
+        | 'ADAPTABILITY'
+        | 'TIME_MANAGEMENT'
+        | 'STRESS'
+        | 'PRIDE'
+        | 'GREED'
+        | 'WRATH'
+        | 'ENVY'
+        | 'GLUTTONY'
+        | 'SLOTH'
       )[]
     | null;
   hardSkills:
-    | ('next.js' | 'react' | 'vue' | 'svelte' | 'astro' | 'solid')[]
+    | (
+        | 'NEXT.JS'
+        | 'SVELTE'
+        | 'VUE'
+        | 'SOLID'
+        | 'ASTRO'
+        | 'REACT'
+        | 'CSS'
+        | 'JS'
+        | 'KOTLIN'
+        | 'HTML'
+        | 'POSTGRESQL'
+        | 'WEBPACK'
+        | 'JAVA'
+        | 'PYTHON'
+        | 'DOCKER'
+        | 'GIT'
+        | 'TYPESCRIPT'
+      )[]
     | null;
   salaryMin: number;
   salaryMax: number;
@@ -32,10 +57,11 @@ type stepSecondValues = {
   description: string;
   requirements: string;
   idealCandidate: string;
+  calendarId: string;
 };
 
 export type PImageModalStore = {
-  firstStep: stepFirstValues;
+  firstStepData: stepFirstValues;
   setFirstStepData: (data: stepFirstValues) => void;
   submitButtonRef: React.RefObject<HTMLButtonElement> | null;
   setSubmitButtonRef: (data: React.RefObject<HTMLButtonElement>) => void;
@@ -43,12 +69,16 @@ export type PImageModalStore = {
   setActiveStep: (
     data: 'Job Information' | 'Job Description' | 'Job Preferences'
   ) => void;
-  secondStep: stepSecondValues;
+  secondStepData: stepSecondValues;
   setSecondStepData: (data: stepSecondValues) => void;
+  firstStepFormValid: boolean;
+  secondStepFormValid: boolean;
+  setFirstStepFormValid: (data: boolean) => void;
+  setSecondStepFormValid: (data: boolean) => void;
 };
 
 export const useVacancyStore = create<PImageModalStore>(set => ({
-  firstStep: {
+  firstStepData: {
     position: '',
     workFormat: [],
     softSkills: [],
@@ -56,15 +86,20 @@ export const useVacancyStore = create<PImageModalStore>(set => ({
     salaryMin: 0,
     salaryMax: 0,
   },
-  setFirstStepData: data => set({ firstStep: data }),
+  firstStepFormValid: false,
+  setFirstStepFormValid: data => set({ firstStepFormValid: data }),
+  setFirstStepData: data => set({ firstStepData: data }),
   submitButtonRef: null,
   setSubmitButtonRef: data => set({ submitButtonRef: data }),
   activeStep: 'Job Information',
   setActiveStep: data => set({ activeStep: data }),
-  secondStep: {
+  secondStepFormValid: false,
+  setSecondStepFormValid: data => set({ secondStepFormValid: data }),
+  secondStepData: {
     description: '',
     requirements: '',
     idealCandidate: '',
+    calendarId: '',
   },
-  setSecondStepData: data => set({ secondStep: data }),
+  setSecondStepData: data => set({ secondStepData: data }),
 }));

@@ -15,8 +15,8 @@ export const PositionField = ({
       control={control}
       render={({ field }) => (
         <FormItem>
-          <div className="w-full flex items-center gap-10">
-            <div className="shrink-0 max-w-[175px]">
+          <div className="w-full flex flex-col md:flex-row md:items-center gap-5 md:gap-10">
+            <div className="shrink-0 md:max-w-[175px]">
               <h2 className="text-slate-950 font-light text-md">Job Title</h2>
               <p className="text-slate-950 font-thin text-xs">
                 Job titles must describe one position
@@ -27,7 +27,7 @@ export const PositionField = ({
                 {...field}
                 type="text"
                 placeholder="e.g. Software Engineer"
-                className="border-0 border-b border-slate-950 rounded-none focus-visible:ring-0 focus-visible:ring-offset-0 px-1 py-2 text-xs"
+                className="md:border-0 md:border-b border-slate-950 rounded-[2px] md:rounded-none focus-visible:ring-0 focus-visible:ring-offset-0 px-1 py-2 text-xs"
               />
               <span className="text-slate-950 text-xs font-thin">
                 At least 5 characters

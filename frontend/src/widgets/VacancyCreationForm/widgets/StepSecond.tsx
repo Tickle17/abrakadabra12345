@@ -1,20 +1,38 @@
 import { useVacancyStore } from '@/app/store';
-import { Form, FormField, FormItem, Textarea } from '@/shared/ui';
+import {
+  Button,
+  Form,
+  FormField,
+  FormItem,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  Textarea,
+} from '@/shared/ui';
 import { useEffect, useRef } from 'react';
 import { stepSecondSchema, stepSecondValues } from '../schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
 export const StepSecond = () => {
-  const { setSubmitButtonRef, setSecondStepData, activeStep, setActiveStep } =
-    useVacancyStore();
+  const {
+    secondStepData,
+    setSubmitButtonRef,
+    setSecondStepData,
+    activeStep,
+    setActiveStep,
+    setSecondStepFormValid,
+  } = useVacancyStore();
   const submitButtonRef = useRef<HTMLButtonElement>(null);
   const form = useForm<stepSecondValues>({
     resolver: zodResolver(stepSecondSchema),
     defaultValues: {
-      description: '',
-      requirements: '',
-      idealCandidate: '',
+      description: secondStepData.description,
+      requirements: secondStepData.requirements,
+      idealCandidate: secondStepData.idealCandidate,
+      calendarId: secondStepData.calendarId,
     },
   });
   const { handleSubmit, control } = form;
@@ -25,6 +43,7 @@ export const StepSecond = () => {
   }, [submitButtonRef, setSubmitButtonRef]);
 
   const onSubmit = (data: stepSecondValues) => {
+    setSecondStepFormValid(true);
     setSecondStepData(data);
     switch (activeStep) {
       case 'Job Information': {
@@ -46,9 +65,9 @@ export const StepSecond = () => {
     <Form {...form}>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="h-full w-full grid grid-cols-1 grid-rows-5 gap-7"
+        className="h-full w-full grid grid-cols-1 grid-rows-4 gap-7"
       >
-        <div className="w-full flex items-center gap-10">
+        <div className="w-full flex flex-col md:flex-row md:items-center gap-5 md:gap-10">
           <div className="shrink-0 max-w-[175px]">
             <h2 className="text-slate-950 font-light text-md">
               Job Description
@@ -57,12 +76,12 @@ export const StepSecond = () => {
               A short description of the position
             </p>
           </div>
-          <div className="shrink-1 flex-grow flex flex-col gap-1">
+          <div className="w-full flex flex-col md:flex-row md:items-center gap-5 md:gap-10">
             <FormField
               control={control}
               name="description"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="w-full">
                   <Textarea
                     {...field}
                     placeholder="e.g. The main objective of the position is to..."
@@ -76,8 +95,7 @@ export const StepSecond = () => {
             ></FormField>
           </div>
         </div>
-
-        <div className="w-full flex items-center gap-10">
+        <div className="w-full flex flex-col md:flex-row md:items-center gap-5 md:gap-10">
           <div className="shrink-0 max-w-[175px]">
             <h2 className="text-slate-950 font-light text-md">
               Responsibilities
@@ -105,8 +123,7 @@ export const StepSecond = () => {
             ></FormField>
           </div>
         </div>
-
-        <div className="w-full flex items-center gap-10">
+        <div className="w-full flex flex-col md:flex-row md:items-center gap-5 md:gap-10">
           <div className="shrink-0 max-w-[175px]">
             <h2 className="text-slate-950 font-light text-md">
               An ideal candidate
@@ -134,15 +151,60 @@ export const StepSecond = () => {
             ></FormField>
           </div>
         </div>
-
-        <button
-          id="TEST"
-          type="submit"
-          className="invisible h-0 w-0 absolute"
-          ref={submitButtonRef}
-        >
-          Submit
-        </button>
+        <FormField
+          control={control}
+          name="calendarId"
+          render={({ field }) => {
+            return (
+              <FormItem>
+                <div className="w-full flex flex-col md:flex-row md:items-center gap-5 md:gap-10">
+                  <div className="shrink-0 max-w-[175px] flex flex-col gap-1">
+                    <h2 className="text-slate-950 font-light text-md">
+                      Responsible HR
+                    </h2>
+                    <p className="text-slate-950 font-thin text-xs">
+                      Select a responsible HR for the position; he or she will
+                      be able to see and edit this position and edit their
+                      calendar for meetings
+                    </p>
+                  </div>
+                  <div className="shrink-1 flex-grow flex flex-col gap-3">
+                    <Select {...field} onValueChange={field.onChange}>
+                      <SelectTrigger className="border rounded-[2px] border-slate-950 focus-visible:ring-0 focus-visible:ring-offset-0">
+                        <SelectValue placeholder="Select HR" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="df3d4dfe-fba9-482d-a6fe-35f644fc95f6">
+                          Stephany Colins
+                        </SelectItem>
+                        <SelectItem value="d14d502a-1984-4782-af47-756ef9936b0a">
+                          Mark Fisher
+                        </SelectItem>
+                        <SelectItem value="4ac29e30-fb34-4f5a-af68-2068a026e587">
+                          Liland Palmer
+                        </SelectItem>
+                        <SelectItem value="6f72c881-703e-411b-818a-400c17f741d7">
+                          Lora Palmer
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              </FormItem>
+            );
+          }}
+        ></FormField>
+        <div className="w-full grid grid-cols-2 gap-3 lg:h-0 lg:w-0 lg:absolute lg:invisible">
+          <Button
+            className="rounded-[2px]"
+            onClick={() => setActiveStep('Job Information')}
+          >
+            Back
+          </Button>
+          <Button className="rounded-[2px]" type="submit" ref={submitButtonRef}>
+            Next
+          </Button>
+        </div>
       </form>
     </Form>
   );

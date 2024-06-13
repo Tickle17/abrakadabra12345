@@ -45,3 +45,4 @@ export {
   FormLabel,
   FormMessage,
 } from './form.tsx';
+export { Avatar, AvatarFallback, AvatarImage } from './avatar.tsx';

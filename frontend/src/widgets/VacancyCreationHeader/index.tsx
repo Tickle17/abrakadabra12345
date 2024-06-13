@@ -5,18 +5,66 @@ import {
   ComponentInstanceIcon,
   ComponentPlaceholderIcon,
 } from '@radix-ui/react-icons';
+import axios, { AxiosResponse } from 'axios';
 import clsx from 'clsx';
+import { toast } from 'sonner';
+
+type ResponseData = {
+  id: string;
+};
 
 export const VacancyCreationHeader = () => {
-  const { submitButtonRef, activeStep } = useVacancyStore();
+  const {
+    submitButtonRef,
+    activeStep,
+    setActiveStep,
+    firstStepData,
+    secondStepData,
+    firstStepFormValid,
+    secondStepFormValid,
+  } = useVacancyStore();
+
+  const handleCreateVacancy = () => {
+    const data = {
+      status: '',
+      position: '',
+      workFormat: '',
+      specialization: '',
+      experience: '',
+      vacancy: firstStepData.position,
+      address: '',
+      businessId: '113c7e20-ce5b-4581-b4e3-04d3854a5ef4',
+      calendarId: '94cb1719-7569-4644-a84d-81e979d534d0',
+    };
+    axios
+      .post<ResponseData>(
+        'https://backendhackaton.onrender.com/vacancy',
+        data,
+        {}
+      )
+      .then((response: AxiosResponse<ResponseData>) => {
+        if (response.status === 200 || response.status === 201) {
+          toast('Vacancy created');
+          console.log(response.data);
+        } else {
+          toast('Something went wrong');
+          console.log(response.data);
+        }
+      })
+      .catch(err => {
+        toast('Something went wrong');
+        console.error(err);
+      });
+  };
 
   return (
     <div className="w-full flex flex-col gap-5">
       <h1 className="text-md font-light text-slate-950">Vacancy Steps</h1>
       <div className="w-full flex flex-col gap-3">
         <div
+          onClick={() => setActiveStep('Job Information')}
           className={clsx(
-            'rounded-[2px] bg-slate-50 border p-3 flex items-center gap-3 relative',
+            'rounded-[2px] bg-slate-50 border p-3 flex items-center gap-3 relative hover:cursor-pointer hover:!border-slate-950 transition-all',
             activeStep === 'Job Information'
               ? 'border-slate-950'
               : 'border-slate-200'
@@ -30,11 +78,18 @@ export const VacancyCreationHeader = () => {
           </div>
         </div>
         <div
+          onClick={() =>
+            secondStepFormValid && setActiveStep('Job Description')
+          }
           className={clsx(
-            'rounded-[2px] bg-slate-50 border p-3 flex items-center gap-3 relative',
+            'rounded-[2px] bg-slate-50 border p-3 flex items-center gap-3 relative hover:cursor-pointer transition-all',
             activeStep === 'Job Description'
               ? 'border-slate-950'
-              : 'border-slate-200'
+              : 'border-slate-200',
+            activeStep === 'Job Description' ||
+              (firstStepFormValid && secondStepFormValid)
+              ? 'hover:cursor-pointer hover:!border-slate-950'
+              : 'hover:cursor-not-allowed'
           )}
         >
           <span className="w-[1px] h-[12px] border border-slate-950 absolute right-[50%] -bottom-[13px]"></span>
@@ -45,11 +100,20 @@ export const VacancyCreationHeader = () => {
           </div>
         </div>
         <div
+          onClick={() =>
+            firstStepFormValid &&
+            secondStepFormValid &&
+            setActiveStep('Job Preferences')
+          }
           className={clsx(
-            'rounded-[2px] bg-slate-50 border p-3 flex items-center gap-3 relative',
+            'rounded-[2px] bg-slate-50 border p-3 flex items-center gap-3 relative hover:cursor-pointer transition-all',
             activeStep === 'Job Preferences'
               ? 'border-slate-950'
-              : 'border-slate-200'
+              : 'border-slate-200',
+            activeStep === 'Job Preferences' ||
+              (firstStepFormValid && secondStepFormValid)
+              ? 'hover:cursor-pointer hover:!border-slate-950'
+              : 'hover:cursor-not-allowed'
           )}
         >
           <p className="text-slate-950 font-thin text-xs shrink-0">3/3</p>
@@ -62,11 +126,36 @@ export const VacancyCreationHeader = () => {
       <Button
         className="bg-slate-950 text-slate-200 rounded-[2px]"
         onClick={() => {
-          if (!submitButtonRef || !submitButtonRef.current) return;
-          submitButtonRef.current.click();
+          switch (activeStep) {
+            case 'Job Information': {
+              if (!submitButtonRef || !submitButtonRef.current) return;
+              submitButtonRef.current.click();
+              break;
+            }
+            case 'Job Description': {
+              if (!submitButtonRef || !submitButtonRef.current) return;
+              submitButtonRef.current.click();
+              break;
+            }
+            case 'Job Preferences': {
+              console.log({ ...firstStepData, ...secondStepData });
+              handleCreateVacancy();
+              break;
+            }
+          }
         }}
       >
-        Next
+        {activeStep === 'Job Information'
+          ? firstStepFormValid
+            ? 'Update'
+            : 'Next'
+          : ''}
+        {activeStep === 'Job Description'
+          ? secondStepFormValid
+            ? 'Update'
+            : 'Next'
+          : ''}
+        {activeStep === 'Job Preferences' && 'Create Vacancy'}
       </Button>
     </div>
   );

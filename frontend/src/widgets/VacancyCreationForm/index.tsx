@@ -1,5 +1,9 @@
 import { useVacancyStore } from '@/app/store';
-import { StepFirst, StepSecond } from '@/widgets/VacancyCreationForm/widgets';
+import {
+  StepFirst,
+  StepSecond,
+  StepThird,
+} from '@/widgets/VacancyCreationForm/widgets';
 
 export const VacancyCreationForm = () => {
   const { activeStep } = useVacancyStore();
@@ -7,7 +11,7 @@ export const VacancyCreationForm = () => {
     <>
       {activeStep === 'Job Information' && <StepFirst />}
       {activeStep === 'Job Description' && <StepSecond />}
-      {activeStep === 'Job Preferences' && <p>3</p>}
+      {activeStep === 'Job Preferences' && <StepThird />}
     </>
   );
 };

@@ -23,7 +23,7 @@ export const AppLayout: FC<AppLayoutProps> = ({ children }) => {
 
         <div
           className={clsx(
-            'max-h-[88vh] grid grid-cols-12 grid-rows-1 gap-4 grow w-full max-w-[1200px]'
+            'h-full lg:max-h-[88vh] grid grid-cols-12 grid-rows-1 gap-4 grow w-full max-w-[1200px]'
           )}
         >
           {children}
