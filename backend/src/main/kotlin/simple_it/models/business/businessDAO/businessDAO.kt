@@ -4,20 +4,13 @@ import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
-import org.jetbrains.exposed.sql.transactions.transaction
 import simple_it.models.business.businessDTO.Business
 import simple_it.models.business.businessDTO.BusinessDTO
 import simple_it.models.business.businessDTO.CreateBusiness
 import simple_it.models.users.usersDTO.UserIdRole
 import java.util.*
 
-class BusinessService(private val database: Database) {
-
-    init {
-        transaction(database) {
-            SchemaUtils.create(Business)
-        }
-    }
+class BusinessService {
 
     suspend fun <T> dbQuery(block: suspend () -> T): T =
         newSuspendedTransaction(Dispatchers.IO) { block() }

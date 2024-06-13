@@ -4,7 +4,7 @@ info:
   description: "hachaton24 API"
   version: "1.0.0"
 servers:
-  - url: "https://hachaton24"
+- url: "https://hachaton24"
 paths:
   /:
     get:
@@ -19,6 +19,59 @@ paths:
               examples:
                 Example#1:
                   value: "Hello World!"
+  /ws/{userId}/{businessId}/{vacancyId}:
+    get:
+      description: ""
+      parameters:
+      - name: "userId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      - name: "businessId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      - name: "vacancyId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      - name: "Connection"
+        in: "header"
+        required: true
+        description: "Websocket Connection parameter"
+        schema:
+          type: "string"
+      - name: "Upgrade"
+        in: "header"
+        required: true
+        description: "Websocket Upgrade parameter"
+        schema:
+          type: "string"
+      - name: "Sec-WebSocket-Key"
+        in: "header"
+        required: true
+        description: "Websocket Sec-WebSocket-Key parameter"
+        schema:
+          type: "string"
+      responses:
+        "101":
+          description: "Switching Protocols"
+          headers:
+            Connection:
+              required: true
+              schema:
+                type: "string"
+            Upgrade:
+              required: true
+              schema:
+                type: "string"
+            Sec-WebSocket-Accept:
+              required: true
+              schema:
+                type: "string"
   /login:
     post:
       description: ""
@@ -83,11 +136,11 @@ paths:
     delete:
       description: "Delete user"
       parameters:
-        - name: "id"
-          in: "path"
-          required: true
-          schema:
-            type: "string"
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
       responses:
         "200":
           description: "OK"
@@ -98,11 +151,11 @@ paths:
     get:
       description: "Read user"
       parameters:
-        - name: "id"
-          in: "path"
-          required: true
-          schema:
-            type: "string"
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
       responses:
         "200":
           description: "OK"
@@ -119,11 +172,11 @@ paths:
     put:
       description: "Update user"
       parameters:
-        - name: "id"
-          in: "path"
-          required: true
-          schema:
-            type: "string"
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
       requestBody:
         content:
           application/json:
@@ -167,11 +220,11 @@ paths:
     delete:
       description: "Delete user"
       parameters:
-        - name: "id"
-          in: "path"
-          required: true
-          schema:
-            type: "string"
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
       responses:
         "200":
           description: "OK"
@@ -182,11 +235,11 @@ paths:
     get:
       description: "Read user"
       parameters:
-        - name: "id"
-          in: "path"
-          required: true
-          schema:
-            type: "string"
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
       responses:
         "200":
           description: "OK"
@@ -203,11 +256,11 @@ paths:
     put:
       description: "Update user"
       parameters:
-        - name: "id"
-          in: "path"
-          required: true
-          schema:
-            type: "string"
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
       requestBody:
         content:
           application/json:
@@ -264,11 +317,11 @@ paths:
     delete:
       description: "Delete user"
       parameters:
-        - name: "id"
-          in: "path"
-          required: true
-          schema:
-            type: "string"
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
       responses:
         "200":
           description: "OK"
@@ -279,11 +332,11 @@ paths:
     get:
       description: "Read user"
       parameters:
-        - name: "id"
-          in: "path"
-          required: true
-          schema:
-            type: "string"
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
       responses:
         "200":
           description: "OK"
@@ -300,11 +353,11 @@ paths:
     put:
       description: "Update user"
       parameters:
-        - name: "id"
-          in: "path"
-          required: true
-          schema:
-            type: "string"
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
       requestBody:
         content:
           application/json:
@@ -348,11 +401,11 @@ paths:
     delete:
       description: ""
       parameters:
-        - name: "id"
-          in: "path"
-          required: true
-          schema:
-            type: "string"
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
       responses:
         "200":
           description: "OK"
@@ -385,11 +438,11 @@ paths:
     get:
       description: ""
       parameters:
-        - name: "id"
-          in: "path"
-          required: true
-          schema:
-            type: "string"
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
       responses:
         "200":
           description: "OK"
@@ -419,11 +472,11 @@ paths:
     put:
       description: ""
       parameters:
-        - name: "id"
-          in: "path"
-          required: true
-          schema:
-            type: "string"
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
       requestBody:
         content:
           application/json:
@@ -511,11 +564,11 @@ paths:
     delete:
       description: ""
       parameters:
-        - name: "id"
-          in: "path"
-          required: true
-          schema:
-            type: "string"
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
       responses:
         "200":
           description: "OK"
@@ -548,11 +601,11 @@ paths:
     get:
       description: ""
       parameters:
-        - name: "id"
-          in: "path"
-          required: true
-          schema:
-            type: "string"
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
       responses:
         "200":
           description: "OK"
@@ -582,11 +635,11 @@ paths:
     put:
       description: ""
       parameters:
-        - name: "id"
-          in: "path"
-          required: true
-          schema:
-            type: "string"
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
       requestBody:
         content:
           application/json:
@@ -644,6 +697,168 @@ paths:
                 Example#1:
                   description: ""
                   value: "null"
+  /defaultMessage:
+    post:
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DefaultMessageDTO"
+        required: true
+      responses:
+        "201":
+          description: "Created"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ReactionsVacancyResultDTO"
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  description: ""
+                  value: "null"
+  /message:
+    post:
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MessageDTO"
+        required: true
+      responses:
+        "201":
+          description: "Created"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ReactionsVacancyResultDTO"
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  description: ""
+                  value: "null"
+  /messages/{userId}/{businessId}/{vacancyId}:
+    get:
+      description: ""
+      parameters:
+      - name: "userId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      - name: "businessId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      - name: "vacancyId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  description: ""
+                  value: "null"
+                Example#2:
+                  value: "Missing or invalid parameters"
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/MessagesDTO"
+  /reaction:
+    post:
+      description: "reaction on vacancy"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReactionsVacancyDTO"
+        required: true
+      responses:
+        "201":
+          description: "Created"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ReactionsVacancyResultDTO"
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  description: ""
+                  value: "null"
+  /reaction/{id}:
+    put:
+      description: ""
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateReactionsVacancy"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "Reaction updated successfully"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "Reaction not found"
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  description: ""
+                  value: "null"
 components:
   schemas:
     UserIdRole:
@@ -655,7 +870,7 @@ components:
         role:
           type: "string"
       required:
-        - "role"
+      - "role"
     CreateUser:
       type: "object"
       properties:
@@ -664,8 +879,8 @@ components:
         password:
           type: "string"
       required:
-        - "login"
-        - "password"
+      - "login"
+      - "password"
     User:
       type: "object"
       properties:
@@ -702,6 +917,36 @@ components:
           type: "string"
         phone:
           type: "string"
+        softSkills:
+          type: "array"
+          items:
+            type: "string"
+            enum:
+            - "Stress"
+            - "PRIDE"
+            - "GREED"
+            - "WRATH"
+            - "ENVY"
+            - "LUST"
+            - "GLUTTONY"
+            - "SLOTH"
+        hardSkills:
+          type: "array"
+          items:
+            type: "string"
+            enum:
+            - "REACT"
+            - "CSS"
+            - "JS"
+            - "KOTLIN"
+            - "HTML"
+            - "POSTGRESQL"
+            - "WEBPACK"
+            - "JAVA"
+            - "PYTHON"
+            - "DOCKER"
+            - "GIT"
+            - "TYPESCRIPT"
         createdAt:
           type: "string"
           format: "date-time"
@@ -712,10 +957,10 @@ components:
           type: "string"
           format: "date-time"
       required:
-        - "login"
-        - "password"
-        - "createdAt"
-        - "updatedAt"
+      - "login"
+      - "password"
+      - "createdAt"
+      - "updatedAt"
     UpdateUser:
       type: "object"
       properties:
@@ -745,6 +990,36 @@ components:
           type: "string"
         phone:
           type: "string"
+        softSkills:
+          type: "array"
+          items:
+            type: "string"
+            enum:
+            - "Stress"
+            - "PRIDE"
+            - "GREED"
+            - "WRATH"
+            - "ENVY"
+            - "LUST"
+            - "GLUTTONY"
+            - "SLOTH"
+        hardSkills:
+          type: "array"
+          items:
+            type: "string"
+            enum:
+            - "REACT"
+            - "CSS"
+            - "JS"
+            - "KOTLIN"
+            - "HTML"
+            - "POSTGRESQL"
+            - "WEBPACK"
+            - "JAVA"
+            - "PYTHON"
+            - "DOCKER"
+            - "GIT"
+            - "TYPESCRIPT"
     CreateBusiness:
       type: "object"
       properties:
@@ -753,8 +1028,8 @@ components:
         password:
           type: "string"
       required:
-        - "login"
-        - "password"
+      - "login"
+      - "password"
     BusinessDTO:
       type: "object"
       properties:
@@ -805,31 +1080,31 @@ components:
           items:
             type: "string"
             enum:
-              - "Stress"
-              - "PRIDE"
-              - "GREED"
-              - "WRATH"
-              - "ENVY"
-              - "LUST"
-              - "GLUTTONY"
-              - "SLOTH"
+            - "Stress"
+            - "PRIDE"
+            - "GREED"
+            - "WRATH"
+            - "ENVY"
+            - "LUST"
+            - "GLUTTONY"
+            - "SLOTH"
         hardSkills:
           type: "array"
           items:
             type: "string"
             enum:
-              - "REACT"
-              - "CSS"
-              - "JS"
-              - "KOTLIN"
-              - "HTML"
-              - "POSTGRESQL"
-              - "WEBPACK"
-              - "JAVA"
-              - "PYTHON"
-              - "DOCKER"
-              - "GIT"
-              - "TYPESCRIPT"
+            - "REACT"
+            - "CSS"
+            - "JS"
+            - "KOTLIN"
+            - "HTML"
+            - "POSTGRESQL"
+            - "WEBPACK"
+            - "JAVA"
+            - "PYTHON"
+            - "DOCKER"
+            - "GIT"
+            - "TYPESCRIPT"
         businessId:
           type: "string"
           format: "uuid"
@@ -846,38 +1121,38 @@ components:
           type: "string"
           format: "date-time"
       required:
-        - "businessId"
-        - "calendarId"
+      - "businessId"
+      - "calendarId"
     WorkingDay:
       type: "object"
       properties:
         day:
           type: "string"
           enum:
-            - "MONDAY"
-            - "TUESDAY"
-            - "WEDNESDAY"
-            - "THURSDAY"
-            - "FRIDAY"
-            - "SATURDAY"
-            - "SUNDAY"
+          - "MONDAY"
+          - "TUESDAY"
+          - "WEDNESDAY"
+          - "THURSDAY"
+          - "FRIDAY"
+          - "SATURDAY"
+          - "SUNDAY"
       required:
-        - "day"
+      - "day"
     CreateVacancyCalendar:
       type: "object"
       properties:
         duration:
-          type: "integer"
-          format: "int32"
+          type: "number"
+          format: "double"
         freeTime:
-          type: "integer"
-          format: "int32"
+          type: "number"
+          format: "double"
         dayStart:
-          type: "integer"
-          format: "int32"
+          type: "number"
+          format: "double"
         dayEnd:
-          type: "integer"
-          format: "int32"
+          type: "number"
+          format: "double"
         maxReservDays:
           type: "integer"
           format: "int32"
@@ -889,8 +1164,8 @@ components:
           type: "string"
           format: "uuid"
       required:
-        - "workingDays"
-        - "businessId"
+      - "workingDays"
+      - "businessId"
     VacancyCalendarDTO:
       type: "object"
       properties:
@@ -898,17 +1173,17 @@ components:
           type: "string"
           format: "uuid"
         duration:
-          type: "integer"
-          format: "int32"
+          type: "number"
+          format: "double"
         freeTime:
-          type: "integer"
-          format: "int32"
+          type: "number"
+          format: "double"
         dayStart:
-          type: "integer"
-          format: "int32"
+          type: "number"
+          format: "double"
         dayEnd:
-          type: "integer"
-          format: "int32"
+          type: "number"
+          format: "double"
         slots:
           type: "integer"
           format: "int32"
@@ -923,7 +1198,7 @@ components:
           type: "string"
           format: "uuid"
       required:
-        - "workingDays"
+      - "workingDays"
     CreateVacancySlotCalendar:
       type: "object"
       properties:
@@ -948,21 +1223,21 @@ components:
         dayOfWeek:
           type: "string"
           enum:
-            - "MONDAY"
-            - "TUESDAY"
-            - "WEDNESDAY"
-            - "THURSDAY"
-            - "FRIDAY"
-            - "SATURDAY"
-            - "SUNDAY"
+          - "MONDAY"
+          - "TUESDAY"
+          - "WEDNESDAY"
+          - "THURSDAY"
+          - "FRIDAY"
+          - "SATURDAY"
+          - "SUNDAY"
         date:
           type: "string"
       required:
-        - "communication"
-        - "calendarId"
-        - "vacancyId"
-        - "dayOfWeek"
-        - "date"
+      - "communication"
+      - "calendarId"
+      - "vacancyId"
+      - "dayOfWeek"
+      - "date"
     VacancySlotDTO:
       type: "object"
       properties:
@@ -990,18 +1265,153 @@ components:
         dayOfWeek:
           type: "string"
           enum:
-            - "MONDAY"
-            - "TUESDAY"
-            - "WEDNESDAY"
-            - "THURSDAY"
-            - "FRIDAY"
-            - "SATURDAY"
-            - "SUNDAY"
+          - "MONDAY"
+          - "TUESDAY"
+          - "WEDNESDAY"
+          - "THURSDAY"
+          - "FRIDAY"
+          - "SATURDAY"
+          - "SUNDAY"
         date:
           type: "string"
       required:
-        - "communication"
-        - "calendarId"
-        - "vacancyId"
-        - "dayOfWeek"
-        - "date"
+      - "communication"
+      - "calendarId"
+      - "vacancyId"
+      - "dayOfWeek"
+      - "date"
+    DefaultMessageDTO:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        businessId:
+          type: "string"
+          format: "uuid"
+        name:
+          type: "string"
+        message:
+          type: "string"
+        createdAt:
+          type: "string"
+          format: "date-time"
+        updatedAt:
+          type: "string"
+          format: "date-time"
+        deletedAt:
+          type: "string"
+          format: "date-time"
+      required:
+      - "businessId"
+      - "name"
+      - "message"
+    ReactionsVacancyResultDTO:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        message:
+          type: "string"
+      required:
+      - "id"
+      - "message"
+    MessageDTO:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        reactionsVacancyId:
+          type: "string"
+          format: "uuid"
+        senderType:
+          type: "string"
+        senderId:
+          type: "string"
+          format: "uuid"
+        message:
+          type: "string"
+        createdAt:
+          type: "string"
+          format: "date-time"
+        updatedAt:
+          type: "string"
+          format: "date-time"
+        deletedAt:
+          type: "string"
+          format: "date-time"
+      required:
+      - "reactionsVacancyId"
+      - "senderType"
+      - "senderId"
+      - "message"
+    MessagesDTO:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        senderType:
+          type: "string"
+        message:
+          type: "string"
+        createdAt:
+          type: "string"
+          format: "date-time"
+        updatedAt:
+          type: "string"
+          format: "date-time"
+        deletedAt:
+          type: "string"
+          format: "date-time"
+      required:
+      - "senderType"
+      - "message"
+    ReactionsVacancyDTO:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        commentary:
+          type: "string"
+        invitation:
+          type: "boolean"
+        control:
+          type: "boolean"
+        userId:
+          type: "string"
+          format: "uuid"
+        businessId:
+          type: "string"
+          format: "uuid"
+        vacancyId:
+          type: "string"
+          format: "uuid"
+        createdAt:
+          type: "string"
+          format: "date-time"
+        updatedAt:
+          type: "string"
+          format: "date-time"
+        deletedAt:
+          type: "string"
+          format: "date-time"
+      required:
+      - "userId"
+      - "businessId"
+      - "vacancyId"
+    UpdateReactionsVacancy:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        commentary:
+          type: "string"
+        invitation:
+          type: "boolean"
+        control:
+          type: "boolean"

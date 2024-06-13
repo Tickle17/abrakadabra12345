@@ -4,19 +4,13 @@ import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
-import org.jetbrains.exposed.sql.transactions.transaction
 import simple_it.models.business.businessDTO.Business
 import simple_it.models.vacancy.vacancyDAO.helpers.*
 import simple_it.models.vacancy.vacancyDTO.Vacancy
 import simple_it.models.vacancy.vacancyDTO.VacancyDTO
 import java.util.*
 
-class VacancyService(private val database: Database) {
-    init {
-        transaction(database) {
-            SchemaUtils.create(Vacancy)
-        }
-    }
+class VacancyService {
 
     suspend fun isBusinessIdExists(businessId: UUID): Boolean = dbQuery {
         Business.select { Business.id eq businessId }.count() > 0
@@ -37,6 +31,7 @@ class VacancyService(private val database: Database) {
             it[vacancy] = vacancies.vacancy
             it[status] = vacancies.status
             it[hardSkills] = toHardSkillsString(vacancies.hardSkills)
+            it[softSkills] = toSoftSkillsString(vacancies.softSkills)
             it[this.businessId] = vacancies.businessId
             it[calendarId] = vacancies.calendarId
         }[Vacancy.id]
