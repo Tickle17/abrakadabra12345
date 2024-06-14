@@ -106,6 +106,16 @@ type ResponseData = {
   id: string;
 };
 
+// TODO: refactor
+const objectTemp = {
+  'full-time': 'FULL_TIME',
+  'part-time': 'PART_TIME',
+  freelance: 'FREELANCE',
+  intership: 'INTERNSHIP',
+  contract: 'CONTRACT',
+  remote: 'REMOTE',
+};
+
 export const StepThird = () => {
   const { firstStepData, secondStepData, setActiveStep } = useVacancyStore();
   const handleCreateVacancy = () => {
@@ -117,13 +127,14 @@ export const StepThird = () => {
       idealCandidate: secondStepData.idealCandidate,
       hardSkills: firstStepData.hardSkills,
       softSkills: firstStepData.softSkills,
-      workFormat: firstStepData.workFormat,
+      workFormat: firstStepData.workFormat?.map(name => objectTemp[name]),
       salaryMin: firstStepData.salaryMin,
       salaryMax: firstStepData.salaryMax,
       specialization: null,
-      experience: firstStepData.experience,
+      experience: String(firstStepData.experience),
       address: secondStepData.address,
       businessId: localStorage.getItem('id') || '',
+      vacancy: '',
     };
     axios
       .post<ResponseData>(

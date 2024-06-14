@@ -14,6 +14,16 @@ type ResponseData = {
   id: string;
 };
 
+// TODO: refactor
+const objectTemp = {
+  'full-time': 'FULL_TIME',
+  'part-time': 'PART_TIME',
+  freelance: 'FREELANCE',
+  intership: 'INTERNSHIP',
+  contract: 'CONTRACT',
+  remote: 'REMOTE',
+};
+
 export const VacancyCreationHeader = () => {
   const {
     submitButtonRef,
@@ -34,19 +44,21 @@ export const VacancyCreationHeader = () => {
       idealCandidate: secondStepData.idealCandidate,
       hardSkills: firstStepData.hardSkills,
       softSkills: firstStepData.softSkills,
-      workFormat: firstStepData.workFormat,
+      workFormat: firstStepData.workFormat?.map(name => objectTemp[name]),
       salaryMin: firstStepData.salaryMin,
       salaryMax: firstStepData.salaryMax,
       specialization: null,
-      experience: firstStepData.experience,
+      experience: String(firstStepData.experience),
       address: secondStepData.address,
       businessId: localStorage.getItem('id') || '',
+      vacancy: '',
     };
+
     axios
       .post<ResponseData>(
         'https://backendhackaton.onrender.com/vacancy',
         data,
-        {}
+        { headers: { 'Content-Type': 'application/json' } }
       )
       .then((response: AxiosResponse<ResponseData>) => {
         if (response.status === 200 || response.status === 201) {
