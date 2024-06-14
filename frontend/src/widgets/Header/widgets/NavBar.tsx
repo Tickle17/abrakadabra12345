@@ -12,7 +12,7 @@ import { IconLinkWrapper } from '../components';
 export const NavBar = () => {
   const role = localStorage.getItem('role');
   return (
-    <div className="row-span-1 col-span-4 bg-white flex justify-center items-center gap-6">
+    <div className="row-span-1 col-span-4 bg-white flex justify-center items-center gap-6 ">
       {role === 'users' ? (
         <>
           <IconLinkWrapper path="/">

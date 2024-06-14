@@ -4,7 +4,7 @@ export const UserDetails = () => {
   const { profileData } = useProfileStore();
 
   return (
-    <div className="flex flex-col gap-4 col-span-3 p-6 bg-white shadow-sm">
+    <div className="flex flex-col gap-4 col-span-3 p-6 bg-white shadow-sm border-radius-default">
       <div className="flex justify-center items-center gap-4 pb-3 border-b border-slate-200">
         <img
           className="shrink-0 w-16 h-16 rounded-full border-2 border-slate-900 object-cover"

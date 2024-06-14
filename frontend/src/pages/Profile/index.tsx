@@ -91,7 +91,7 @@ export const Profile = () => {
   return (
     <AppLayout>
       <UserDetails />
-      <div className="col-span-6 bg-white shadow-sm p-10 overflow-hidden max-h-screen">
+      <div className="col-span-6 bg-white shadow-sm p-10 overflow-hidden max-h-screen border-radius-default">
         {editMenu ? (
           <FormProvider {...methods}>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -556,8 +556,8 @@ export const Profile = () => {
         )}
       </div>
       <div className="col-span-3 grid grid-cols-1 grid-rows-2 gap-4">
-        <div className="grid grid-cols-1 grid-rows-8 gap-4 bg-white shadow-sm p-5 overflow-y-hidden relative"></div>
-        <div className="grid grid-cols-1 grid-rows-8 gap-4 bg-white shadow-sm p-5 overflow-y-hidden relative"></div>
+        <div className="grid grid-cols-1 grid-rows-8 gap-4 bg-white shadow-sm p-5 overflow-y-hidden relative border-radius-default"></div>
+        <div className="grid grid-cols-1 grid-rows-8 gap-4 bg-white shadow-sm p-5 overflow-y-hidden relative border-radius-default"></div>
       </div>
     </AppLayout>
   );

@@ -5,7 +5,7 @@ export const RootPage = () => {
   return (
     <AppLayout>
       <UserDetails />
-      <div className="col-span-6 grid grid-cols-1 grid-rows-12 gap-4 bg-card">
+      <div className="col-span-6 grid grid-cols-1 grid-rows-12 gap-4 bg-card border-radius-default">
         <div className="row-span-12">
           <ThredList />
         </div>

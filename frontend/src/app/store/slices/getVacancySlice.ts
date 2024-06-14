@@ -5,7 +5,10 @@ export type VacancyDTO = {
   id?: string;
   status?: string;
   position?: string;
-  workFormat?: string;
+  description?: string;
+  requirements?: string;
+  idealCandidate?: string;
+  workFormat?: string[];
   specialization?: string;
   experience?: string;
   vacancy?: string;
@@ -47,6 +50,8 @@ export type VacancyDTO = {
         | 'TYPESCRIPT'
       )[]
     | null;
+  salaryMin?: number;
+  salaryMax?: number;
   businessId?: string;
   createdAt?: string;
   updatedAt?: string;

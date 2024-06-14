@@ -25,7 +25,7 @@ const UserCard = ({ user }: { user: UserType }) => (
 export const Recommendations = () => {
   return (
     <div className="col-span-3 grid grid-cols-1 grid-rows-2 gap-4">
-      <div className="grid grid-cols-1 grid-rows-[25px_1fr] gap-4 bg-card shadow-default p-4 overflow-y-hidden relative">
+      <div className="grid grid-cols-1 grid-rows-[25px_1fr] gap-4 bg-card shadow-default p-4 overflow-y-hidden relative border-radius-default">
         <h3 className="row-span-1 text-sm text-foreground">
           Eldritch Recommendations
         </h3>
@@ -40,7 +40,7 @@ export const Recommendations = () => {
           </span>
         </button>
       </div>
-      <div className="grid grid-cols-1 grid-rows-[25px_1fr] gap-4 bg-card shadow-default p-4 overflow-y-hidden relative">
+      <div className="grid grid-cols-1 grid-rows-[25px_1fr] gap-4 bg-card shadow-default p-4 overflow-y-hidden relative border-radius-default">
         <h3 className="row-span-1 text-sm text-foreground">Ancient Contacts</h3>
         <div className="row-span-1 flex flex-col gap-3">
           {contactsFollow.map((user, index) => (
