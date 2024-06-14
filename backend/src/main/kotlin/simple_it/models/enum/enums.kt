@@ -26,6 +26,15 @@ enum class SoftSkills {
     SLOTH
 }
 
+enum class WorkFormat {
+    FULL_TIME,
+    PART_TIME,
+    REMOTE,
+    FREELANCE,
+    INTERSHIP,
+    CONTRACT,
+}
+
 enum class DayOfWeek {
     MONDAY,
     TUESDAY,

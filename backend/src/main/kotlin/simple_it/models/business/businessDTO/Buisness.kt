@@ -11,10 +11,11 @@ object Business : Table() {
     val id = uuid("id").autoGenerate()
     val login = varchar("login", length = 50)
     val password = varchar("password", length = 50)
-    val fullName = varchar("full_name", length = 100).nullable()
+    val fullName = varchar("full_name", length = 100).nullable().default("Рексофт")
     val photoUrl = varchar("photo_url", length = 255).nullable()
+    val companyURL = varchar("company_url", length = 255).nullable()
     val description = varchar("about_business", length = 255).nullable()
-    val role = varchar("role", length = 255).default("Admin")
+    val role = varchar("role", length = 255).check { it inList listOf("user", "business") }.default("business")
     val createdAt = datetime("created_at").default(LocalDateTime.now())
     val updatedAt = datetime("updated_at").default(LocalDateTime.now())
     val deletedAt = datetime("deleted_at").nullable()
@@ -29,6 +30,7 @@ data class BusinessDTO(
     val password: String? = null,
     val fullName: String? = null,
     val photoUrl: String? = null,
+    val companyURL: String? = null,
     val description: String? = null,
     @Contextual val createdAt: LocalDateTime? = null,
     @Contextual val updatedAt: LocalDateTime? = null,

@@ -30,9 +30,11 @@ class CalendarService {
             it[dayEnd] = BigDecimal.valueOf(calendar.dayEnd)
 //            it[freeSlots] = toFreeSlotsCalendarString(calendar.freeSlots)
             it[slots] = slotsMath
-            it[maxReservDays] = calendar.maxReservDays
+            it[maxReserveDays] = calendar.maxReservDays
             it[workingDays] = Json.encodeToString(calendar.workingDays)
             it[businessId] = calendar.businessId
+            it[userId] = calendar.userId
+
         }
         val result = insertStatement.resultedValues?.firstOrNull()
         VacancyCalendarDTO(
@@ -43,9 +45,10 @@ class CalendarService {
             dayEnd = result.get(VacancyCalendar.dayEnd).toDouble(),
             slots = result.get(VacancyCalendar.slots),
 //            freeSlots = fromFreeSlotsCalendarString(result.get(VacancyCalendar.freeSlots)) ?: emptyList(),
-            maxReservDays = result.get(VacancyCalendar.maxReservDays),
+            maxReserveDays = result.get(VacancyCalendar.maxReserveDays),
             workingDays = Json.decodeFromString(result.get(VacancyCalendar.workingDays)),
-            businessId = result.get(VacancyCalendar.businessId)
+            businessId = result.get(VacancyCalendar.businessId),
+            userId = result.get(VacancyCalendar.userId)
         )
     }
 
@@ -60,9 +63,10 @@ class CalendarService {
                     dayEnd = it[VacancyCalendar.dayEnd].toDouble(),
                     slots = it[VacancyCalendar.slots],
 //                    freeSlots = fromFreeSlotsCalendarString(it[VacancyCalendar.freeSlots]) ?: emptyList(),
-                    maxReservDays = it[VacancyCalendar.maxReservDays],
+                    maxReserveDays = it[VacancyCalendar.maxReserveDays],
                     workingDays = Json.decodeFromString(it[VacancyCalendar.workingDays]),
-                    businessId = it[VacancyCalendar.businessId]
+                    businessId = it[VacancyCalendar.businessId],
+                    userId = it[VacancyCalendar.userId]
                 )
             }.singleOrNull()
     }
@@ -77,9 +81,11 @@ class CalendarService {
                 dayEnd = it[VacancyCalendar.dayEnd].toDouble(),
                 slots = it[VacancyCalendar.slots],
 //                freeSlots = fromFreeSlotsCalendarString(it[VacancyCalendar.freeSlots]) ?: emptyList(),
-                maxReservDays = it[VacancyCalendar.maxReservDays],
+                maxReserveDays = it[VacancyCalendar.maxReserveDays],
                 workingDays = Json.decodeFromString(it[VacancyCalendar.workingDays]),
-                businessId = it[VacancyCalendar.businessId]
+                businessId = it[VacancyCalendar.businessId],
+                userId = it[VacancyCalendar.userId]
+
             )
         }
     }
@@ -91,7 +97,7 @@ class CalendarService {
             it[dayStart] = BigDecimal.valueOf(calendar.dayStart)
             it[dayEnd] = BigDecimal.valueOf(calendar.dayEnd)
 //            it[freeSlots] = toFreeSlotsCalendarString(calendar.freeSlots)
-            it[maxReservDays] = calendar.maxReservDays
+            it[maxReserveDays] = calendar.maxReservDays
             it[workingDays] = Json.encodeToString(calendar.workingDays)
             it[businessId] = calendar.businessId
         }

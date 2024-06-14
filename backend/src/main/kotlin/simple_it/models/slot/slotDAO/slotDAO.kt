@@ -23,7 +23,6 @@ class CalendarSlotService {
             it[userId] = calendarSlot.userId
             it[communication] = calendarSlot.communication
             it[acceptingByUser] = calendarSlot.acceptingByUser
-            it[calendarId] = calendarSlot.calendarId
             it[vacancyId] = calendarSlot.vacancyId
             it[dayOfWeek] = calendarSlot.dayOfWeek.name
             it[date] = calendarSlot.date
@@ -36,7 +35,6 @@ class CalendarSlotService {
             userId = result.get(VacancySlot.userId),
             communication = result.get(VacancySlot.communication),
             acceptingByUser = result.get(VacancySlot.acceptingByUser),
-            calendarId = result.get(VacancySlot.calendarId),
             vacancyId = result.get(VacancySlot.vacancyId),
             dayOfWeek = DayOfWeek.valueOf(result.get(VacancySlot.dayOfWeek)),
             date = result.get(VacancySlot.date)
@@ -53,7 +51,6 @@ class CalendarSlotService {
                     userId = it[VacancySlot.userId],
                     communication = it[VacancySlot.communication],
                     acceptingByUser = it[VacancySlot.acceptingByUser],
-                    calendarId = it[VacancySlot.calendarId],
                     vacancyId = it[VacancySlot.vacancyId],
                     dayOfWeek = Json.decodeFromString(it[VacancySlot.dayOfWeek]),
                     date = it[VacancySlot.date]
@@ -70,7 +67,6 @@ class CalendarSlotService {
                 userId = it[VacancySlot.userId],
                 communication = it[VacancySlot.communication],
                 acceptingByUser = it[VacancySlot.acceptingByUser],
-                calendarId = it[VacancySlot.calendarId],
                 vacancyId = it[VacancySlot.vacancyId],
                 dayOfWeek = DayOfWeek.valueOf(it[VacancySlot.dayOfWeek]),
                 date = it[VacancySlot.date]
@@ -85,7 +81,6 @@ class CalendarSlotService {
             it[userId] = calendarSlot.userId
             it[communication] = calendarSlot.communication
             it[acceptingByUser] = calendarSlot.acceptingByUser
-            it[calendarId] = calendarSlot.calendarId
             it[vacancyId] = calendarSlot.vacancyId
             it[dayOfWeek] = calendarSlot.dayOfWeek.name
             it[date] = calendarSlot.date

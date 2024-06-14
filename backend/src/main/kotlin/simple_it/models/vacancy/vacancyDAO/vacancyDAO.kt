@@ -30,10 +30,19 @@ class VacancyService {
             requireNotNull(vacancies.businessId) { "id business must not be null" }
             it[vacancy] = vacancies.vacancy
             it[status] = vacancies.status
+            it[position] = vacancies.position
+            it[workFormat] = toWorkFormatString(vacancies.workFormat)
+            it[description] = vacancies.description
+            it[requirements] = vacancies.requirements
+            it[idealCandidate] = vacancies.idealCandidate
+            it[specialization] = vacancies.specialization
+            it[experience] = vacancies.experience
+            it[address] = vacancies.address
+            it[salaryMin] = vacancies.salaryMin
+            it[salaryMax] = vacancies.salaryMax
             it[hardSkills] = toHardSkillsString(vacancies.hardSkills)
             it[softSkills] = toSoftSkillsString(vacancies.softSkills)
             it[this.businessId] = vacancies.businessId
-            it[calendarId] = vacancies.calendarId
         }[Vacancy.id]
     }
 
@@ -43,17 +52,21 @@ class VacancyService {
                 .map { row ->
                     VacancyDTO(
                         id = row[Vacancy.id],
+                        vacancy = row[Vacancy.vacancy],
                         status = row[Vacancy.status],
                         position = row[Vacancy.position],
-                        workFormat = row[Vacancy.workFormat],
+                        workFormat = fromWorkFormatString(row[Vacancy.workFormat]),
+                        description = row[Vacancy.description],
+                        requirements = row[Vacancy.requirements],
+                        idealCandidate = row[Vacancy.idealCandidate],
                         specialization = row[Vacancy.specialization],
                         experience = row[Vacancy.experience],
-                        vacancy = row[Vacancy.vacancy],
                         address = row[Vacancy.address],
+                        salaryMin = row[Vacancy.salaryMin],
+                        salaryMax = row[Vacancy.salaryMax],
                         softSkills = fromSoftSkillsString(row[Vacancy.softSkills]),
                         hardSkills = fromHardSkillsString(row[Vacancy.hardSkills]),
                         businessId = row[Vacancy.businessId],
-                        calendarId = row[Vacancy.calendarId],
                         createdAt = row[Vacancy.createdAt],
                         updatedAt = row[Vacancy.updatedAt],
                         deletedAt = row[Vacancy.deletedAt],
@@ -66,13 +79,21 @@ class VacancyService {
     suspend fun update(id: UUID, vacancies: VacancyDTO) {
         dbQuery {
             Vacancy.update({ Vacancy.id eq id }) {
-                it[status] = vacancies.status
+                when (vacancies.status) {
+                    null -> it[status] = "hidden"
+                    else -> it[status] = vacancies.status
+                }
+                it[vacancy] = vacancies.vacancy
                 it[position] = vacancies.position
-                it[workFormat] = vacancies.workFormat
+                it[workFormat] = toWorkFormatString(vacancies.workFormat)
+                it[description] = vacancies.description
+                it[requirements] = vacancies.requirements
+                it[idealCandidate] = vacancies.idealCandidate
                 it[specialization] = vacancies.specialization
                 it[experience] = vacancies.experience
-                it[vacancy] = vacancies.vacancy
                 it[address] = vacancies.address
+                it[salaryMin] = vacancies.salaryMin
+                it[salaryMax] = vacancies.salaryMax
                 it[softSkills] = toSoftSkillsString(vacancies.softSkills)
                 it[hardSkills] = toHardSkillsString(vacancies.hardSkills)
                 it[businessId] = vacancies.businessId

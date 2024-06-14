@@ -50,7 +50,6 @@ class UserService {
                 it[photoUrl] = user.photoUrl
                 it[fullName] = user.fullName
                 it[age] = user.age
-                it[stackTech] = user.stackTech
                 it[projects] = user.projects
                 it[gitlabUrl] = user.gitlabUrl
                 it[githubUrl] = user.githubUrl
@@ -76,7 +75,6 @@ class UserService {
                         photoUrl = row[Users.photoUrl],
                         fullName = row[Users.fullName],
                         age = row[Users.age],
-                        stackTech = row[Users.stackTech],
                         projects = row[Users.projects],
                         gitlabUrl = row[Users.gitlabUrl],
                         githubUrl = row[Users.githubUrl],

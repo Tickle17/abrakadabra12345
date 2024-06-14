@@ -1,7 +1,7 @@
 export { RootPage } from './Root';
 export { ErrorPage } from './Error';
 export { Profile } from './Profile';
-export { JobList } from './JobList';
+export { Vacancies } from './Vacancies';
 export { Settings } from './Settings';
 export { Chat } from './Chat';
 export { AuthPage } from './Auth';
