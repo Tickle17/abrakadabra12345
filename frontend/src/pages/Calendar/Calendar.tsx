@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { format, addDays, startOfWeek, addWeeks, subWeeks } from 'date-fns';
+import { addDays, addWeeks, format, startOfWeek, subWeeks } from 'date-fns';
 
 const CalendarPreferences = {
-  duration: 1.5, // длительность одного собеседования в часах
-  freeTime: 15, // время отдыха между собеседованиями
+  duration: 0.75, // длительность одного собеседования в часах
+  freeTime: 0.25, // время отдыха между собеседованиями
   dayStart: 8, // начало рабочего дня
   dayEnd: 17, // конец рабочего дня
-  slots: 5, // кол-во слотов в день
+  slots: 17 - 8, // кол-во слотов в день
   dayOfWeek: [
     {
       day: 'MONDAY',
@@ -38,24 +38,58 @@ const CalendarPreferences = {
     },
   ],
 };
-function createRange(start: number, end: number): number[] {
-  const result: number[] = [];
-  for (let i = start; i <= end; i++) {
-    result.push(i);
-  }
-  return result;
+
+function getToday() {
+  const today = new Date();
+  const day = String(today.getDate()).padStart(2, '0');
+  const month = String(today.getMonth() + 1).padStart(2, '0'); // Январь это 0
+
+  return `${month}/${day}`;
 }
+
+const CalendarSlot = {
+  slot: 1,
+  free: false,
+  communication: 'zoom',
+  acceptingByUser: false,
+  date: getToday(),
+  dayOfWeek: 'MONDAY',
+};
+
 const CalendarWidget = () => {
   const [currentWeek, setCurrentWeek] = useState(
     startOfWeek(new Date(), { weekStartsOn: 0 })
   );
 
-  //   const hours_ = Array.from({ length: 10 }, (_, i) => 8 + i);
+  const daysOfWeek = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ];
 
-  //   const hours = createRange(
-  //     CalendarPreferences.dayStart,
-  //     CalendarPreferences.dayEnd
-  //   );
+  const generateWeekDays = startDate => {
+    return daysOfWeek.map((day, index) => {
+      const date = addDays(startDate, index);
+      return {
+        day,
+        date: format(date, 'MM/dd'),
+      };
+    });
+  };
+
+  const weekDays = generateWeekDays(currentWeek);
+
+  const handlePrevWeek = () => {
+    setCurrentWeek(subWeeks(currentWeek, 1));
+  };
+
+  const handleNextWeek = () => {
+    setCurrentWeek(addWeeks(currentWeek, 1));
+  };
 
   function calculateAndGenerateArray(x: number, y: number, z: number) {
     // Вычитаем x из y
@@ -80,45 +114,10 @@ const CalendarWidget = () => {
     return array;
   }
 
-  const daysOfWeek = [
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-  ];
-
-  const generateWeekDays = (startDate: Date) => {
-    return daysOfWeek.map((day, index) => {
-      const date = addDays(startDate, index);
-      return {
-        day,
-        date: format(date, 'MM/dd'),
-      };
-    });
-  };
-
-  const weekDays = generateWeekDays(currentWeek);
-
-  const handlePrevWeek = () => {
-    setCurrentWeek(subWeeks(currentWeek, 1));
-  };
-
-  const handleNextWeek = () => {
-    setCurrentWeek(addWeeks(currentWeek, 1));
-  };
-
-  //   const hours = calculateAndGenerateArray(
-  //     CalendarPreferences.dayStart,
-  //     CalendarPreferences.dayEnd,
-  //     CalendarPreferences.slots
-  //   );
-
-  const hours = createRange(
+  const hours = calculateAndGenerateArray(
     CalendarPreferences.dayStart,
-    CalendarPreferences.dayEnd
+    CalendarPreferences.dayEnd,
+    CalendarPreferences.slots
   );
 
   return (
@@ -157,18 +156,39 @@ const CalendarWidget = () => {
             <div className="border-r border-gray-300 text-right pr-2 font-bold h-[50px]">
               {hour}:00
             </div>
-            {weekDays.map((_, dayIndex) => (
-              <div
-                key={dayIndex}
-                className="border border-gray-300 h-16 h-[calc(50px * )]"
-              ></div>
-            ))}
+            {weekDays.map((day, dayIndex) => {
+              const isTargetSlot =
+                day.date === CalendarSlot.date &&
+                CalendarSlot.slot - 1 === hourIndex;
+              const durationPercent =
+                (CalendarPreferences.duration /
+                  (CalendarPreferences.duration +
+                    CalendarPreferences.freeTime)) *
+                100;
+              const freeTimePercent = 100 - durationPercent;
+
+              return (
+                <div
+                  key={dayIndex}
+                  className="border border-gray-300 h-16"
+                  style={{
+                    background: isTargetSlot
+                      ? `linear-gradient(to bottom, green ${durationPercent}%, red ${freeTimePercent}%)`
+                      : 'red',
+                  }}
+                >
+                  {isTargetSlot ? 1 : 2}
+                </div>
+              );
+            })}
           </React.Fragment>
         ))}
       </div>
     </div>
   );
 };
+
+export default CalendarWidget;
 
 export const CalendarPage = () => {
   return <CalendarWidget />;
