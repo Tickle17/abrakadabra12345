@@ -1096,20 +1096,41 @@ components:
         id:
           type: "string"
           format: "uuid"
+        vacancy:
+          type: "string"
         status:
           type: "string"
         position:
           type: "string"
         workFormat:
+          type: "array"
+          items:
+            type: "string"
+            enum:
+            - "FULL_TIME"
+            - "PART_TIME"
+            - "REMOTE"
+            - "FREELANCE"
+            - "INTERSHIP"
+            - "CONTRACT"
+        description:
+          type: "string"
+        requirements:
+          type: "string"
+        idealCandidate:
           type: "string"
         specialization:
           type: "string"
         experience:
           type: "string"
-        vacancy:
-          type: "string"
         address:
           type: "string"
+        salaryMin:
+          type: "integer"
+          format: "int32"
+        salaryMax:
+          type: "integer"
+          format: "int32"
         softSkills:
           type: "array"
           items:
