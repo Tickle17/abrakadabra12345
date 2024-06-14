@@ -7,6 +7,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import simple_it.models.business.businessDAO.BusinessService
 import simple_it.models.business.businessDTO.Business
 import simple_it.models.calendar.calendarDAO.CalendarService
+import simple_it.models.calendar.calendarDTO.VacancyCalendar
 import simple_it.models.chat.chatDAO.DefaultMessagesService
 import simple_it.models.chat.chatDAO.MessagesService
 import simple_it.models.chat.chatDAO.ReactionsVacancyService
@@ -14,6 +15,7 @@ import simple_it.models.chat.chatDTO.DefaultMessages
 import simple_it.models.chat.chatDTO.Messages
 import simple_it.models.chat.chatDTO.ReactionsVacancy
 import simple_it.models.slot.slotDAO.CalendarSlotService
+import simple_it.models.slot.slotDTO.VacancySlot
 import simple_it.models.users.userDAO.UserService
 import simple_it.models.users.usersDTO.Users
 import simple_it.models.vacancy.vacancyDAO.VacancyService
@@ -34,7 +36,10 @@ fun Application.configureDatabases() {
     )
 
     transaction(database) {
-        SchemaUtils.create(Users, Business, Vacancy, ReactionsVacancy, Messages, DefaultMessages)
+        SchemaUtils.create(
+            Users, Business, Vacancy,
+            VacancySlot, VacancyCalendar, ReactionsVacancy, Messages, DefaultMessages
+        )
     }
 
 
