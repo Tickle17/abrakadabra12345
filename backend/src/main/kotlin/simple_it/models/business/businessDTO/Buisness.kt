@@ -15,7 +15,7 @@ object Business : Table() {
     val photoUrl = varchar("photo_url", length = 255).nullable()
     val companyURL = varchar("company_url", length = 255).nullable()
     val description = varchar("about_business", length = 255).nullable()
-    val role = varchar("role", length = 255).check { it inList listOf("user", "business") }.default("business")
+    val role = varchar("role", length = 255).check { it inList listOf("users", "business") }.default("business")
     val createdAt = datetime("created_at").default(LocalDateTime.now())
     val updatedAt = datetime("updated_at").default(LocalDateTime.now())
     val deletedAt = datetime("deleted_at").nullable()

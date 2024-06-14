@@ -67,7 +67,7 @@ data class ReactionsVacancyDetailsDTO(
 object Messages : Table() {
     val id = uuid("id").autoGenerate()
     val reactionsVacancyId = uuid("reactionsVacancy_id").references(ReactionsVacancy.id)
-    val senderType = varchar("sender_type", 10).check { it inList listOf("user", "business") }
+    val senderType = varchar("sender_type", 10).check { it inList listOf("users", "business") }
     val senderId = uuid("sender_id")
     val message = text("message")
     val createdAt = datetime("created_at").default(LocalDateTime.now())
