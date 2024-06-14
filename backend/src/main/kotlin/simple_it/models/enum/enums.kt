@@ -31,7 +31,7 @@ enum class WorkFormat {
     PART_TIME,
     REMOTE,
     FREELANCE,
-    INTERSHIP,
+    INTERNSHIP,
     CONTRACT,
 }
 
