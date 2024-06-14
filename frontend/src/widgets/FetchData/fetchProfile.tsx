@@ -12,7 +12,12 @@ export const useFetchUserProfile = () => {
   const id = getUserId();
 
   useEffect(() => {
-    if (token && id) {
+    if (
+      token &&
+      id &&
+      localStorage.getItem('role') &&
+      localStorage.getItem('role') === 'user'
+    ) {
       axios
         .get<ResponseData>(`https://backendhackaton.onrender.com/users/${id}`)
         .then((response: AxiosResponse<ResponseData>) => {

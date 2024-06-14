@@ -1,26 +1,44 @@
 import { z } from 'zod';
-// import { DayOfWeek } from './types';
 
-// const MyObjectSchema = z.object({
-//   day: z.nativeEnum(DayOfWeek),
-//   isWorking: z.boolean(),
-// });
-
+// TODO finish validation
 export const formSchema = z.object({
-  duration: z.string().nullable(),
-  freeTime: z.string().nullable(),
-  dayStart: z.string().nullable(),
-  dayEnd: z.string().nullable(),
-  //maxReservDays: z.array(MyObjectSchema),
-  //maxReservDays: z.nativeEnum(DayOfWeek),
-  MONDAY: z.boolean().nullable(),
-  TUESDAY: z.boolean().nullable(),
-  WEDNESDAY: z.boolean().nullable(),
-  THURSDAY: z.boolean().nullable(),
-  FRIDAY: z.boolean().nullable(),
-  SATURDAY: z.boolean().nullable(),
-  SUNDAY: z.boolean().nullable(),
-  workingDays: z.string().nullable(),
+  duration: z.string().refine(value => /^[1-9]\d*$/.test(value), {
+    message:
+      'Duration must contain only numbers and first symbol must not be 0',
+  }),
+  freeTime: z.string().refine(value => /^[1-9]\d*$/.test(value), {
+    message:
+      'freeTime must contain only numbers and first symbol must not be 0',
+  }),
+  dayStart: z
+    .string()
+    .refine(value => /^\d{2}:\d{2}$/.test(value), {
+      message: 'Day start must be in format HH:MM',
+    })
+    .refine(value => /^[1-9]\d{1}:\d{2}$/.test(value), {
+      message:
+        'Day start must contain only numbers and first two symbols must not be 0',
+    }),
+  dayEnd: z
+    .string()
+    .refine(value => /^\d{2}:\d{2}$/.test(value), {
+      message: 'Day start must be in format HH:MM',
+    })
+    .refine(value => /^[1-9]\d{1}:\d{2}$/.test(value), {
+      message:
+        'Day start must contain only numbers and first two symbols must not be 0',
+    }),
+  maxReservDays: z.string().refine(value => /^[1-9]\d*$/.test(value), {
+    message:
+      'maxReservedDays must contain only numbers and first symbol must not be 0',
+  }),
+  MONDAY: z.boolean(),
+  TUESDAY: z.boolean(),
+  WEDNESDAY: z.boolean(),
+  THURSDAY: z.boolean(),
+  FRIDAY: z.boolean(),
+  SATURDAY: z.boolean(),
+  SUNDAY: z.boolean(),
   businessId: z.string().uuid(),
 });
 

@@ -100,7 +100,7 @@ export const Message = ({
     ? getByUsername(replyMessage.username)
     : undefined;
   const formattedName = user ? user.formattedName : undefined;
-  const messageRef = useRef<HTMLDivElement>(null);
+  // const messageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (messageThreadRef.current && messageIdToSrollIntoView === id) {
@@ -109,17 +109,17 @@ export const Message = ({
     }
   }, [messageIdToSrollIntoView]);
 
-  useEffect(() => {
-    if (messageRef.current && lastMessageId === id) {
-      messageRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [lastMessageId]);
+  // useEffect(() => {
+  //   if (messageRef.current && lastMessageId === id) {
+  //     messageRef.current.scrollIntoView({ behavior: 'smooth' });
+  //   }
+  // }, [lastMessageId]);
 
   return (
     <div className="w-full flex flex-col gap-3">
       {replyMessage !== undefined && (
         <div
-          ref={messageRef}
+          // ref={messageRef}
           className={clsx(
             'w-full flex flex-col gap-3',
             image !== undefined && 'mb-[10px]'
@@ -159,7 +159,7 @@ export const Message = ({
 
       {replyMessage === undefined && text && (
         <div
-          ref={messageRef}
+          // ref={messageRef}
           className={clsx(
             'w-full flex flex-col gap-3',
             image !== undefined && 'mb-[10px]'
@@ -186,7 +186,7 @@ export const Message = ({
       )}
       {replyMessage === undefined && text.length === 0 && (
         <div
-          ref={messageRef}
+          // ref={messageRef}
           className={clsx('w-full flex', image !== undefined && 'mb-[10px]')}
         >
           <p className="w-12 leading-[6px] text-[8px] font-thin text-slate-800 text-center pt-[3.5px] ml-[2.5px]">

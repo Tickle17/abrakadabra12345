@@ -4,10 +4,26 @@ import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/shared/ui/input.tsx';
-import { Form, FormControl, FormField, FormItem } from '@/shared/ui/form';
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+} from '@/shared/ui/form';
 import { Button } from '@/shared/ui/button.tsx';
 import { Checkbox } from '@/shared/ui/checkbox.tsx';
 import axios, { AxiosResponse } from 'axios';
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/shared/ui';
+import clsx from 'clsx';
+import { toast } from 'sonner';
 
 type FormSchema = z.infer<typeof formSchema>;
 
@@ -21,185 +37,440 @@ export const days = [
   'SUNDAY',
 ] as const;
 
-export function FormComponent() {
-  const onSubmit = (data: FormSchema) => {
-    //console.log(data);
-    if (
-      !data.duration ||
-      !data.freeTime ||
-      !data.dayStart ||
-      !data.dayEnd ||
-      !data.workingDays
-    )
-      return;
+// export function FormComponent() {
+//   const onSubmit = (data: FormSchema) => {
+//     //console.log(data);
+//     if (
+//       !data.duration ||
+//       !data.freeTime ||
+//       !data.dayStart ||
+//       !data.dayEnd ||
+//       !data.workingDays
+//     )
+//       return;
+//     const result = {
+//       duration: parseFloat(data.duration),
+//       freeTime: parseFloat(data.freeTime),
+//       dayStart: parseFloat(data.dayStart),
+//       dayEnd: parseFloat(data.dayEnd),
+//       maxReservDays: parseFloat(data.workingDays),
+//       businessId: data.businessId,
+//       workingDays: [
+//         { day: 'MONDAY', isWorking: data.MONDAY ? true : false },
+//         { day: 'TUESDAY', isWorking: data.TUESDAY ? true : false },
+//         { day: 'WEDNESDAY', isWorking: data.WEDNESDAY ? true : false },
+//         { day: 'THURSDAY', isWorking: data.THURSDAY ? true : false },
+//         { day: 'FRIDAY', isWorking: data.FRIDAY ? true : false },
+//         { day: 'SATURDAY', isWorking: data.SATURDAY ? true : false },
+//         { day: 'SUNDAY', isWorking: data.SUNDAY ? true : false },
+//       ],
+//     };
+//     axios
+//       .post('https://backendhackaton.onrender.com/calendar', result)
+//       .then((response: AxiosResponse) => {
+//         if (response.status === 200 || response.status === 201) {
+//           console.log(response.data);
+//         } else {
+//           console.log(response.data);
+//         }
+//       });
+//   };
+//   // 1. Define your form.
+//   const form = useForm<z.infer<typeof formSchema>>({
+//     resolver: zodResolver(formSchema),
+//     defaultValues: {
+//       duration: '0',
+//       freeTime: '0',
+//       dayStart: '0',
+//       dayEnd: '0',
+//       MONDAY: false,
+//       TUESDAY: false,
+//       WEDNESDAY: false,
+//       THURSDAY: false,
+//       FRIDAY: false,
+//       SATURDAY: false,
+//       SUNDAY: false,
+//       workingDays: '0',
+//       businessId: '',
+//     },
+//   });
+
+//   return (
+//     <Form {...form}>
+//       <form onSubmit={form.handleSubmit(onSubmit)}>
+//         <FormField
+//           control={form.control}
+//           name="duration" // длительность одного собеседования (можно поменять позднее)
+//           render={({ field }) => (
+//             <FormItem>
+//               <FormControl>
+//                 <div>
+//                   <label>duration</label>
+//                   <Input {...field} value={field.value || ''} />
+//                 </div>
+//               </FormControl>
+//             </FormItem>
+//           )}
+//         />
+//         <FormField
+//           control={form.control}
+//           name="freeTime" // время отдыха между собеседованиями
+//           render={({ field }) => (
+//             <FormItem>
+//               <FormControl>
+//                 <div>
+//                   <label>freeTime</label>
+//                   <Input {...field} value={field.value || ''} />
+//                 </div>
+//               </FormControl>
+//             </FormItem>
+//           )}
+//         />
+//         <FormField
+//           control={form.control}
+//           name="dayStart" // начало рабочего дня
+//           render={({ field }) => (
+//             <FormItem>
+//               <FormControl>
+//                 <div>
+//                   <label>dayStart</label>
+//                   <Input {...field} value={field.value || ''} />
+//                 </div>
+//               </FormControl>
+//             </FormItem>
+//           )}
+//         />
+//         <FormField
+//           control={form.control}
+//           name="dayEnd" // конец рабочего дня
+//           render={({ field }) => (
+//             <FormItem>
+//               <FormControl>
+//                 <div>
+//                   <label>dayEnd</label>
+//                   <Input {...field} value={field.value || ''} />
+//                 </div>
+//               </FormControl>
+//             </FormItem>
+//           )}
+//         />
+//         <FormField
+//           control={form.control}
+//           name="workingDays" // количество рабочих дней (массив рабочих дней)
+//           render={({ field }) => (
+//             <FormItem>
+//               <FormControl>
+//                 <div>
+//                   <label>workingDays</label>
+//                   <Input {...field} value={field.value || ''} />
+//                 </div>
+//               </FormControl>
+//             </FormItem>
+//           )}
+//         />
+//         <FormField
+//           control={form.control}
+//           name="businessId" // id бизнеса
+//           render={({ field }) => (
+//             <FormItem>
+//               <FormControl>
+//                 <div>
+//                   <label>businessId</label>
+//                   <Input {...field} />
+//                 </div>
+//               </FormControl>
+//             </FormItem>
+//           )}
+//         />
+//         {days.map((day, index) => (
+//           <FormField
+//             key={index}
+//             control={form.control}
+//             name={day}
+//             render={({ field }) => (
+//               <FormItem>
+//                 <FormControl>
+//                   <div className="flex items-center gap-3 w-full">
+//                     <span>{day}</span>
+//                     <Checkbox
+//                       value={day}
+//                       checked={field.value || false}
+//                       onCheckedChange={checked => {
+//                         field.onChange(checked ? false : true);
+//                       }}
+//                     />
+//                   </div>
+//                 </FormControl>
+//               </FormItem>
+//             )}
+//           />
+//         ))}
+//         <Button type="submit">Submit</Button>
+//       </form>
+//     </Form>
+//   );
+// }
+
+const convertStringTimeToFloat = (timeString: string): number => {
+  const [hours, minutes] = timeString.split(':').map(Number);
+  const timeInHours = hours + minutes / 60;
+  return parseFloat(timeInHours.toFixed(2));
+};
+
+const convertMinutesTimeToFloat = (timeString: string): number => {
+  const hours = parseFloat(timeString) / 60;
+  return parseFloat(hours.toFixed(2));
+};
+
+export const FormRewritedComponent = () => {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      duration: '',
+      freeTime: '',
+      dayStart: '',
+      dayEnd: '',
+      maxReservDays: '',
+      MONDAY: true,
+      TUESDAY: true,
+      WEDNESDAY: true,
+      THURSDAY: true,
+      FRIDAY: true,
+      SATURDAY: false,
+      SUNDAY: false,
+      businessId: localStorage.getItem('id') || '',
+    },
+    mode: 'all',
+  });
+  const {
+    formState: { errors },
+  } = form;
+
+  const onSubmit = (rawData: z.infer<typeof formSchema>) => {
     const result = {
-      duration: parseFloat(data.duration),
-      freeTime: parseFloat(data.freeTime),
-      dayStart: parseFloat(data.dayStart),
-      dayEnd: parseFloat(data.dayEnd),
-      maxReservDays: parseFloat(data.workingDays),
-      businessId: data.businessId,
+      duration: convertMinutesTimeToFloat(rawData.duration),
+      freeTime: convertMinutesTimeToFloat(rawData.freeTime),
+      dayStart: convertStringTimeToFloat(rawData.dayStart),
+      dayEnd: convertStringTimeToFloat(rawData.dayEnd),
+      maxReservDays: Number(rawData.maxReservDays),
+      businessId: rawData.businessId,
       workingDays: [
-        { day: 'MONDAY', isWorking: data.MONDAY ? true : false },
-        { day: 'TUESDAY', isWorking: data.TUESDAY ? true : false },
-        { day: 'WEDNESDAY', isWorking: data.WEDNESDAY ? true : false },
-        { day: 'THURSDAY', isWorking: data.THURSDAY ? true : false },
-        { day: 'FRIDAY', isWorking: data.FRIDAY ? true : false },
-        { day: 'SATURDAY', isWorking: data.SATURDAY ? true : false },
-        { day: 'SUNDAY', isWorking: data.SUNDAY ? true : false },
+        {
+          day: 'MONDAY',
+          isWorking: rawData.MONDAY,
+        },
+        {
+          day: 'TUESDAY',
+          isWorking: rawData.TUESDAY,
+        },
+        {
+          day: 'WEDNESDAY',
+          isWorking: rawData.WEDNESDAY,
+        },
+        {
+          day: 'THURSDAY',
+          isWorking: rawData.THURSDAY,
+        },
+        {
+          day: 'FRIDAY',
+          isWorking: rawData.FRIDAY,
+        },
+        {
+          day: 'SATURDAY',
+          isWorking: rawData.SATURDAY,
+        },
+        {
+          day: 'SUNDAY',
+          isWorking: rawData.SUNDAY,
+        },
       ],
     };
     axios
       .post('https://backendhackaton.onrender.com/calendar', result)
       .then((response: AxiosResponse) => {
         if (response.status === 200 || response.status === 201) {
-          console.log(response.data);
+          toast('Calendar created');
         } else {
-          console.log(response.data);
+          toast('Something went wrong');
         }
+      })
+      .catch(err => {
+        toast('Something went wrong');
+        console.error(err);
       });
+    //console.log(data);
   };
-  // 1. Define your form.
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      duration: '0',
-      freeTime: '0',
-      dayStart: '0',
-      dayEnd: '0',
-      MONDAY: false,
-      TUESDAY: false,
-      WEDNESDAY: false,
-      THURSDAY: false,
-      FRIDAY: false,
-      SATURDAY: false,
-      SUNDAY: false,
-      workingDays: '0',
-      businessId: '',
-    },
-  });
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <FormField
-          control={form.control}
-          name="duration"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <div>
-                  <label>duration</label>
-                  <Input {...field} value={field.value || ''} />
-                </div>
-              </FormControl>
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="freeTime"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <div>
-                  <label>freeTime</label>
-                  <Input {...field} value={field.value || ''} />
-                </div>
-              </FormControl>
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="dayStart"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <div>
-                  <label>dayStart</label>
-                  <Input {...field} value={field.value || ''} />
-                </div>
-              </FormControl>
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="dayEnd"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <div>
-                  <label>dayEnd</label>
-                  <Input {...field} value={field.value || ''} />
-                </div>
-              </FormControl>
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="workingDays"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <div>
-                  <label>workingDays</label>
-                  <Input {...field} value={field.value || ''} />
-                </div>
-              </FormControl>
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="businessId"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <div>
-                  <label>businessId</label>
-                  <Input {...field} />
-                </div>
-              </FormControl>
-            </FormItem>
-          )}
-        />
-        {days.map((day, index) => (
-          <FormField
-            key={index}
-            control={form.control}
-            name={day}
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <div className="flex items-center gap-3 w-full">
-                    <span>{day}</span>
-                    <Checkbox
-                      value={day}
-                      checked={field.value || false}
-                      onCheckedChange={checked => {
-                        field.onChange(checked ? false : true);
-                      }}
+    <div className="w-full h-full flex flex-col justify-center">
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="w-full flex justify-center items-center"
+        >
+          <Card className="w-full max-w-[750px]">
+            <CardHeader>
+              <CardTitle>Calendar Setup</CardTitle>
+              <span>You need to setup calendar brefore you can use it</span>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 grid-rows-1 gap-7 my-3">
+                <FormField
+                  control={form.control}
+                  name="duration" // длительность одного собеседования (можно поменять позднее)
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        Duration of one interview in minutes
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          value={field.value || ''}
+                          className={clsx(errors.duration && 'border-red-500')}
+                          placeholder="60"
+                        />
+                      </FormControl>
+                      <FormDescription>
+                        Possible to setup later for individual cases
+                      </FormDescription>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="freeTime" // время отдыха между собеседованиями
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        Free time between interviews in minutes
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          value={field.value || ''}
+                          className={clsx(errors.freeTime && 'border-red-500')}
+                          placeholder="15"
+                        />
+                      </FormControl>
+                      <FormDescription>
+                        Possible to change later
+                      </FormDescription>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="dayStart" // начало рабочего дня
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Start of work day</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          value={field.value || ''}
+                          className={clsx(errors.dayStart && 'border-red-500')}
+                          placeholder="10:00"
+                        />
+                      </FormControl>
+                      <FormDescription>in format HH:MM</FormDescription>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="dayEnd" // конец рабочего дня
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>End of work day</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          value={field.value || ''}
+                          className={clsx(errors.dayEnd && 'border-red-500')}
+                          placeholder="23:00"
+                        />
+                      </FormControl>
+                      <FormDescription>in format HH:MM</FormDescription>
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className="my-3 w-full md:w-1/2 md:pr-4">
+                <FormField
+                  control={form.control}
+                  name="maxReservDays" // максимальное количество зарезервированных дней для ответа у кандидата
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Maximum number of reserved days</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          value={field.value || ''}
+                          className={clsx(
+                            errors.maxReservDays && 'border-red-500'
+                          )}
+                          placeholder="3"
+                        />
+                      </FormControl>
+                      <FormDescription>
+                        How many days a candidate have to answer
+                      </FormDescription>
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className="flex flex-col gap-3 my-10">
+                <p className="text-slate-950 font-light text-md">
+                  Select working days and weekends
+                </p>
+                <div className="flex flex-wrap items-center gap-3">
+                  {days.map((day, index) => (
+                    <FormField
+                      key={index}
+                      control={form.control}
+                      name={day}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Button
+                              className={clsx(
+                                'rounded-sm px-3 py-2 w-10 h-10',
+                                field.value
+                                  ? 'bg-slate-950 text-slate-200 hover:text-slate-950'
+                                  : 'bg-slate-200 text-slate-950 hover:text-slate-200'
+                              )}
+                              onClick={() => {
+                                field.onChange(!field.value);
+                              }}
+                            >
+                              {day.slice(0, 2)}
+                            </Button>
+                          </FormControl>
+                        </FormItem>
+                      )}
                     />
-                  </div>
-                </FormControl>
-              </FormItem>
-            )}
-          />
-        ))}
-        <Button type="submit">Submit</Button>
-      </form>
-    </Form>
+                  ))}
+                </div>
+              </div>
+            </CardContent>
+            <CardFooter>
+              <Button type="submit" className="w-full">
+                Create calendar
+              </Button>
+            </CardFooter>
+          </Card>
+        </form>
+      </Form>
+    </div>
   );
-}
+};
+
 export const Calendar = () => {
   return (
     <AppLayout>
-      <div className="bg-white shadow-sm p-3 rounded-[2px] col-span-3"></div>
-      <div className="bg-white shadow-sm p-5 rounded-[2px] col-span-9">
-        <FormComponent />
+      <div className="bg-white shadow-sm p-5 rounded-[2px] col-span-12">
+        <FormRewritedComponent />
       </div>
     </AppLayout>
   );
