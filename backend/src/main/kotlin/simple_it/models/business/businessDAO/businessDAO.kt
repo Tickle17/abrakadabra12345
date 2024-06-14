@@ -10,6 +10,7 @@ import org.jetbrains.exposed.sql.update
 import simple_it.models.business.businessDTO.Business
 import simple_it.models.business.businessDTO.BusinessDTO
 import simple_it.models.business.businessDTO.CreateBusiness
+import simple_it.models.calendar.calendarDTO.VacancyCalendar
 import simple_it.models.users.usersDTO.UserIdRole
 import java.util.*
 
@@ -45,7 +46,7 @@ class BusinessService {
 
     suspend fun read(id: UUID): BusinessDTO? {
         return dbQuery {
-            Business.select { Business.id eq id }
+            (Business innerJoin VacancyCalendar).select { Business.id eq id }
                 .map { row ->
                     BusinessDTO(
                         id = row[Business.id],
@@ -57,7 +58,8 @@ class BusinessService {
                         description = row[Business.description],
                         createdAt = row[Business.createdAt],
                         updatedAt = row[Business.updatedAt],
-                        deletedAt = row[Business.deletedAt]
+                        deletedAt = row[Business.deletedAt],
+                        calendarId = row[VacancyCalendar.id]
                     )
                 }
                 .singleOrNull()

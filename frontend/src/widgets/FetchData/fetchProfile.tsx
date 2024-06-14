@@ -12,14 +12,10 @@ export const useFetchUserProfile = () => {
   const id = getUserId();
 
   useEffect(() => {
-    if (
-      token &&
-      id &&
-      localStorage.getItem('role') &&
-      localStorage.getItem('role') === 'user'
-    ) {
+    const role = localStorage.getItem('role');
+    if (token && id) {
       axios
-        .get<ResponseData>(`https://backendhackaton.onrender.com/users/${id}`)
+        .get<ResponseData>(`https://backendhackaton.onrender.com/${role}/${id}`)
         .then((response: AxiosResponse<ResponseData>) => {
           if (response.status === 200 || response.status === 201) {
             const data = response.data;

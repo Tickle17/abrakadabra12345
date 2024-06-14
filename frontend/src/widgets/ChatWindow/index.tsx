@@ -14,7 +14,7 @@ export const ChatWindow: React.FC = () => {
 
   const isMessageRightAligned = (message: Messages) => {
     if (id === currentChatId.userId) {
-      return message.senderType === 'user';
+      return message.senderType === 'users';
     } else if (id === currentChatId.businessId) {
       return message.senderType === 'business';
     }
@@ -27,7 +27,7 @@ export const ChatWindow: React.FC = () => {
       return;
     }
 
-    const senderType = id === currentChatId.userId ? 'user' : 'business';
+    const senderType = id === currentChatId.userId ? 'users' : 'business';
 
     const newMessage = {
       reactionsVacancyId: currentChatId.reactionId,

@@ -23,7 +23,7 @@ object Users : Table() {
     val targetsInfo = varchar("targets_info", length = 255).nullable()
     val price = integer("price").nullable()
     val criterionsJob = varchar("criterions_job", length = 255).nullable()
-    val role = varchar("role", length = 255).check { it inList listOf("user", "business") }.default("user")
+    val role = varchar("role", length = 255).check { it inList listOf("users", "business") }.default("users")
 
     //        val companyWorkerId = varchar("company_worker_id", length = 50).references(Company.id).nullable()
     val phone = varchar("phone", length = 20).nullable()
