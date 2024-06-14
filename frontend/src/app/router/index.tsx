@@ -12,6 +12,7 @@ import {
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { useAuthStore } from '../store';
 import { useFetchUserProfile } from '@/widgets/FetchData/fetchProfile.tsx';
+import { Statistic } from '@/pages/Statistic';
 
 interface PrivateRouteProps {
   element: React.ComponentType;
@@ -59,6 +60,7 @@ export const router = createBrowserRouter([
     path: 'messages',
     element: <PrivateRoute element={Chat} />,
   },
+  //   business routes
   {
     path: 'create-vacancy',
     element: <PrivateRoute element={CreateVacancy} />,
@@ -66,5 +68,9 @@ export const router = createBrowserRouter([
   {
     path: 'calendar',
     element: <PrivateRoute element={Calendar} />,
+  },
+  {
+    path: 'statistic',
+    element: <PrivateRoute element={Statistic} />,
   },
 ]);

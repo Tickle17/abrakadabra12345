@@ -98,6 +98,7 @@ export const StepSecondContent = ({
         if (response.status === 200 || response.status === 201) {
           localStorage.setItem('token', 'true');
           localStorage.setItem('id', response.data.id);
+          localStorage.setItem('role', response.data.role);
           setAuthStageState('success');
         } else {
           setAuthStageState('error');
