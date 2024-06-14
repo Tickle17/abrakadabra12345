@@ -13,7 +13,7 @@ export const NavBar = () => {
   const role = localStorage.getItem('role');
   return (
     <div className="row-span-1 col-span-4 bg-white flex justify-center items-center gap-6">
-      {role === 'user' ? (
+      {role === 'users' ? (
         <>
           <IconLinkWrapper path="/">
             <HomeIcon className="w-5 h-5 text-slate-900" />
