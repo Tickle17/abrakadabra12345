@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/shared/ui/input.tsx';
+import { CalendarPage } from './Calendar.tsx';
 import {
   Form,
   FormControl,
@@ -34,6 +35,7 @@ const days = [
   'SUNDAY',
 ] as const;
 
+// TODO add loader to the button
 const convertStringTimeToFloat = (timeString: string): number => {
   const [hours, minutes] = timeString.split(':').map(Number);
   const timeInHours = hours + minutes / 60;
@@ -70,13 +72,18 @@ export const FormRewritedComponent = () => {
   } = form;
 
   const onSubmit = (rawData: z.infer<typeof formSchema>) => {
+    console.log(
+      Number(rawData.maxReservDays),
+      typeof parseInt(rawData.maxReservDays)
+    );
     const result = {
       duration: convertMinutesTimeToFloat(rawData.duration),
       freeTime: convertMinutesTimeToFloat(rawData.freeTime),
       dayStart: convertStringTimeToFloat(rawData.dayStart),
       dayEnd: convertStringTimeToFloat(rawData.dayEnd),
-      maxReservDays: Number(rawData.maxReservDays),
+      maxReservDays: parseInt(rawData.maxReservDays),
       businessId: rawData.businessId,
+      userId: null,
       workingDays: [
         {
           day: 'MONDAY',
@@ -293,7 +300,8 @@ export const Calendar = () => {
   return (
     <AppLayout>
       <div className="bg-white shadow-sm p-5 rounded-[2px] col-span-12">
-        <FormRewritedComponent />
+        {/* <FormRewritedComponent /> */}
+        <CalendarPage />
       </div>
     </AppLayout>
   );

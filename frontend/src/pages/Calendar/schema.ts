@@ -28,10 +28,13 @@ export const formSchema = z.object({
       message:
         'Day start must contain only numbers and first two symbols must not be 0',
     }),
-  maxReservDays: z.string().refine(value => /^[1-9]\d*$/.test(value), {
-    message:
-      'maxReservedDays must contain only numbers and first symbol must not be 0',
-  }),
+  maxReservDays: z
+    .string()
+    .max(10)
+    .refine(value => /^[1-9]\d*$/.test(value), {
+      message:
+        'maxReservedDays must contain only numbers and first symbol must not be 0',
+    }),
   MONDAY: z.boolean(),
   TUESDAY: z.boolean(),
   WEDNESDAY: z.boolean(),
