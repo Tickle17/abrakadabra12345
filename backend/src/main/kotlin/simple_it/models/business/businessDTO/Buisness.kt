@@ -32,6 +32,8 @@ data class BusinessDTO(
     val photoUrl: String? = null,
     val companyURL: String? = null,
     val description: String? = null,
+    @Contextual val calendarId: UUID? = null,
+
     @Contextual val createdAt: LocalDateTime? = null,
     @Contextual val updatedAt: LocalDateTime? = null,
     @Contextual val deletedAt: LocalDateTime? = null
