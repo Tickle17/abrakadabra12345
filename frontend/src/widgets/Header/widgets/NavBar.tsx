@@ -15,7 +15,7 @@ export const NavBar = () => {
       <IconLinkWrapper path="/profile">
         <PersonIcon className="w-5 h-5 text-slate-900" />
       </IconLinkWrapper>
-      <IconLinkWrapper path="/joblist">
+      <IconLinkWrapper path="/vacancies">
         <BackpackIcon className="w-5 h-5 text-slate-900" />
       </IconLinkWrapper>
       <IconLinkWrapper path="/settings">

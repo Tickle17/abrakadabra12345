@@ -4,10 +4,10 @@ import {
   Chat,
   CreateVacancy,
   ErrorPage,
-  JobList,
   Profile,
   RootPage,
   Settings,
+  Vacancies,
 } from '@/pages';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { useAuthStore } from '../store';
@@ -48,8 +48,8 @@ export const router = createBrowserRouter([
     element: <PrivateRoute element={Profile} />,
   },
   {
-    path: 'joblist',
-    element: <PrivateRoute element={JobList} />,
+    path: 'vacancies',
+    element: <PrivateRoute element={Vacancies} />,
   },
   {
     path: 'settings',
