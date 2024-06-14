@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { addDays, addWeeks, format, startOfWeek, subWeeks } from 'date-fns';
 
 const CalendarPreferences = {
-  duration: 0.75, // длительность одного собеседования в часах
+  duration: 1, // длительность одного собеседования в часах
   freeTime: 0.25, // время отдыха между собеседованиями
   dayStart: 8, // начало рабочего дня
   dayEnd: 17, // конец рабочего дня
@@ -48,7 +48,7 @@ function getToday() {
 }
 
 const CalendarSlot = {
-  slot: 1,
+  slot: 3,
   free: false,
   communication: 'zoom',
   acceptingByUser: false,
@@ -71,7 +71,7 @@ const CalendarWidget = () => {
     'Saturday',
   ];
 
-  const generateWeekDays = startDate => {
+  const generateWeekDays = (startDate: Date) => {
     return daysOfWeek.map((day, index) => {
       const date = addDays(startDate, index);
       return {
@@ -91,34 +91,14 @@ const CalendarWidget = () => {
     setCurrentWeek(addWeeks(currentWeek, 1));
   };
 
-  function calculateAndGenerateArray(x: number, y: number, z: number) {
-    // Вычитаем x из y
-    const difference = y - x;
-
-    // Делим разницу на z
-    const step = difference / z;
-
-    // Генерируем массив от x до y с шагом step
-    const array = [];
-    let currentValue = x;
-    while (currentValue <= y) {
-      array.push(currentValue);
-      currentValue += step;
-    }
-
-    // Добавляем y в массив, если он не был добавлен из-за округления
-    if (array[array.length - 1] !== y) {
-      array.push(y);
-    }
-
-    return array;
+  const hours = [];
+  for (
+    let i = CalendarPreferences.dayStart;
+    i <= CalendarPreferences.dayEnd;
+    i++
+  ) {
+    hours.push(i);
   }
-
-  const hours = calculateAndGenerateArray(
-    CalendarPreferences.dayStart,
-    CalendarPreferences.dayEnd,
-    CalendarPreferences.slots
-  );
 
   return (
     <div className="container mx-auto p-4">
@@ -139,7 +119,7 @@ const CalendarWidget = () => {
           Next Week
         </button>
       </div>
-      <div className="grid grid-cols-8 gap-2">
+      <div className="grid grid-cols-8 gap-0">
         <div className="border-b border-gray-300"></div>
         {weekDays.map((weekDay, index) => (
           <div
@@ -150,34 +130,31 @@ const CalendarWidget = () => {
           </div>
         ))}
       </div>
-      <div className="grid grid-cols-8 gap-2">
+      <div className="grid grid-cols-8 gap-0">
         {hours.map((hour, hourIndex) => (
           <React.Fragment key={hourIndex}>
-            <div className="border-r border-gray-300 text-right pr-2 font-bold h-[50px]">
+            <div className="border-r border-gray-300 text-right pr-2 font-bold h-[50px] flex items-center justify-end">
               {hour}:00
             </div>
             {weekDays.map((day, dayIndex) => {
               const isTargetSlot =
                 day.date === CalendarSlot.date &&
                 CalendarSlot.slot - 1 === hourIndex;
-              const durationPercent =
-                (CalendarPreferences.duration /
-                  (CalendarPreferences.duration +
-                    CalendarPreferences.freeTime)) *
-                100;
-              const freeTimePercent = 100 - durationPercent;
 
               return (
                 <div
                   key={dayIndex}
-                  className="border border-gray-300 h-16"
-                  style={{
-                    background: isTargetSlot
-                      ? `linear-gradient(to bottom, green ${durationPercent}%, red ${freeTimePercent}%)`
-                      : 'red',
-                  }}
+                  className="border border-gray-300 h-[50px] relative"
                 >
-                  {isTargetSlot ? 1 : 2}
+                  {isTargetSlot && (
+                    <div
+                      className="absolute left-0 right-0 bg-green-500"
+                      style={{
+                        height: `${CalendarPreferences.duration * 50}px`,
+                        bottom: `${CalendarPreferences.freeTime * 50}px`,
+                      }}
+                    ></div>
+                  )}
                 </div>
               );
             })}
