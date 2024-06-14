@@ -935,8 +935,6 @@ components:
         age:
           type: "integer"
           format: "int32"
-        stackTech:
-          type: "string"
         projects:
           type: "string"
         gitlabUrl:
@@ -1008,8 +1006,6 @@ components:
         age:
           type: "integer"
           format: "int32"
-        stackTech:
-          type: "string"
         projects:
           type: "string"
         gitlabUrl:
@@ -1081,6 +1077,8 @@ components:
           type: "string"
         photoUrl:
           type: "string"
+        companyURL:
+          type: "string"
         description:
           type: "string"
         createdAt:
@@ -1145,9 +1143,6 @@ components:
         businessId:
           type: "string"
           format: "uuid"
-        calendarId:
-          type: "string"
-          format: "uuid"
         createdAt:
           type: "string"
           format: "date-time"
@@ -1159,7 +1154,6 @@ components:
           format: "date-time"
       required:
       - "businessId"
-      - "calendarId"
     WorkingDay:
       type: "object"
       properties:
@@ -1200,9 +1194,11 @@ components:
         businessId:
           type: "string"
           format: "uuid"
+        userId:
+          type: "string"
+          format: "uuid"
       required:
       - "workingDays"
-      - "businessId"
     VacancyCalendarDTO:
       type: "object"
       properties:
@@ -1224,7 +1220,7 @@ components:
         slots:
           type: "integer"
           format: "int32"
-        maxReservDays:
+        maxReserveDays:
           type: "integer"
           format: "int32"
         workingDays:
@@ -1234,8 +1230,9 @@ components:
         businessId:
           type: "string"
           format: "uuid"
-      required:
-      - "workingDays"
+        userId:
+          type: "string"
+          format: "uuid"
     CreateVacancySlotCalendar:
       type: "object"
       properties:
@@ -1251,9 +1248,6 @@ components:
           type: "string"
         acceptingByUser:
           type: "boolean"
-        calendarId:
-          type: "string"
-          format: "uuid"
         vacancyId:
           type: "string"
           format: "uuid"
@@ -1271,7 +1265,6 @@ components:
           type: "string"
       required:
       - "communication"
-      - "calendarId"
       - "vacancyId"
       - "dayOfWeek"
       - "date"
@@ -1293,9 +1286,6 @@ components:
           type: "string"
         acceptingByUser:
           type: "boolean"
-        calendarId:
-          type: "string"
-          format: "uuid"
         vacancyId:
           type: "string"
           format: "uuid"
@@ -1313,7 +1303,6 @@ components:
           type: "string"
       required:
       - "communication"
-      - "calendarId"
       - "vacancyId"
       - "dayOfWeek"
       - "date"

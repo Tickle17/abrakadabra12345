@@ -1,9 +1,12 @@
 package simple_it.models.business.businessDAO
 
 import kotlinx.coroutines.Dispatchers
-import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.deleteWhere
+import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
+import org.jetbrains.exposed.sql.update
 import simple_it.models.business.businessDTO.Business
 import simple_it.models.business.businessDTO.BusinessDTO
 import simple_it.models.business.businessDTO.CreateBusiness
@@ -32,8 +35,9 @@ class BusinessService {
     suspend fun update(id: UUID, user: BusinessDTO) {
         dbQuery {
             Business.update({ Business.id eq id }) {
-                it[photoUrl] = user.photoUrl
                 it[fullName] = user.fullName
+                it[photoUrl] = user.photoUrl
+                it[companyURL] = user.companyURL
                 it[description] = user.description
             }
         }
@@ -48,6 +52,7 @@ class BusinessService {
                         login = row[Business.login],
                         password = row[Business.password],
                         photoUrl = row[Business.photoUrl],
+                        companyURL = row[Business.companyURL],
                         fullName = row[Business.fullName],
                         description = row[Business.description],
                         createdAt = row[Business.createdAt],
@@ -58,15 +63,6 @@ class BusinessService {
                 .singleOrNull()
         }
     }
-
-    suspend fun getAllUsers(): List<Pair<UUID, String>> {
-        return dbQuery {
-            Business.selectAll().map { row ->
-                Pair(row[Business.id], row[Business.login])
-            }
-        }
-    }
-
 
     suspend fun delete(id: UUID) {
         dbQuery {

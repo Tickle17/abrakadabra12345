@@ -30,10 +30,14 @@ class VacancyService {
             requireNotNull(vacancies.businessId) { "id business must not be null" }
             it[vacancy] = vacancies.vacancy
             it[status] = vacancies.status
+            it[position] = vacancies.position
+            it[workFormat] = vacancies.workFormat
+            it[specialization] = vacancies.specialization
+            it[experience] = vacancies.experience
+            it[address] = vacancies.address
             it[hardSkills] = toHardSkillsString(vacancies.hardSkills)
             it[softSkills] = toSoftSkillsString(vacancies.softSkills)
             it[this.businessId] = vacancies.businessId
-            it[calendarId] = vacancies.calendarId
         }[Vacancy.id]
     }
 
@@ -53,7 +57,6 @@ class VacancyService {
                         softSkills = fromSoftSkillsString(row[Vacancy.softSkills]),
                         hardSkills = fromHardSkillsString(row[Vacancy.hardSkills]),
                         businessId = row[Vacancy.businessId],
-                        calendarId = row[Vacancy.calendarId],
                         createdAt = row[Vacancy.createdAt],
                         updatedAt = row[Vacancy.updatedAt],
                         deletedAt = row[Vacancy.deletedAt],
@@ -66,7 +69,10 @@ class VacancyService {
     suspend fun update(id: UUID, vacancies: VacancyDTO) {
         dbQuery {
             Vacancy.update({ Vacancy.id eq id }) {
-                it[status] = vacancies.status
+                when (vacancies.status) {
+                    null -> it[status] = "hidden"
+                    else -> it[status] = vacancies.status
+                }
                 it[position] = vacancies.position
                 it[workFormat] = vacancies.workFormat
                 it[specialization] = vacancies.specialization

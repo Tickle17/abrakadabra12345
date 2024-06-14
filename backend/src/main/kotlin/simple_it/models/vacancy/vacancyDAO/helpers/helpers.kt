@@ -47,6 +47,5 @@ fun rowToVacancyDTO(row: ResultRow): VacancyDTO {
         softSkills = fromSoftSkillsString(row[Vacancy.softSkills]),
         hardSkills = fromHardSkillsString(row[Vacancy.hardSkills]),
         businessId = row[Vacancy.businessId],
-        calendarId = row[Vacancy.calendarId],
     )
 }
