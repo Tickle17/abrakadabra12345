@@ -3,7 +3,8 @@ import { PMessage } from '../types';
 import { getFormattedTime } from '../utils';
 import { AnimatedImage } from './AnimatedImage';
 import { useChatStore, useUserStore, useImageModalStore } from '@/app/store';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
+
 import {
   DotsHorizontalIcon,
   ResetIcon,
@@ -90,7 +91,7 @@ export const Message = ({
     messageIdToSrollIntoView,
     setMessageIdToSrollIntoView,
     dropMessageIdToSrollIntoView,
-    lastMessageId,
+    // lastMessageId,
   } = useChatStore();
   const { getByUsername } = useUserStore();
   const replyMessage = replyMessageId
