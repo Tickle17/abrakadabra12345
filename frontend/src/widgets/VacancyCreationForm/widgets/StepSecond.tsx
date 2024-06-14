@@ -4,6 +4,7 @@ import {
   Form,
   FormField,
   FormItem,
+  Input,
   Select,
   SelectContent,
   SelectItem,
@@ -29,6 +30,7 @@ export const StepSecond = () => {
   const form = useForm<stepSecondValues>({
     resolver: zodResolver(stepSecondSchema),
     defaultValues: {
+      address: secondStepData.address,
       description: secondStepData.description,
       requirements: secondStepData.requirements,
       idealCandidate: secondStepData.idealCandidate,
@@ -44,7 +46,10 @@ export const StepSecond = () => {
 
   const onSubmit = (data: stepSecondValues) => {
     setSecondStepFormValid(true);
-    setSecondStepData(data);
+    setSecondStepData({
+      ...data,
+      address: form.getValues('address'),
+    });
     switch (activeStep) {
       case 'Job Information': {
         setActiveStep('Job Description');
@@ -65,8 +70,34 @@ export const StepSecond = () => {
     <Form {...form}>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="h-full w-full grid grid-cols-1 grid-rows-4 gap-7"
+        className="h-full w-full grid grid-cols-1 md:grid-rows-5 gap-7"
       >
+        <div className="w-full flex flex-col md:flex-row md:items-center gap-5 md:gap-10">
+          <div className="shrink-0 max-w-[175px]">
+            <h2 className="text-slate-950 font-light text-md">Job Address</h2>
+            <p className="text-slate-950 font-thin text-xs">
+              The location of the position. Leave blank if remote
+            </p>
+          </div>
+          <div className="w-full flex flex-col md:flex-row md:items-center gap-5 md:gap-10">
+            <FormField
+              control={control}
+              name="address"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <Input
+                    {...field}
+                    placeholder="e.g. Mumbai, India"
+                    className="border rounded-[2px] border-slate-950 focus-visible:ring-0 focus-visible:ring-offset-0 px-3 py-2 text-xs resize-none"
+                  />
+                  <span className="text-slate-950 text-xs font-thin">
+                    At least 5 characters
+                  </span>
+                </FormItem>
+              )}
+            ></FormField>
+          </div>
+        </div>
         <div className="w-full flex flex-col md:flex-row md:items-center gap-5 md:gap-10">
           <div className="shrink-0 max-w-[175px]">
             <h2 className="text-slate-950 font-light text-md">

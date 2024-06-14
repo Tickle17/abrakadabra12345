@@ -8,6 +8,7 @@ import {
   SalaryField,
   SoftSkillsField,
   HardSkillsField,
+  ExperienceField,
 } from '../components';
 import { useVacancyStore } from '@/app/store';
 import { useEffect, useRef } from 'react';
@@ -25,6 +26,7 @@ export const StepFirst = () => {
   const form = useForm<stepFirstValues>({
     resolver: zodResolver(stepFirstSchema),
     defaultValues: {
+      experience: firstStepData.experience,
       position: firstStepData.position,
       salaryMin: firstStepData.salaryMin,
       salaryMax: firstStepData.salaryMax,
@@ -63,16 +65,17 @@ export const StepFirst = () => {
     }
   };
 
-  // console.log('errors', errors);
+  console.log('errors', errors);
 
   return (
     <Form {...form}>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="h-full w-full flex flex-col md:grid md:grid-cols-1 md:grid-rows-5 gap-7"
+        className="h-full w-full flex flex-col md:grid md:grid-cols-1 md:grid-rows-6 gap-7"
       >
         <PositionField control={control} errors={errors} />
         <WorkFormatField form={form} control={control} errors={errors} />
+        <ExperienceField control={control} errors={errors} />
         <SalaryField control={control} errors={errors} />
         <SoftSkillsField control={control} errors={errors} />
         <HardSkillsField control={control} errors={errors} />

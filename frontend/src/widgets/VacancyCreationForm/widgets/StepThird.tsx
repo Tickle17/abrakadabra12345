@@ -110,15 +110,23 @@ export const StepThird = () => {
   const { firstStepData, secondStepData, setActiveStep } = useVacancyStore();
   const handleCreateVacancy = () => {
     const data = {
-      status: '',
-      position: '',
-      workFormat: '',
-      specialization: '',
-      experience: '',
-      vacancy: firstStepData.position,
-      address: '',
-      businessId: '113c7e20-ce5b-4581-b4e3-04d3854a5ef4',
-      calendarId: '94cb1719-7569-4644-a84d-81e979d534d0',
+      status: 'active',
+      position: firstStepData.position,
+      description: secondStepData.description,
+      requirements: secondStepData.requirements,
+      idealCandidate: secondStepData.idealCandidate,
+      hardSkills: firstStepData.hardSkills,
+      softSkills: firstStepData.softSkills,
+      workFormat: firstStepData.workFormat,
+      salaryMin: firstStepData.salaryMin,
+      salaryMax: firstStepData.salaryMax,
+      specialization: null,
+      experience: firstStepData.experience,
+      address: secondStepData.address,
+      businessId: localStorage.getItem('id') || '',
+      createdAt: new Date().toISOString(),
+      updatedAt: null,
+      deletedAt: null,
     };
     axios
       .post<ResponseData>(
@@ -160,6 +168,30 @@ export const StepThird = () => {
             </div>
           </CardHeader>
           <CardContent className="flex flex-col gap-3">
+            <div>
+              <h3>Address</h3>
+              <CardDescription>
+                {secondStepData.address ? (
+                  <p className="text-slate-950 text-sm font-semibold">
+                    {secondStepData.address}
+                  </p>
+                ) : (
+                  'here will be address for the position'
+                )}
+              </CardDescription>
+            </div>
+            <div>
+              <h3>Experience</h3>
+              <CardDescription>
+                {firstStepData.experience ? (
+                  <p className="text-slate-950 text-sm font-semibold">
+                    from {firstStepData.experience} years of experience
+                  </p>
+                ) : (
+                  'here will be min and max salary for the position'
+                )}
+              </CardDescription>
+            </div>
             <div>
               <h3>Salary</h3>
               <CardDescription>
@@ -286,6 +318,30 @@ export const StepThird = () => {
           </div>
         </CardHeader>
         <CardContent className="flex flex-col gap-3">
+          <div>
+            <h3>Address</h3>
+            <CardDescription>
+              {secondStepData.address ? (
+                <p className="text-slate-950 text-sm font-semibold">
+                  {secondStepData.address}
+                </p>
+              ) : (
+                'here will be address for the position'
+              )}
+            </CardDescription>
+          </div>
+          <div>
+            <h3>Experience</h3>
+            <CardDescription>
+              {firstStepData.experience ? (
+                <p className="text-slate-950 text-sm font-semibold">
+                  from {firstStepData.experience} years of experience
+                </p>
+              ) : (
+                'here will be min and max salary for the position'
+              )}
+            </CardDescription>
+          </div>
           <div>
             <h3>Salary</h3>
             <CardDescription>

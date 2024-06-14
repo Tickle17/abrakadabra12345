@@ -1,5 +1,6 @@
 import { useVacancyStore } from '@/app/store';
 import { Button } from '@/shared/ui';
+import { Description } from '@radix-ui/react-dialog';
 import {
   ComponentBooleanIcon,
   ComponentInstanceIcon,
@@ -26,15 +27,23 @@ export const VacancyCreationHeader = () => {
 
   const handleCreateVacancy = () => {
     const data = {
-      status: '',
-      position: '',
-      workFormat: '',
-      specialization: '',
-      experience: '',
-      vacancy: firstStepData.position,
-      address: '',
-      businessId: '113c7e20-ce5b-4581-b4e3-04d3854a5ef4',
-      calendarId: '94cb1719-7569-4644-a84d-81e979d534d0',
+      status: 'active',
+      position: firstStepData.position,
+      description: secondStepData.description,
+      requirements: secondStepData.requirements,
+      idealCandidate: secondStepData.idealCandidate,
+      hardSkills: firstStepData.hardSkills,
+      softSkills: firstStepData.softSkills,
+      workFormat: firstStepData.workFormat,
+      salaryMin: firstStepData.salaryMin,
+      salaryMax: firstStepData.salaryMax,
+      specialization: null,
+      experience: firstStepData.experience,
+      address: secondStepData.address,
+      businessId: localStorage.getItem('id') || '',
+      createdAt: new Date().toISOString(),
+      updatedAt: null,
+      deletedAt: null,
     };
     axios
       .post<ResponseData>(

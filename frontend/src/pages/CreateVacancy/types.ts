@@ -14,7 +14,7 @@ export enum HardSkills {
 }
 
 export enum SoftSkills {
-  STRESS = 'STRESS',
+  STRESS = 'Stress',
   PRIDE = 'PRIDE',
   GREED = 'GREED',
   WRATH = 'WRATH',

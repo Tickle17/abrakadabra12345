@@ -14,27 +14,18 @@ type stepFirstValues = {
     | null;
   softSkills:
     | (
-        | 'COMMUNICATION'
-        | 'PROBLEM_SOLVING'
-        | 'TEAMWORK'
-        | 'ADAPTABILITY'
-        | 'TIME_MANAGEMENT'
-        | 'STRESS'
+        | 'Stress'
         | 'PRIDE'
         | 'GREED'
         | 'WRATH'
         | 'ENVY'
+        | 'LUST'
         | 'GLUTTONY'
         | 'SLOTH'
       )[]
     | null;
   hardSkills:
     | (
-        | 'NEXT.JS'
-        | 'SVELTE'
-        | 'VUE'
-        | 'SOLID'
-        | 'ASTRO'
         | 'REACT'
         | 'CSS'
         | 'JS'
@@ -51,9 +42,11 @@ type stepFirstValues = {
     | null;
   salaryMin: number;
   salaryMax: number;
+  experience: number;
 };
 
 type stepSecondValues = {
+  address: string;
   description: string;
   requirements: string;
   idealCandidate: string;
@@ -80,6 +73,7 @@ export type PImageModalStore = {
 export const useVacancyStore = create<PImageModalStore>(set => ({
   firstStepData: {
     position: '',
+    experience: 0,
     workFormat: [],
     softSkills: [],
     hardSkills: [],
@@ -96,6 +90,7 @@ export const useVacancyStore = create<PImageModalStore>(set => ({
   secondStepFormValid: false,
   setSecondStepFormValid: data => set({ secondStepFormValid: data }),
   secondStepData: {
+    address: '',
     description: '',
     requirements: '',
     idealCandidate: '',

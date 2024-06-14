@@ -16,16 +16,12 @@ export const formSchema = z.object({
   softSkills: z
     .array(
       z.enum([
-        'COMMUNICATION',
-        'PROBLEM_SOLVING',
-        'TEAMWORK',
-        'ADAPTABILITY',
-        'TIME_MANAGEMENT',
-        'STRESS',
+        'Stress',
         'PRIDE',
         'GREED',
         'WRATH',
         'ENVY',
+        'LUST',
         'GLUTTONY',
         'SLOTH',
       ]),
@@ -35,11 +31,6 @@ export const formSchema = z.object({
   hardSkills: z
     .array(
       z.enum([
-        'NEXT.JS',
-        'SVELTE',
-        'VUE',
-        'SOLID',
-        'ASTRO',
         'REACT',
         'CSS',
         'JS',

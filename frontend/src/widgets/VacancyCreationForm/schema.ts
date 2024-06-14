@@ -2,11 +2,6 @@ import { z } from 'zod';
 
 const hardSkillsSchema = z.array(
   z.enum([
-    'NEXT.JS',
-    'SVELTE',
-    'VUE',
-    'SOLID',
-    'ASTRO',
     'REACT',
     'CSS',
     'JS',
@@ -23,16 +18,12 @@ const hardSkillsSchema = z.array(
 );
 const softSkillsSchema = z.array(
   z.enum([
-    'COMMUNICATION',
-    'PROBLEM_SOLVING',
-    'TEAMWORK',
-    'ADAPTABILITY',
-    'TIME_MANAGEMENT',
-    'STRESS',
+    'Stress',
     'PRIDE',
     'GREED',
     'WRATH',
     'ENVY',
+    'LUST',
     'GLUTTONY',
     'SLOTH',
   ])
@@ -68,6 +59,7 @@ export const stepFirstSchema = z
     workFormat: workFormatSchema.nullable(),
     salaryMin: z.number().nonnegative(),
     salaryMax: z.number().nonnegative(),
+    experience: z.number().nonnegative(),
     softSkills: softSkillsSchema.nullable(),
     hardSkills: hardSkillsSchema.nullable(),
   })

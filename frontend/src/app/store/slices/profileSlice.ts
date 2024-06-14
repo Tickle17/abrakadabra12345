@@ -11,27 +11,18 @@ export type ProfileState = {
   criterionsJob: string;
   softSkills:
     | (
-        | 'COMMUNICATION'
-        | 'PROBLEM_SOLVING'
-        | 'TEAMWORK'
-        | 'ADAPTABILITY'
-        | 'TIME_MANAGEMENT'
-        | 'STRESS'
+        | 'Stress'
         | 'PRIDE'
         | 'GREED'
         | 'WRATH'
         | 'ENVY'
+        | 'LUST'
         | 'GLUTTONY'
         | 'SLOTH'
       )[]
     | null;
   hardSkills:
     | (
-        | 'NEXT.JS'
-        | 'SVELTE'
-        | 'VUE'
-        | 'SOLID'
-        | 'ASTRO'
         | 'REACT'
         | 'CSS'
         | 'JS'
