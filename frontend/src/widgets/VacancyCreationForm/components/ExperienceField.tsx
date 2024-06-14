@@ -1,5 +1,5 @@
 import { FormField, FormItem, Input } from '@/shared/ui';
-import { SketchLogoIcon } from '@radix-ui/react-icons';
+// import { SketchLogoIcon } from '@radix-ui/react-icons';
 import { Control, FieldErrors } from 'react-hook-form';
 import { stepFirstValues } from '../schema';
 
@@ -10,7 +10,7 @@ export const ExperienceField = ({
   control: Control<stepFirstValues>;
   errors: FieldErrors;
 }) => {
-  // console.log(errors);
+  console.log(errors);
   return (
     <div className="w-full flex flex-col md:flex-row md:items-center gap-5 md:gap-10">
       <div className="shrink-0 max-w-[60%] md:max-w-[175px] flex flex-col gap-1">

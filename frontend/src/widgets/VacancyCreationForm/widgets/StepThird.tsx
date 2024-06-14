@@ -124,9 +124,6 @@ export const StepThird = () => {
       experience: firstStepData.experience,
       address: secondStepData.address,
       businessId: localStorage.getItem('id') || '',
-      createdAt: new Date().toISOString(),
-      updatedAt: null,
-      deletedAt: null,
     };
     axios
       .post<ResponseData>(
@@ -279,7 +276,7 @@ export const StepThird = () => {
           </CardContent>
           <CardFooter>
             <div className="w-full flex items-end flex-col gap-1">
-              {secondStepData.calendarId ? (
+              {secondStepData.businessId ? (
                 <div className="flex items-center gap-1">
                   <Avatar className="w-12 h-12">
                     <AvatarImage src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fthelondonmagazine.org%2Fwp-content%2Fuploads%2F2019%2F11%2FFeature-Image-The-Brothers-Karamazov-2.jpg&f=1&nofb=1&ipt=421e8a95bd1ea4544f62bf2cf2514552447009adb800cceed49b7166b19a01c3&ipo=images" />
@@ -290,7 +287,7 @@ export const StepThird = () => {
                       Responsible hr
                     </p>
                     <p className="text-slate-950 font-semibold text-md underline">
-                      Karamazov
+                      {secondStepData.businessId}
                     </p>
                   </div>
                 </div>
@@ -428,7 +425,7 @@ export const StepThird = () => {
         </CardContent>
         <CardFooter>
           <div className="w-full flex items-end flex-col gap-1">
-            {secondStepData.calendarId ? (
+            {secondStepData.businessId ? (
               <div className="flex items-center gap-1">
                 <Avatar className="w-12 h-12">
                   <AvatarImage src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fthelondonmagazine.org%2Fwp-content%2Fuploads%2F2019%2F11%2FFeature-Image-The-Brothers-Karamazov-2.jpg&f=1&nofb=1&ipt=421e8a95bd1ea4544f62bf2cf2514552447009adb800cceed49b7166b19a01c3&ipo=images" />
@@ -439,7 +436,7 @@ export const StepThird = () => {
                     Responsible hr
                   </p>
                   <p className="text-slate-950 font-semibold text-md underline">
-                    Karamazov
+                    {secondStepData.businessId}
                   </p>
                 </div>
               </div>

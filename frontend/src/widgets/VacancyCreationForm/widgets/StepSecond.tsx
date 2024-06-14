@@ -34,7 +34,7 @@ export const StepSecond = () => {
       description: secondStepData.description,
       requirements: secondStepData.requirements,
       idealCandidate: secondStepData.idealCandidate,
-      calendarId: secondStepData.calendarId,
+      businessId: secondStepData.businessId,
     },
   });
   const { handleSubmit, control } = form;
@@ -48,7 +48,7 @@ export const StepSecond = () => {
     setSecondStepFormValid(true);
     setSecondStepData({
       ...data,
-      address: form.getValues('address'),
+      //address: form.getValues('address'),
     });
     switch (activeStep) {
       case 'Job Information': {
@@ -184,7 +184,7 @@ export const StepSecond = () => {
         </div>
         <FormField
           control={control}
-          name="calendarId"
+          name="businessId"
           render={({ field }) => {
             return (
               <FormItem>
@@ -205,18 +205,14 @@ export const StepSecond = () => {
                         <SelectValue placeholder="Select HR" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="df3d4dfe-fba9-482d-a6fe-35f644fc95f6">
+                        <SelectItem value="Stephany Colins">
                           Stephany Colins
                         </SelectItem>
-                        <SelectItem value="d14d502a-1984-4782-af47-756ef9936b0a">
-                          Mark Fisher
-                        </SelectItem>
-                        <SelectItem value="4ac29e30-fb34-4f5a-af68-2068a026e587">
+                        <SelectItem value="Mark Fisher">Mark Fisher</SelectItem>
+                        <SelectItem value="Liland Palmer">
                           Liland Palmer
                         </SelectItem>
-                        <SelectItem value="6f72c881-703e-411b-818a-400c17f741d7">
-                          Lora Palmer
-                        </SelectItem>
+                        <SelectItem value="Lora Palmer">Lora Palmer</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>

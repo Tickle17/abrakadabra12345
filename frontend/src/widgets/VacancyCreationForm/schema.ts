@@ -74,10 +74,11 @@ export const stepFirstSchema = z
   });
 
 export const stepSecondSchema = z.object({
+  address: z.string().min(5, { message: 'Too short' }),
   description: z.string().min(10, { message: 'Too short' }),
   requirements: z.string().min(10, { message: 'Too short' }),
   idealCandidate: z.string().min(10, { message: 'Too short' }),
-  calendarId: z.string().uuid(),
+  businessId: z.string(),
 });
 
 export const stepThirdSchema = z.object({

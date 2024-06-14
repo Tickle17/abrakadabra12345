@@ -10,7 +10,7 @@ export const SalaryField = ({
   control: Control<stepFirstValues>;
   errors: FieldErrors;
 }) => {
-  // console.log(errors);
+  console.log(errors);
   return (
     <div className="w-full flex flex-col md:flex-row md:items-center gap-5 md:gap-10">
       <div className="shrink-0 max-w-[60%] md:max-w-[175px] flex flex-col gap-1">

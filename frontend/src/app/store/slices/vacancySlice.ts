@@ -50,7 +50,7 @@ type stepSecondValues = {
   description: string;
   requirements: string;
   idealCandidate: string;
-  calendarId: string;
+  businessId: string;
 };
 
 export type PImageModalStore = {
@@ -94,7 +94,7 @@ export const useVacancyStore = create<PImageModalStore>(set => ({
     description: '',
     requirements: '',
     idealCandidate: '',
-    calendarId: '',
+    businessId: '',
   },
   setSecondStepData: data => set({ secondStepData: data }),
 }));

@@ -1,6 +1,6 @@
 import { useVacancyStore } from '@/app/store';
 import { Button } from '@/shared/ui';
-import { Description } from '@radix-ui/react-dialog';
+// import { Description } from '@radix-ui/react-dialog';
 import {
   ComponentBooleanIcon,
   ComponentInstanceIcon,
@@ -41,9 +41,6 @@ export const VacancyCreationHeader = () => {
       experience: firstStepData.experience,
       address: secondStepData.address,
       businessId: localStorage.getItem('id') || '',
-      createdAt: new Date().toISOString(),
-      updatedAt: null,
-      deletedAt: null,
     };
     axios
       .post<ResponseData>(
