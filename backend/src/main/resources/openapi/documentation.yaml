@@ -686,7 +686,7 @@ paths:
               schema:
                 type: "array"
                 items:
-                  $ref: "#/components/schemas/VacancySlotDTO"
+                  $ref: "#/components/schemas/VacancyExpandedSlotDTO"
         "400":
           description: "Bad Request"
           content:
@@ -849,6 +849,37 @@ paths:
               examples:
                 Example#1:
                   value: "Reaction not found"
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  description: ""
+                  value: "null"
+  /reactions:
+    get:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/ReactionsVacancyDTO"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "No reactions found"
         "400":
           description: "Bad Request"
           content:
@@ -1081,6 +1112,9 @@ components:
           type: "string"
         description:
           type: "string"
+        calendarId:
+          type: "string"
+          format: "uuid"
         createdAt:
           type: "string"
           format: "date-time"
@@ -1111,7 +1145,7 @@ components:
             - "PART_TIME"
             - "REMOTE"
             - "FREELANCE"
-            - "INTERSHIP"
+            - "INTERNSHIP"
             - "CONTRACT"
         description:
           type: "string"
@@ -1327,6 +1361,49 @@ components:
       - "vacancyId"
       - "dayOfWeek"
       - "date"
+    VacancyExpandedSlotDTO:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        slot:
+          type: "integer"
+          format: "int32"
+        free:
+          type: "boolean"
+        userId:
+          type: "string"
+          format: "uuid"
+        communication:
+          type: "string"
+        acceptingByUser:
+          type: "boolean"
+        vacancyId:
+          type: "string"
+          format: "uuid"
+        dayOfWeek:
+          type: "string"
+          enum:
+          - "MONDAY"
+          - "TUESDAY"
+          - "WEDNESDAY"
+          - "THURSDAY"
+          - "FRIDAY"
+          - "SATURDAY"
+          - "SUNDAY"
+        date:
+          type: "string"
+        businessId:
+          type: "string"
+          format: "uuid"
+        vacancyCalendar:
+          $ref: "#/components/schemas/VacancyCalendarDTO"
+      required:
+      - "communication"
+      - "vacancyId"
+      - "dayOfWeek"
+      - "date"
     DefaultMessageDTO:
       type: "object"
       properties:
@@ -1477,6 +1554,10 @@ components:
         vacancyId:
           type: "string"
           format: "uuid"
+        calendarData:
+          $ref: "#/components/schemas/VacancyCalendarDTO"
+        vacancySlot:
+          $ref: "#/components/schemas/VacancySlotDTO"
         vacancy:
           type: "string"
         position:
