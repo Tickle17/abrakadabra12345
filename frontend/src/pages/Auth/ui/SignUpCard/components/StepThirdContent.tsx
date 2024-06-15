@@ -27,7 +27,7 @@ export const StepThirdContent = ({ visible }: { visible: boolean }) => {
             <button
               onClick={() => {
                 setIsLoggedIn(true);
-                navigate('/profile');
+                navigate('/');
               }}
               className="w-full bg-slate-900 text-slate-50 px-3 py-3 border border-slate-950 rounded-sm text-sm font-light hover:opacity-85 transition-all shrink-0"
             >

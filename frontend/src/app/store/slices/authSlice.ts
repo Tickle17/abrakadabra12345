@@ -15,9 +15,10 @@ export type TAuthStore = {
   setUsername: (username: string) => void;
 };
 
+// TODO: merge getLoggedInToken and getUserId
 export const useAuthStore = create<TAuthStore>(set => ({
   isLoggedIn: false,
-  getLoggedInToken: () => localStorage.getItem('token') !== null,
+  getLoggedInToken: () => localStorage.getItem('id') !== null,
   getUserId: () => localStorage.getItem('id'),
   setIsLoggedIn: isLoggedIn => set({ isLoggedIn }),
   password: '',

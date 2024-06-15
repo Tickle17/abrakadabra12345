@@ -2,6 +2,7 @@ import { create } from 'zustand';
 
 export type ProfileState = {
   fullName: string;
+  role: 'business' | 'users' | '';
   photoUrl: string;
   age: number;
   stackTech: string;
@@ -41,11 +42,14 @@ export type ProfileState = {
 
 export type ProfileStore = {
   profileData: ProfileState;
+  setRole: (role: 'business' | 'users') => void;
+  setUserId: (userId: string) => void;
   setProfileData: (profileData: Partial<ProfileState>) => void;
 };
 
 export const useProfileStore = create<ProfileStore>(set => ({
   profileData: {
+    role: '',
     fullName: '',
     photoUrl: '',
     age: 0,
@@ -57,6 +61,18 @@ export const useProfileStore = create<ProfileStore>(set => ({
     softSkills: null,
     hardSkills: null,
   },
+  setRole: role =>
+    set(state => {
+      localStorage.setItem('role', role);
+      return {
+        profileData: { ...state.profileData, role: role },
+      };
+    }),
+  setUserId: userId =>
+    set(state => {
+      localStorage.setItem('id', userId);
+      return { profileData: { ...state.profileData, userId } };
+    }),
   setProfileData: profileData =>
     set(state => ({
       profileData: { ...state.profileData, ...profileData },

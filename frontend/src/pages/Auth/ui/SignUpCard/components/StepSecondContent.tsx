@@ -1,4 +1,4 @@
-import { useAuthStore } from '@/app/store';
+import { useAuthStore, useProfileStore } from '@/app/store';
 import { Input } from '@/shared/ui';
 import {
   Form,
@@ -63,6 +63,7 @@ export const StepSecondContent = ({
   visible: boolean;
   setSignUpStep: React.Dispatch<React.SetStateAction<1 | 2 | 3>>;
 }) => {
+  const { setRole, setUserId } = useProfileStore();
   const [authStage, setAuthStageState] = useState<
     'initial' | 'loading' | 'success' | 'error'
   >('initial');
@@ -85,7 +86,7 @@ export const StepSecondContent = ({
 
     interface ResponseData {
       id: string;
-      role: string;
+      role: 'business' | 'users';
     }
 
     axios
@@ -96,9 +97,8 @@ export const StepSecondContent = ({
       )
       .then((response: AxiosResponse<ResponseData>) => {
         if (response.status === 200 || response.status === 201) {
-          localStorage.setItem('token', 'true');
-          localStorage.setItem('id', response.data.id);
-          localStorage.setItem('role', response.data.role);
+          setUserId(response.data.id);
+          setRole(response.data.role);
           setAuthStageState('success');
         } else {
           setAuthStageState('error');
@@ -116,7 +116,6 @@ export const StepSecondContent = ({
     if (authStage === 'success') {
       const timeOut = setTimeout(() => {
         setAuthStageState('initial');
-        localStorage.setItem('token', 'true');
         setSignUpStep(3);
       }, 2000);
 

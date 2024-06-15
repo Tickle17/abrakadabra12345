@@ -13,14 +13,27 @@ import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { formSchema } from '../types';
 import { useAuthStore } from '@/app/store';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
+import { useProfileStore } from '@/app/store';
 
+type ResponseData = {
+  role: 'business' | 'users';
+  id: string;
+};
+
+// TODO: move state logic to slice
+// TODO: merge sign in and sign up auth logic
+// TODO: fix navigate issues
 export const SignInForm = ({
   setAuthStage,
 }: {
   setAuthStage: React.Dispatch<React.SetStateAction<'signIn' | 'signUp'>>;
 }) => {
-  const [userRole, setUserRole] = useState<undefined | 'Admin' | 'User'>();
+  const { profileData, setRole, setUserId } = useProfileStore();
+  const [responseData, setResponseData] = useState<ResponseData>({
+    role: 'users',
+    id: '',
+  });
   const [loginStage, setLoginStageState] = useState<
     'none' | 'loading' | 'success' | 'error'
   >('none');
@@ -44,16 +57,21 @@ export const SignInForm = ({
     const data = { login: email, password };
 
     axios
-      .post('https://backendhackaton.onrender.com/login', data)
-      .then(response => {
-        setLoginStageState(response.status === 200 ? 'success' : 'error');
-        response.status === 200 && setUserRole(response.data.role);
-        localStorage.setItem('id', response.data.id);
-        localStorage.setItem('role', response.data.role);
+      .post<ResponseData>('https://backendhackaton.onrender.com/login', data)
+      .then((response: AxiosResponse<ResponseData>) => {
+        if (response.status === 200) {
+          setResponseData(response.data);
+          setLoginStageState('success');
+        } else {
+          setLoginStageState('error');
+          setResponseData({ role: 'users', id: '' });
+          toast('Something went wrong');
+        }
       })
       .catch(error => {
         toast('Something went wrong');
         console.error(error);
+        setResponseData({ role: 'users', id: '' });
         setLoginStageState('error');
       });
   }
@@ -70,17 +88,27 @@ export const SignInForm = ({
   }, [loginStage, setAuthStage]);
 
   useEffect(() => {
-    if (loginStage === 'success') {
-      const timeout = setTimeout(() => {
-        setIsLoggedIn(true);
-        userRole === 'Admin' ? navigate('/admin') : navigate('/');
-        localStorage.setItem('token', 'true');
-      }, 2000);
-      return () => {
-        clearTimeout(timeout);
-      };
-    }
-  });
+    if (loginStage !== 'success') return;
+
+    const timeout = setTimeout(() => {
+      setIsLoggedIn(true);
+      setRole(responseData.role);
+      setUserId(responseData.id);
+    }, 2000);
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [
+    loginStage,
+    navigate,
+    setIsLoggedIn,
+    profileData.role,
+    setRole,
+    responseData.role,
+    responseData.id,
+    setUserId,
+  ]);
 
   return (
     <Form {...form}>
