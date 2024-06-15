@@ -13,12 +13,14 @@ export type TDay = {
 };
 
 export type TCalendarStore = {
+  id: string;
   duration: number; // длительность одного собеседования в часах
   freeTime: number; // время отдыха между собеседованиями
   dayStart: number; // начало рабочего дня
   dayEnd: number; // конец рабочего дня
   slots: number; // кол-во слотов в день
-  dayOfWeek: TDay[]; // дни недели
+  maxReserveDays: number;
+  workingDays: TDay[]; // дни недели
   setDuration: (duration: number) => void;
   setFreeTime: (freeTime: number) => void;
   setDayStart: (dayStart: number) => void;
@@ -29,12 +31,15 @@ export type TCalendarStore = {
 
 // TODO: merge getLoggedInToken and getUserId
 export const useCalendarSlice = create<TCalendarStore>(set => ({
+  id: '',
   duration: 0,
   freeTime: 0,
   dayStart: 0,
   dayEnd: 0,
   slots: 0,
-  dayOfWeek: [
+  maxReserveDays: 0,
+
+  workingDays: [
     {
       day: 'MONDAY',
       isWorking: true,
@@ -69,5 +74,8 @@ export const useCalendarSlice = create<TCalendarStore>(set => ({
   setDayStart: dayStart => set({ dayStart }),
   setDayEnd: dayEnd => set({ dayEnd }),
   setSlots: slots => set({ slots }),
-  setDayOfWeek: dayOfWeek => set({ dayOfWeek }),
+  setDayOfWeek: workingDays =>
+    set({
+      workingDays,
+    }),
 }));

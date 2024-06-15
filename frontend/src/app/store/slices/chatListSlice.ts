@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import axios, { AxiosResponse } from 'axios';
 import { toast } from 'sonner';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
+import { TCalendarStore } from '@/app/store/slices/calendarSlice.ts';
 
 export type TChatList = {
   reactionId: string;
@@ -10,6 +11,18 @@ export type TChatList = {
   position: string;
   userId: string;
   vacancyId: string;
+  calendarData: TCalendarStore;
+  vacancySlot: {
+    id: string;
+    slot: number;
+    free: boolean;
+    userId: string;
+    communication: string;
+    acceptingByUser: boolean;
+    vacancyId: string;
+    dayOfWeek: string;
+    date: Date;
+  };
 };
 
 export type Messages = {
@@ -32,7 +45,6 @@ export type TChatListCurrentUser = {
 export type ChatListStore = {
   profileData: TChatList[];
   setProfileData: (profileData: TChatList[]) => void;
-  getProfileData: () => TChatList[];
   currentChatId: TChatListCurrentUser;
   setCurrentChat: (
     reactionId: string,
@@ -53,7 +65,6 @@ export type ChatListStore = {
 export const useChatListStore = create<ChatListStore>((set, get) => ({
   profileData: [],
   setProfileData: (profileData: TChatList[]) => set({ profileData }),
-  getProfileData: () => get().profileData,
   currentChatId: { reactionId: '', businessId: '', userId: '', vacancyId: '' },
   setCurrentChat: (reactionId, businessId, userId, vacancyId) => {
     set({ currentChatId: { reactionId, businessId, userId, vacancyId } });

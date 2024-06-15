@@ -1,61 +1,82 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import {
   Messages,
   useChatListStore,
 } from '@/app/store/slices/chatListSlice.ts';
-import { toast } from 'sonner';
-import { Button, CardDescription } from '@/shared/ui';
+import { CardDescription } from '@/shared/ui';
+import {
+  checkPosition,
+  createSlots,
+  Index,
+  SendSlotRequest,
+} from '@/pages/Chat/ui/ChatWindow/feature';
+import { ChatInputBlock } from '@/pages/Chat/ui/ChatWindow/ui/ChatInputBlock.tsx';
+import { addDays, format } from 'date-fns';
+import { PopUp } from './ui/PopUp';
 
 export const ChatWindow: React.FC = () => {
+  const { currentChatId, profileData } = useChatListStore();
   const currentMessages = useChatListStore(state => state.messages);
-  const currentChatId = useChatListStore(state => state.currentChatId);
+  const filteredChatData = profileData.find(
+    chat => chat.reactionId === currentChatId.reactionId
+  );
   const id = localStorage.getItem('id');
   const role = localStorage.getItem('role');
   const [message, setMessage] = useState('');
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
+  const [selectedCommunication, setSelectedCommunication] = useState<
+    string | null
+  >(null);
+  const isMessageRightAligned = checkPosition(id, currentChatId);
 
-  const isMessageRightAligned = (message: Messages) => {
-    if (id === currentChatId.userId) {
-      return message.senderType === 'users';
-    } else if (id === currentChatId.businessId) {
-      return message.senderType === 'business';
+  const handleSendMessage = Index(message, id, currentChatId, setMessage);
+
+  const getNextDays = (maxDays: number) => {
+    const days = [];
+    for (let i = 0; i <= maxDays; i++) {
+      days.push(addDays(new Date(), i));
     }
-    return false;
+    return days;
   };
 
-  const handleSendMessage = async () => {
-    if (!message.trim()) {
-      toast('Message cannot be empty');
-      return;
-    }
-
-    const senderType = id === currentChatId.userId ? 'users' : 'business';
-
-    const newMessage = {
-      reactionsVacancyId: currentChatId.reactionId,
-      senderType,
-      senderId: id,
-      message,
-    };
-
-    try {
-      const response = await axios.post(
-        'https://backendhackaton.onrender.com/message',
-        newMessage
+  let availableDays: Date[] = [];
+  if (filteredChatData && role !== 'business') {
+    const newFilter = filteredChatData.calendarData;
+    availableDays = getNextDays(newFilter.maxReserveDays).filter(date => {
+      const dayOfWeek = format(date, 'EEEE').toUpperCase();
+      return newFilter.workingDays.some(
+        day => day.day === dayOfWeek && day.isWorking
       );
+    });
+  }
 
-      if (response.status === 200 || response.status === 201) {
-        setMessage('');
-      } else {
-        toast('Failed to send message');
-      }
-    } catch (error) {
-      toast('Failed to send message');
-      console.error(error);
-    }
+  const formatDate = (date: Date) => {
+    return format(date, 'dd.MM.yyyy');
   };
 
   const shouldDisable = currentMessages.length <= 0 && role === 'users';
+
+  const convertToMinutes = (time: number) => {
+    const hours = Math.floor(time);
+    const minutes = (time - hours) * 100;
+    return hours * 60 + minutes;
+  };
+  const generateTimeSlots = createSlots(convertToMinutes);
+  const sendSlotRequest = SendSlotRequest(
+    selectedDate,
+    selectedSlot,
+    filteredChatData
+  );
+
+  let timeSlots: string[] = [];
+  if (filteredChatData && role !== 'business') {
+    const { dayStart, slots, duration, freeTime } =
+      filteredChatData.calendarData;
+    timeSlots = generateTimeSlots(dayStart, slots, duration, freeTime);
+  }
+
+  const communicationMethods = ['Google Meet', 'Zoom', 'Telegram'];
 
   return (
     <div className="flex flex-col gap-3 col-span-6 p-6 bg-white shadow-sm">
@@ -65,16 +86,41 @@ export const ChatWindow: React.FC = () => {
           .map((message: Messages) => (
             <div
               key={message.id}
-              className={`flex ${isMessageRightAligned(message) ? 'justify-end' : 'justify-start'}`}
+              className={`flex ${isMessageRightAligned(message) ? ' flex-col items-end' : 'justify-start'}`}
             >
-              <div className="max-w-xs p-2 m-1 rounded-lg shadow-md bg-gray-100">
-                <p>
-                  <strong>Sender:</strong> {message.senderId}
-                </p>
-                <p>{message.message}</p>
-                <p>
-                  <small>{message.createdAt}</small>
-                </p>
+              <div>
+                <div className="flex flex-col max-w-xs p-2 m-1 rounded-lg shadow-md bg-gray-100">
+                  <p>
+                    <strong>
+                      {isMessageRightAligned(message)
+                        ? 'Отправитель'
+                        : 'Получатель'}
+                    </strong>{' '}
+                    {message.senderId}
+                  </p>
+                  <p>{message.message}</p>
+                  <p className="flex justify-end">
+                    <small>
+                      {format(message.createdAt, 'dd.MM.yyyy HH:mm')}
+                    </small>
+                  </p>
+                </div>
+                {!isMessageRightAligned(message) &&
+                  role !== 'business' &&
+                  PopUp(
+                    selectedDate,
+                    filteredChatData,
+                    availableDays,
+                    setSelectedDate,
+                    formatDate,
+                    selectedSlot,
+                    timeSlots,
+                    setSelectedSlot,
+                    selectedCommunication,
+                    communicationMethods,
+                    setSelectedCommunication,
+                    sendSlotRequest
+                  )}
               </div>
             </div>
           ))}
@@ -86,23 +132,7 @@ export const ChatWindow: React.FC = () => {
           </CardDescription>
         )}
       </div>
-      <div className="flex gap-2 mt-4">
-        <input
-          type="text"
-          value={message}
-          onChange={e => setMessage(e.target.value)}
-          className={`flex-grow p-2 border rounded-lg ${shouldDisable ? 'bg-gray-300' : 'bg-white'}`}
-          placeholder="Type your message..."
-          disabled={shouldDisable}
-        />
-        <Button
-          onClick={handleSendMessage}
-          className={shouldDisable ? 'bg-gray-300 cursor-not-allowed' : ''}
-          disabled={shouldDisable}
-        >
-          Send
-        </Button>
-      </div>
+      {ChatInputBlock(message, setMessage, shouldDisable, handleSendMessage)}
     </div>
   );
 };

@@ -54,6 +54,14 @@ export function putReaction(
           control,
         }
       );
+      if (invitation === true) {
+        await axios.put(`https://backendhackaton.onrender.com/message`, {
+          message: 'Выберите подходящую дату для собеседования:',
+          reactionsVacancyId: selectedReaction.id,
+          senderId: selectedReaction.businessId,
+          senderType: 'business',
+        });
+      }
       console.log('Data updated successfully');
     } catch (error) {
       console.error('Failed to update data', error);
