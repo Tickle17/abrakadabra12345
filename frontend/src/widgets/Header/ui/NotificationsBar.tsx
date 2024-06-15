@@ -1,5 +1,5 @@
 import { useThemeStore } from '@/app/store';
-import { BookmarkIcon, EnvelopeClosedIcon } from '@radix-ui/react-icons';
+import { BellIcon, EnvelopeClosedIcon } from '@radix-ui/react-icons';
 import { NotificationButtonWrapper } from '../components';
 
 import { Switch } from '@/shared/ui/switch';
@@ -11,14 +11,14 @@ export const NotificationsBar = () => {
   return (
     <div className="row-span-1 col-span-4 flex justify-center items-center gap-6">
       <div className="flex justify-center items-center gap-4 bg-white mx-4 w-full h-full p-2">
-        {/*<NotificationButtonWrapper path="/notifications" notifications={7}>*/}
-        {/*  <BellIcon className="w-5 h-5 text-slate-900" />*/}
-        {/*</NotificationButtonWrapper>*/}
         <NotificationButtonWrapper path="/messages" notifications={11}>
           <EnvelopeClosedIcon className="w-5 h-5 text-slate-900" />
         </NotificationButtonWrapper>
-        <NotificationButtonWrapper path="/bookmarks" notifications={11}>
-          <BookmarkIcon className="w-5 h-5 text-slate-900" />
+        {/*<NotificationButtonWrapper path="/bookmarks" notifications={11}>*/}
+        {/*  <BookmarkIcon className="w-5 h-5 text-slate-900" />*/}
+        {/*</NotificationButtonWrapper>*/}
+        <NotificationButtonWrapper path="/notifications" notifications={7}>
+          <BellIcon className="w-5 h-5 text-slate-900" />
         </NotificationButtonWrapper>
         <div className="flex items-center">
           <Switch

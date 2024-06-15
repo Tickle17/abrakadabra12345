@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { NavBar, NotificationsBar, SearchBar } from './widgets'; // import { useThemeStore } from '@/app/store';
+import { NavBar, NotificationsBar, SearchBar } from './ui'; // import { useThemeStore } from '@/app/store';
 
 // import { useThemeStore } from '@/app/store';
 
