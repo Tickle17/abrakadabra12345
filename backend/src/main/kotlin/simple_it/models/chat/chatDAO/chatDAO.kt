@@ -2,9 +2,12 @@ package simple_it.models.chat.chatDAO
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json.Default.decodeFromString
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import simple_it.models.business.businessDTO.Business
+import simple_it.models.calendar.calendarDTO.VacancyCalendar
+import simple_it.models.calendar.calendarDTO.VacancyCalendarDTO
 import simple_it.models.chat.chatDTO.*
 import simple_it.models.users.usersDTO.Users
 import simple_it.models.vacancy.vacancyDTO.Vacancy
@@ -62,20 +65,42 @@ class ReactionsVacancyService {
             emptyList()
         }
 
-        reactions.mapNotNull { (reactionId, vacancyId, relatedId) ->
+        reactions.mapNotNull { (reactionId, vacancyId, businessId) ->
             val vacancy = Vacancy
                 .select { Vacancy.id eq vacancyId }
                 .map { it[Vacancy.vacancy] to it[Vacancy.position] }
                 .firstOrNull()
 
+            val calendarData = if (userExists) {
+                VacancyCalendar.select { VacancyCalendar.businessId eq businessId }
+                    .map {
+                        VacancyCalendarDTO(
+                            id = it[VacancyCalendar.id],
+                            duration = it[VacancyCalendar.duration].toDouble(),
+                            freeTime = it[VacancyCalendar.freeTime].toDouble(),
+                            dayStart = it[VacancyCalendar.dayStart].toDouble(),
+                            dayEnd = it[VacancyCalendar.dayEnd].toDouble(),
+                            slots = it[VacancyCalendar.slots],
+                            maxReserveDays = it[VacancyCalendar.maxReserveDays],
+                            workingDays = decodeFromString(it[VacancyCalendar.workingDays]),
+                            businessId = it[VacancyCalendar.businessId],
+                            userId = it[VacancyCalendar.userId]
+                        )
+                    }
+                    .firstOrNull()
+            } else {
+                null
+            }
+
             vacancy?.let { (vacancyName, position) ->
                 ReactionsVacancyDetailsDTO(
                     reactionId = reactionId,
-                    userId = if (userExists) id else relatedId,
-                    businessId = if (businessExists) id else relatedId,
+                    userId = if (userExists) id else businessId,
+                    businessId = if (businessExists) id else businessId,
                     vacancyId = vacancyId,
                     vacancy = vacancyName ?: "Unknown vacancy",
-                    position = position ?: "Unknown position"
+                    position = position ?: "Unknown position",
+                    calendarData = calendarData
                 )
             }
         }

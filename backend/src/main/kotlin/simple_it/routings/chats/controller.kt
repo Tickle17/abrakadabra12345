@@ -37,17 +37,5 @@ fun Application.chatRout(
         post("/defaultMessage") {
             create(defaultMessagesService)
         }
-//        put("/calendar/{id}") {
-//            update(chatService)
-//        }
-//        get("/calendar/{id}") {
-//            read(chatService)
-//        }
-//        get("/calendars") {
-//            readAll(chatService)
-//        }
-//        delete("/calendar/{id}") {
-//            delete(chatService)
-//        }
     }
 }
