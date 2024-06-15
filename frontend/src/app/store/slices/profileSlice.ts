@@ -8,6 +8,7 @@ export type ProfileState = {
   stackTech: string;
   gitlabUrl: string;
   aboutUser: string;
+  targetsInfo: string;
   price: number;
   criterionsJob: string;
   softSkills:
@@ -59,6 +60,7 @@ export const useProfileStore = create<ProfileStore>(set => ({
     stackTech: '',
     gitlabUrl: '',
     aboutUser: '',
+    targetsInfo: '',
     price: 0,
     criterionsJob: '',
     softSkills: null,

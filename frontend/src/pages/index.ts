@@ -1,7 +1,7 @@
 export { RootPage } from '@/pages/User/Root';
 export { ErrorPage } from './Error';
 export { Profile } from '@/pages/User/Profile';
-export { Vacancies } from './User/Vacancies';
+export { Jobs } from './User/Vacancies';
 export { Settings } from '@/pages/Business/Settings';
 export { Chat } from '@/pages/Chat';
 export { AuthPage } from './Auth';

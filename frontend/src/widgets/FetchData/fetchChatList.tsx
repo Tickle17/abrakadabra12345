@@ -32,5 +32,5 @@ export default function FetchChatData() {
     }
   }, [id, setProfileData]);
 
-  return null; // Этот компонент используется только для получения данных при монтировании
+  return null;
 }

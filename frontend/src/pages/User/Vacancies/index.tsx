@@ -8,7 +8,7 @@ import { UserDetails } from '@/widgets';
 import { vacancyOffer } from '@/pages/User/Vacancies/ui/vacancyOffer.tsx';
 import { Button } from '@/shared/ui';
 
-export const Vacancies = () => {
+export const Jobs = () => {
   const { vacancies, loading, error, fetchVacancies } = useGetVacancyStore();
   const [selectedVacancy, setSelectedVacancy] = useState<VacancyDTO | null>(
     null

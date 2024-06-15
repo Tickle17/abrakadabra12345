@@ -4,14 +4,15 @@ import {
   Chat,
   CreateVacancy,
   ErrorPage,
+  Jobs,
   Profile,
   RootPage,
   Settings,
-  Vacancies,
 } from '@/pages';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { useFetchUserProfile } from '@/widgets/FetchData/fetchProfile';
 import { Statistic } from '@/pages/Business/Statistic';
+import Vacancies from '@/pages/Business/Vacancies';
 import React from 'react';
 
 interface PrivateRouteProps {
@@ -89,8 +90,8 @@ export const router = createBrowserRouter([
     element: <PrivateRoute element={Profile} role="users" />,
   },
   {
-    path: 'vacancies',
-    element: <PrivateRoute element={Vacancies} role="users" />,
+    path: 'jobs',
+    element: <PrivateRoute element={Jobs} role="users" />,
   },
   {
     path: 'settings',
@@ -107,5 +108,9 @@ export const router = createBrowserRouter([
   {
     path: 'statistic',
     element: <PrivateRoute element={Statistic} role="business" />,
+  },
+  {
+    path: 'vacancies',
+    element: <PrivateRoute element={Vacancies} />,
   },
 ]);

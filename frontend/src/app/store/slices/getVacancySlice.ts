@@ -87,3 +87,33 @@ export const useGetVacancyStore = create<VacancyState>(set => ({
     }
   },
 }));
+
+type VacancyByIdState = {
+  vacancy: VacancyDTO | null;
+  loading: boolean;
+  error: string | null;
+  fetchVacancyById: (id: string) => Promise<void>;
+};
+
+export const useGetVacancyByIdStore = create<VacancyByIdState>(set => ({
+  vacancy: null,
+  loading: false,
+  error: null,
+
+  // Асинхронное действие для получения вакансии по ID
+  fetchVacancyById: async (id: string) => {
+    set({ loading: true, error: null });
+    try {
+      const response = await axios.get(
+        `https://backendhackaton.onrender.com/vacancy/${id}`
+      );
+      set({ vacancy: response.data, loading: false });
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        set({ error: error.message, loading: false });
+      } else {
+        set({ error: 'An unknown error occurred', loading: false });
+      }
+    }
+  },
+}));

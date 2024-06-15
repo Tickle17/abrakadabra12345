@@ -5,12 +5,13 @@ import {
   useChatListStore,
 } from '@/app/store/slices/chatListSlice.ts';
 import { toast } from 'sonner';
-import { CardDescription } from '@/shared/ui';
+import { Button, CardDescription } from '@/shared/ui';
 
 export const ChatWindow: React.FC = () => {
   const currentMessages = useChatListStore(state => state.messages);
   const currentChatId = useChatListStore(state => state.currentChatId);
   const id = localStorage.getItem('id');
+  const role = localStorage.getItem('role');
   const [message, setMessage] = useState('');
 
   const isMessageRightAligned = (message: Messages) => {
@@ -54,11 +55,11 @@ export const ChatWindow: React.FC = () => {
     }
   };
 
+  const shouldDisable = currentMessages.length <= 0 && role === 'users';
+
   return (
     <div className="flex flex-col gap-3 col-span-6 p-6 bg-white shadow-sm">
       <div className="flex-grow overflow-auto">
-        {/*<MessageWindow messageList={messages} />*/}
-        {/*<MessageSender />*/}
         {currentMessages
           .filter(message => message.message && message.message.trim() !== '')
           .map((message: Messages) => (
@@ -79,24 +80,28 @@ export const ChatWindow: React.FC = () => {
           ))}
         {currentMessages.length <= 0 && (
           <CardDescription>
-            Ваш отклик еще изучают, ожидайте, пожалуйста, обратной связи
+            {role === 'users'
+              ? 'Ваш отклик еще изучают, ожидайте, пожалуйста, обратной связи'
+              : 'Пользователь еще не получил ответ'}
           </CardDescription>
         )}
       </div>
-      <div className="flex mt-4">
+      <div className="flex gap-2 mt-4">
         <input
           type="text"
           value={message}
           onChange={e => setMessage(e.target.value)}
-          className="flex-grow p-2 border border-gray-300 rounded-lg"
+          className={`flex-grow p-2 border rounded-lg ${shouldDisable ? 'bg-gray-300' : 'bg-white'}`}
           placeholder="Type your message..."
+          disabled={shouldDisable}
         />
-        <button
+        <Button
           onClick={handleSendMessage}
-          className="ml-2 p-2 bg-blue-500 text-white rounded-lg"
+          className={shouldDisable ? 'bg-gray-300 cursor-not-allowed' : ''}
+          disabled={shouldDisable}
         >
           Send
-        </button>
+        </Button>
       </div>
     </div>
   );
