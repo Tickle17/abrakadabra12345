@@ -2,11 +2,8 @@ package simple_it.models.chat.chatDAO
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.Serializable
-import org.jetbrains.exposed.sql.and
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
-import org.jetbrains.exposed.sql.update
 import simple_it.models.business.businessDTO.Business
 import simple_it.models.chat.chatDTO.*
 import simple_it.models.users.usersDTO.Users
@@ -81,6 +78,20 @@ class ReactionsVacancyService {
                     position = position ?: "Unknown position"
                 )
             }
+        }
+    }
+
+    suspend fun getAllReactions(): List<ReactionsVacancyDTO> = dbQuery {
+        ReactionsVacancy.selectAll().map {
+            ReactionsVacancyDTO(
+                id = it[ReactionsVacancy.id],
+                commentary = it[ReactionsVacancy.commentary],
+                invitation = it[ReactionsVacancy.invitation],
+                control = it[ReactionsVacancy.control],
+                userId = it[ReactionsVacancy.userId],
+                businessId = it[ReactionsVacancy.businessId],
+                vacancyId = it[ReactionsVacancy.vacancyId]
+            )
         }
     }
 }

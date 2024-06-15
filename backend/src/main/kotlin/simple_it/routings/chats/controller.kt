@@ -23,6 +23,9 @@ fun Application.chatRout(
         get("/reactions/{id}") {
             getAllbyId(reactionsVacancyService)
         }
+        get("/reactions") {
+            getAllReactions(reactionsVacancyService)
+        }
         post("/message") {
             postMessage(messagesService)
         }

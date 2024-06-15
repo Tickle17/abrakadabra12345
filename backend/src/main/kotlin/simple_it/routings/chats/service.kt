@@ -62,6 +62,22 @@ suspend fun PipelineContext<Unit, ApplicationCall>.getAllbyId(
     }
 }
 
+suspend fun PipelineContext<Unit, ApplicationCall>.getAllReactions(
+    reactionsVacancyService: ReactionsVacancyService
+) {
+    try {
+        val reactions = reactionsVacancyService.getAllReactions()
+        if (reactions.isNotEmpty()) {
+            call.respond(HttpStatusCode.OK, reactions)
+        } else {
+            call.respond(HttpStatusCode.NotFound, "No reactions found")
+        }
+    } catch (e: Throwable) {
+        val errorMessage = "Error occurred: ${e.message}"
+        call.respond(HttpStatusCode.BadRequest, errorMessage)
+    }
+}
+
 
 suspend fun PipelineContext<Unit, ApplicationCall>.postMessage(
     messagesService: MessagesService
