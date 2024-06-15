@@ -1,4 +1,5 @@
 import {
+  ArchiveIcon,
   BackpackIcon,
   BarChartIcon,
   CalendarIcon,
@@ -21,7 +22,7 @@ export const NavBar = () => {
           <IconLinkWrapper path="/profile">
             <PersonIcon className="w-5 h-5 text-slate-900" />
           </IconLinkWrapper>
-          <IconLinkWrapper path="/vacancies">
+          <IconLinkWrapper path="/jobs">
             <BackpackIcon className="w-5 h-5 text-slate-900" />
           </IconLinkWrapper>
         </>
@@ -32,6 +33,9 @@ export const NavBar = () => {
           </IconLinkWrapper>
           <IconLinkWrapper path="/create-vacancy">
             <FileIcon className="w-5 h-5 text-slate-900" />
+          </IconLinkWrapper>
+          <IconLinkWrapper path="/vacancies">
+            <ArchiveIcon className="w-5 h-5 text-slate-900" />
           </IconLinkWrapper>
           <IconLinkWrapper path="/calendar">
             <CalendarIcon className="w-5 h-5 text-slate-900" />
