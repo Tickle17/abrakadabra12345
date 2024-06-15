@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { HardSkills, SoftSkills } from './types';
+import { HardSkills, SoftSkills } from './types.ts';
 
 export const formSchema = z.object({
   status: z.string().nullable(),

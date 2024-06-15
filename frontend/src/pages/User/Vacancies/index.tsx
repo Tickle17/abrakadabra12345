@@ -5,7 +5,7 @@ import {
 } from '@/app/store/slices/getVacancySlice.ts';
 import { useEffect, useState } from 'react';
 import { UserDetails } from '@/widgets';
-import { vacancyOffer } from '@/pages/Vacancies/ui/vacancyOffer.tsx';
+import { vacancyOffer } from '@/pages/User/Vacancies/ui/vacancyOffer.tsx';
 import { Button } from '@/shared/ui';
 
 export const Vacancies = () => {

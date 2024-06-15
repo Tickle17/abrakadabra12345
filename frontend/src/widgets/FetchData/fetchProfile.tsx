@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import axios, { AxiosResponse } from 'axios';
 import { useProfileStore } from '@/app/store/slices/profileSlice.ts';
-import { ResponseData } from '@/pages/Profile';
+import { ResponseData } from '@/pages/User/Profile';
 import { toast } from 'sonner';
 import { useAuthStore } from '@/app/store';
 

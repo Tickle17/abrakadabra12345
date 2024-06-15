@@ -1,9 +1,9 @@
-export { RootPage } from './Root';
+export { RootPage } from '@/pages/User/Root';
 export { ErrorPage } from './Error';
-export { Profile } from './Profile';
-export { Vacancies } from './Vacancies';
-export { Settings } from './Settings';
-export { Chat } from './Chat';
+export { Profile } from '@/pages/User/Profile';
+export { Vacancies } from './User/Vacancies';
+export { Settings } from '@/pages/Business/Settings';
+export { Chat } from '@/pages/User/Chat';
 export { AuthPage } from './Auth';
-export { CreateVacancy } from './CreateVacancy';
-export { Calendar } from './Calendar';
+export { CreateVacancy } from '@/pages/Business/CreateVacancy';
+export { Calendar } from '@/pages/Business/Calendar';

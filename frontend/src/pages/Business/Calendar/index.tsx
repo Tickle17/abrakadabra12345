@@ -12,7 +12,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-} from '@/shared/ui/form';
+} from '@/shared/ui/form.tsx';
 import { Button } from '@/shared/ui/button.tsx';
 import axios, { AxiosResponse } from 'axios';
 import {

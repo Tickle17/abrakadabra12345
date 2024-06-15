@@ -10,9 +10,9 @@ import {
   Vacancies,
 } from '@/pages';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
-import { useAuthStore } from '../store';
+import { useAuthStore } from './store';
 import { useFetchUserProfile } from '@/widgets/FetchData/fetchProfile.tsx';
-import { Statistic } from '@/pages/Statistic';
+import { Statistic } from '@/pages/Business/Statistic';
 
 interface PrivateRouteProps {
   element: React.ComponentType;
