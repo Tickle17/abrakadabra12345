@@ -132,7 +132,7 @@ export const FormRewritedComponent = () => {
   };
 
   return (
-    <div className="w-full h-full flex flex-col justify-center">
+    <div className="w-full h-full flex flex-col justify-center ">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -299,7 +299,7 @@ export const FormRewritedComponent = () => {
 export const Calendar = () => {
   return (
     <AppLayout>
-      <div className="bg-white shadow-sm p-5 rounded-[2px] col-span-12">
+      <div className="bg-white shadow-sm p-5 border-radius-default col-span-12">
         {/* <FormRewritedComponent /> */}
         <CalendarPage />
       </div>

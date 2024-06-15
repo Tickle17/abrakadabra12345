@@ -1,5 +1,5 @@
 import { VacancyDTO } from '@/app/store/slices/getVacancySlice.ts';
-import Modal from '@/widgets/Modal/Modal.tsx';
+import Modal from '@/widgets/VacancyModal/Modal.tsx';
 import {
   Avatar,
   AvatarFallback,

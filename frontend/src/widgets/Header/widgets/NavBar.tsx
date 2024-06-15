@@ -24,9 +24,6 @@ export const NavBar = () => {
           <IconLinkWrapper path="/vacancies">
             <BackpackIcon className="w-5 h-5 text-slate-900" />
           </IconLinkWrapper>
-          <IconLinkWrapper path="/settings">
-            <GearIcon className="w-5 h-5 text-slate-900" />
-          </IconLinkWrapper>
         </>
       ) : (
         <>
@@ -38,6 +35,9 @@ export const NavBar = () => {
           </IconLinkWrapper>
           <IconLinkWrapper path="/calendar">
             <CalendarIcon className="w-5 h-5 text-slate-900" />
+          </IconLinkWrapper>
+          <IconLinkWrapper path="/settings">
+            <GearIcon className="w-5 h-5 text-slate-900" />
           </IconLinkWrapper>
         </>
       )}
