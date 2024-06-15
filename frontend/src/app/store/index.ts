@@ -6,3 +6,4 @@ export { useUserStore } from './slices/userSlice';
 export { useAuthStore } from './slices/authSlice';
 export { useVacancyStore } from './slices/vacancySlice';
 export { useProfileStore } from './slices/profileSlice';
+export { useCalendarSlice } from './slices/calendarSlice';

@@ -42,6 +42,8 @@ export type ProfileState = {
 
 export type ProfileStore = {
   profileData: ProfileState;
+  calendarid: string | null;
+  setCalendarId: (calendarId: string | null) => void;
   setRole: (role: 'business' | 'users') => void;
   setUserId: (userId: string) => void;
   setProfileData: (profileData: Partial<ProfileState>) => void;
@@ -49,6 +51,7 @@ export type ProfileStore = {
 
 export const useProfileStore = create<ProfileStore>(set => ({
   profileData: {
+    id: '',
     role: '',
     fullName: '',
     photoUrl: '',
@@ -61,6 +64,8 @@ export const useProfileStore = create<ProfileStore>(set => ({
     softSkills: null,
     hardSkills: null,
   },
+  calendarid: null,
+  setCalendarId: calendarId => set({ calendarid: calendarId }),
   setRole: role =>
     set(state => {
       localStorage.setItem('role', role);
