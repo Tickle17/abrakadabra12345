@@ -2,6 +2,7 @@ package simple_it.models.chat.chatDAO
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.Json.Default.decodeFromString
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
@@ -9,6 +10,8 @@ import simple_it.models.business.businessDTO.Business
 import simple_it.models.calendar.calendarDTO.VacancyCalendar
 import simple_it.models.calendar.calendarDTO.VacancyCalendarDTO
 import simple_it.models.chat.chatDTO.*
+import simple_it.models.slot.slotDTO.VacancySlot
+import simple_it.models.slot.slotDTO.VacancySlotDTO
 import simple_it.models.users.usersDTO.Users
 import simple_it.models.vacancy.vacancyDTO.Vacancy
 import java.util.*
@@ -92,6 +95,23 @@ class ReactionsVacancyService {
                 null
             }
 
+            val vacancySlot = VacancySlot
+                .select { VacancySlot.vacancyId eq vacancyId }
+                .map {
+                    VacancySlotDTO(
+                        id = it[VacancySlot.id],
+                        slot = it[VacancySlot.slot],
+                        free = it[VacancySlot.free],
+                        userId = it[VacancySlot.userId],
+                        communication = it[VacancySlot.communication],
+                        acceptingByUser = it[VacancySlot.acceptingByUser],
+                        vacancyId = it[VacancySlot.vacancyId],
+                        dayOfWeek = Json.decodeFromString(it[VacancySlot.dayOfWeek]),
+                        date = it[VacancySlot.date],
+                    )
+                }
+                .firstOrNull()
+
             vacancy?.let { (vacancyName, position) ->
                 ReactionsVacancyDetailsDTO(
                     reactionId = reactionId,
@@ -100,11 +120,13 @@ class ReactionsVacancyService {
                     vacancyId = vacancyId,
                     vacancy = vacancyName ?: "Unknown vacancy",
                     position = position ?: "Unknown position",
-                    calendarData = calendarData
+                    calendarData = calendarData,
+                    vacancySlot = vacancySlot
                 )
             }
         }
     }
+
 
     suspend fun getAllReactions(): List<ReactionsVacancyDTO> = dbQuery {
         ReactionsVacancy.selectAll().map {

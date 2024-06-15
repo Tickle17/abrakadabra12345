@@ -6,6 +6,7 @@ import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.javatime.datetime
 import simple_it.models.business.businessDTO.Business
 import simple_it.models.calendar.calendarDTO.VacancyCalendarDTO
+import simple_it.models.slot.slotDTO.VacancySlotDTO
 import simple_it.models.users.usersDTO.Users
 import simple_it.models.vacancy.vacancyDTO.Vacancy
 import java.time.LocalDateTime
@@ -61,6 +62,7 @@ data class ReactionsVacancyDetailsDTO(
     @Contextual val businessId: UUID,
     @Contextual val vacancyId: UUID,
     @Contextual val calendarData: VacancyCalendarDTO?,
+    @Contextual val vacancySlot: VacancySlotDTO?,
     val vacancy: String,
     val position: String
 )
