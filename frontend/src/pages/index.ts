@@ -3,7 +3,7 @@ export { ErrorPage } from './Error';
 export { Profile } from '@/pages/User/Profile';
 export { Vacancies } from './User/Vacancies';
 export { Settings } from '@/pages/Business/Settings';
-export { Chat } from '@/pages/User/Chat';
+export { Chat } from '@/pages/Chat';
 export { AuthPage } from './Auth';
 export { CreateVacancy } from '@/pages/Business/CreateVacancy';
 export { Calendar } from '@/pages/Business/Calendar';

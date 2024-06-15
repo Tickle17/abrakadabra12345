@@ -30,7 +30,7 @@ export const Vacancies = () => {
   return (
     <AppLayout>
       <UserDetails />
-      <div className="col-span-6 grid grid-cols-1 grid-rows-12 gap-4 bg-white shadow-sm border-radius-default">
+      <div className="col-span-6 grid grid-cols-1 grid-rows-12 gap-4 bg-white shadow-sm border-radius-default overflow-y-auto">
         <div className="col-span-9 grid grid-cols-1 gap-4">
           {loading ? (
             <div className="bg-white p-6 shadow rounded-md">Loading...</div>

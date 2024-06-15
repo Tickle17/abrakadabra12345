@@ -5,6 +5,7 @@ import {
   useChatListStore,
 } from '@/app/store/slices/chatListSlice.ts';
 import { toast } from 'sonner';
+import { CardDescription } from '@/shared/ui';
 
 export const ChatWindow: React.FC = () => {
   const currentMessages = useChatListStore(state => state.messages);
@@ -76,6 +77,11 @@ export const ChatWindow: React.FC = () => {
               </div>
             </div>
           ))}
+        {currentMessages.length <= 0 && (
+          <CardDescription>
+            Ваш отклик еще изучают, ожидайте, пожалуйста, обратной связи
+          </CardDescription>
+        )}
       </div>
       <div className="flex mt-4">
         <input
