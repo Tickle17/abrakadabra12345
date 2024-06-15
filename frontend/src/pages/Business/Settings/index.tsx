@@ -1,13 +1,7 @@
 import { AppLayout } from '@/shared/layouts';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/shared/ui';
 import { CalendarSettings } from '@/pages/Business/Settings/ui/calendarSettings.tsx';
+import { AutoMessageSettings } from '@/pages/Business/Settings/ui/autoMessage.tsx';
+import { CreateWorkers } from '@/pages/Business/Settings/ui/createWorkers.tsx';
 
 export const Settings = () => {
   return (
@@ -15,20 +9,8 @@ export const Settings = () => {
       <div className="col-span-9 grid grid-cols-1 grid-rows-12 gap-4 bg-white shadow-sm border-radius-default p-4">
         <div className="grid grid-cols-2 gap-5 row-span-2">
           {CalendarSettings()}
-          <Card>
-            <CardHeader className="p-2">
-              <CardTitle>Авто - сообщения</CardTitle>
-              <CardDescription>
-                Настройте отправку автосообщений
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="p-2">
-              <p>Card Content</p>
-            </CardContent>
-            <CardFooter className="p-2">
-              <p>Card Footer</p>
-            </CardFooter>
-          </Card>
+          {AutoMessageSettings()}
+          {CreateWorkers()}
         </div>
       </div>
 
