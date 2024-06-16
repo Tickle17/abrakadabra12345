@@ -95,22 +95,41 @@ class ReactionsVacancyService {
                 null
             }
 
-            val vacancySlot = VacancySlot
-                .select { VacancySlot.vacancyId eq vacancyId }
-                .map {
-                    VacancySlotDTO(
-                        id = it[VacancySlot.id],
-                        slot = it[VacancySlot.slot],
-                        free = it[VacancySlot.free],
-                        userId = it[VacancySlot.userId],
-                        communication = it[VacancySlot.communication],
-                        acceptingByUser = it[VacancySlot.acceptingByUser],
-                        vacancyId = it[VacancySlot.vacancyId],
-                        dayOfWeek = DayOfWeek.valueOf(it[VacancySlot.dayOfWeek]),
-                        date = it[VacancySlot.date],
-                    )
-                }
-                .firstOrNull()
+            val vacancySlot = if (userExists) {
+                VacancySlot
+                    .select { (VacancySlot.vacancyId eq vacancyId) and (VacancySlot.userId eq id) }
+                    .map {
+                        VacancySlotDTO(
+                            id = it[VacancySlot.id],
+                            slot = it[VacancySlot.slot],
+                            free = it[VacancySlot.free],
+                            userId = it[VacancySlot.userId],
+                            communication = it[VacancySlot.communication],
+                            acceptingByUser = it[VacancySlot.acceptingByUser],
+                            vacancyId = it[VacancySlot.vacancyId],
+                            dayOfWeek = DayOfWeek.valueOf(it[VacancySlot.dayOfWeek]),
+                            date = it[VacancySlot.date]
+                        )
+                    }
+                    .firstOrNull()
+            } else {
+                VacancySlot
+                    .select { VacancySlot.vacancyId eq vacancyId }
+                    .map {
+                        VacancySlotDTO(
+                            id = it[VacancySlot.id],
+                            slot = it[VacancySlot.slot],
+                            free = it[VacancySlot.free],
+                            userId = it[VacancySlot.userId],
+                            communication = it[VacancySlot.communication],
+                            acceptingByUser = it[VacancySlot.acceptingByUser],
+                            vacancyId = it[VacancySlot.vacancyId],
+                            dayOfWeek = DayOfWeek.valueOf(it[VacancySlot.dayOfWeek]),
+                            date = it[VacancySlot.date]
+                        )
+                    }
+                    .firstOrNull()
+            }
 
             vacancy?.let { (vacancyName, position) ->
                 ReactionsVacancyDetailsDTO(
