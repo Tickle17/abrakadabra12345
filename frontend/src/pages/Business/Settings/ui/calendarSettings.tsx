@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/shared/ui';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import FetchCalendarById from '@/widgets/FetchData/fetchCalendarById.ts';
 
 export type Calendar = {
@@ -23,21 +23,20 @@ export type Calendar = {
 export function CalendarSettings() {
   const [calendar, setCalendar] = useState<Calendar | null>(null);
 
-  useEffect(() => {
-    const fetchCalendar = async () => {
-      const calendarData = await FetchCalendarById();
-      setCalendar(calendarData);
-    };
-
-    fetchCalendar();
+  const fetchCalendar = useCallback(async () => {
+    const calendarData = await FetchCalendarById();
+    setCalendar(calendarData);
   }, []);
+
+  useEffect(() => {
+    fetchCalendar();
+  }, [fetchCalendar]);
+
   return (
     <Card>
       <CardHeader className="p-2">
-        <CardHeader className="p-2">
-          <CardTitle>Календарь</CardTitle>
-          <CardDescription>Отрегулируйте свое расписание</CardDescription>
-        </CardHeader>
+        <CardTitle>Календарь</CardTitle>
+        <CardDescription>Отрегулируйте свое расписание</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-2 px-4">
         <div className="flex justify-between gap-4">
@@ -55,7 +54,7 @@ export function CalendarSettings() {
       <CardFooter className="p-2 flex align-center w-full gap-4">
         <div className="flex w-full items-center justify-between">
           <div>
-            <Button> Изменить </Button>
+            <Button>Изменить</Button>
           </div>
           <div className="flex gap-2">
             <div>

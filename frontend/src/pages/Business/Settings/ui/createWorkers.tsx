@@ -9,20 +9,20 @@ import {
   Input,
 } from '@/shared/ui';
 import { createBusiness } from '@/widgets/FetchData/fetchCreateBusiness.ts';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 export function CreateWorkers() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleCreateBusiness = async () => {
+  const handleCreateBusiness = useCallback(async () => {
     const confirmation = window.confirm(
       `Email: ${email}\nPassword: ${password}\n\nСоздать сотрудника с этими данными?`
     );
     if (confirmation) {
       await createBusiness(email, password);
     }
-  };
+  }, [email, password]);
 
   return (
     <Card>
