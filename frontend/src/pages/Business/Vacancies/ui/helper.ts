@@ -42,7 +42,8 @@ export function putReaction(
   selectedReaction: TReactions,
   commentary: string,
   invitation: boolean,
-  control: boolean
+  control: boolean,
+  closeModal: () => void
 ) {
   const handlePutReaction = async () => {
     try {
@@ -54,6 +55,15 @@ export function putReaction(
           control,
         }
       );
+      if (invitation === true) {
+        await axios.post(`https://backendhackaton.onrender.com/message`, {
+          message: 'Выберите подходящую дату для собеседования:',
+          reactionsVacancyId: selectedReaction.id,
+          senderId: selectedReaction.businessId,
+          senderType: 'business',
+        });
+      }
+      closeModal();
       console.log('Data updated successfully');
     } catch (error) {
       console.error('Failed to update data', error);

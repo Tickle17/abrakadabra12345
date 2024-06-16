@@ -4,6 +4,7 @@ import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import org.jetbrains.exposed.sql.ReferenceOption
 import org.jetbrains.exposed.sql.Table
+import simple_it.models.calendar.calendarDTO.VacancyCalendarDTO
 import simple_it.models.enum.DayOfWeek
 import simple_it.models.users.usersDTO.Users
 import simple_it.models.vacancy.vacancyDTO.Vacancy
@@ -32,7 +33,22 @@ data class VacancySlotDTO(
     val acceptingByUser: Boolean,
     @Contextual val vacancyId: UUID,
     val dayOfWeek: DayOfWeek,
-    val date: String
+    val date: String,
+)
+
+@Serializable
+data class VacancyExpandedSlotDTO(
+    @Contextual val id: UUID? = null,
+    val slot: Int,
+    val free: Boolean,
+    @Contextual val userId: UUID?,
+    val communication: String,
+    val acceptingByUser: Boolean,
+    @Contextual val vacancyId: UUID,
+    val dayOfWeek: DayOfWeek,
+    val date: String,
+    @Contextual val businessId: UUID?,
+    val vacancyCalendar: VacancyCalendarDTO?
 )
 
 @Serializable

@@ -4,8 +4,7 @@ import clsx from 'clsx';
 import { useChatListStore } from '@/app/store/slices/chatListSlice.ts';
 
 export const UsersList = () => {
-  const { getProfileData, currentChatId, setCurrentChat } = useChatListStore();
-  const profileData = getProfileData();
+  const { profileData, currentChatId, setCurrentChat } = useChatListStore();
   const currentChat = currentChatId;
 
   const handleClick = (

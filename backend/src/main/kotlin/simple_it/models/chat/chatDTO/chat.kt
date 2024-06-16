@@ -5,6 +5,8 @@ import kotlinx.serialization.Serializable
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.javatime.datetime
 import simple_it.models.business.businessDTO.Business
+import simple_it.models.calendar.calendarDTO.VacancyCalendarDTO
+import simple_it.models.slot.slotDTO.VacancySlotDTO
 import simple_it.models.users.usersDTO.Users
 import simple_it.models.vacancy.vacancyDTO.Vacancy
 import java.time.LocalDateTime
@@ -59,6 +61,8 @@ data class ReactionsVacancyDetailsDTO(
     @Contextual val userId: UUID,
     @Contextual val businessId: UUID,
     @Contextual val vacancyId: UUID,
+    @Contextual val calendarData: VacancyCalendarDTO?,
+    @Contextual val vacancySlot: VacancySlotDTO?,
     val vacancy: String,
     val position: String
 )
@@ -103,6 +107,7 @@ object DefaultMessages : Table() {
     val id = uuid("id").autoGenerate()
     val businessId = reference("business_id", Business.id).index()
     val name = varchar("name", 255)
+    val active = bool("active").default(false)
     val message = text("message")
     val createdAt = datetime("created_at").default(LocalDateTime.now())
     val updatedAt = datetime("updated_at").default(LocalDateTime.now())
@@ -116,6 +121,7 @@ data class DefaultMessageDTO(
     @Contextual val businessId: UUID,
     val name: String,
     val message: String,
+    val active: Boolean?,
     @Contextual val createdAt: LocalDateTime? = null,
     @Contextual val updatedAt: LocalDateTime? = null,
     @Contextual val deletedAt: LocalDateTime? = null

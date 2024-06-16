@@ -29,7 +29,8 @@ export default function CheckUser({
     selectedReaction,
     commentary,
     invitation,
-    control
+    control,
+    closeModal
   );
 
   const { user, fetchReactionUser } = useReactionUserStore();

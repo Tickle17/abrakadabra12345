@@ -2,10 +2,17 @@ package simple_it.models.chat.chatDAO
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json.Default.decodeFromString
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import simple_it.models.business.businessDTO.Business
+import simple_it.models.calendar.calendarDTO.VacancyCalendar
+import simple_it.models.calendar.calendarDTO.VacancyCalendarDTO
 import simple_it.models.chat.chatDTO.*
+import simple_it.models.enum.DayOfWeek
+import simple_it.models.slot.slotDTO.VacancySlot
+import simple_it.models.slot.slotDTO.VacancySlotDTO
 import simple_it.models.users.usersDTO.Users
 import simple_it.models.vacancy.vacancyDTO.Vacancy
 import java.util.*
@@ -62,24 +69,84 @@ class ReactionsVacancyService {
             emptyList()
         }
 
-        reactions.mapNotNull { (reactionId, vacancyId, relatedId) ->
+        reactions.mapNotNull { (reactionId, vacancyId, businessId) ->
             val vacancy = Vacancy
                 .select { Vacancy.id eq vacancyId }
                 .map { it[Vacancy.vacancy] to it[Vacancy.position] }
                 .firstOrNull()
 
+            val calendarData = if (userExists) {
+                VacancyCalendar.select { VacancyCalendar.businessId eq businessId }
+                    .map {
+                        VacancyCalendarDTO(
+                            id = it[VacancyCalendar.id],
+                            duration = it[VacancyCalendar.duration].toDouble(),
+                            freeTime = it[VacancyCalendar.freeTime].toDouble(),
+                            dayStart = it[VacancyCalendar.dayStart].toDouble(),
+                            dayEnd = it[VacancyCalendar.dayEnd].toDouble(),
+                            slots = it[VacancyCalendar.slots],
+                            maxReserveDays = it[VacancyCalendar.maxReserveDays],
+                            workingDays = decodeFromString(it[VacancyCalendar.workingDays]),
+                            businessId = it[VacancyCalendar.businessId],
+                            userId = it[VacancyCalendar.userId]
+                        )
+                    }
+                    .firstOrNull()
+            } else {
+                null
+            }
+
+            val vacancySlot = if (userExists) {
+                VacancySlot
+                    .select { (VacancySlot.vacancyId eq vacancyId) and (VacancySlot.userId eq id) }
+                    .map {
+                        VacancySlotDTO(
+                            id = it[VacancySlot.id],
+                            slot = it[VacancySlot.slot],
+                            free = it[VacancySlot.free],
+                            userId = it[VacancySlot.userId],
+                            communication = it[VacancySlot.communication],
+                            acceptingByUser = it[VacancySlot.acceptingByUser],
+                            vacancyId = it[VacancySlot.vacancyId],
+                            dayOfWeek = DayOfWeek.valueOf(it[VacancySlot.dayOfWeek]),
+                            date = it[VacancySlot.date]
+                        )
+                    }
+                    .firstOrNull()
+            } else {
+                VacancySlot
+                    .select { VacancySlot.vacancyId eq vacancyId }
+                    .map {
+                        VacancySlotDTO(
+                            id = it[VacancySlot.id],
+                            slot = it[VacancySlot.slot],
+                            free = it[VacancySlot.free],
+                            userId = it[VacancySlot.userId],
+                            communication = it[VacancySlot.communication],
+                            acceptingByUser = it[VacancySlot.acceptingByUser],
+                            vacancyId = it[VacancySlot.vacancyId],
+                            dayOfWeek = DayOfWeek.valueOf(it[VacancySlot.dayOfWeek]),
+                            date = it[VacancySlot.date]
+                        )
+                    }
+                    .firstOrNull()
+            }
+
             vacancy?.let { (vacancyName, position) ->
                 ReactionsVacancyDetailsDTO(
                     reactionId = reactionId,
-                    userId = if (userExists) id else relatedId,
-                    businessId = if (businessExists) id else relatedId,
+                    userId = if (userExists) id else businessId,
+                    businessId = if (businessExists) id else businessId,
                     vacancyId = vacancyId,
                     vacancy = vacancyName ?: "Unknown vacancy",
-                    position = position ?: "Unknown position"
+                    position = position ?: "Unknown position",
+                    calendarData = calendarData,
+                    vacancySlot = vacancySlot
                 )
             }
         }
     }
+
 
     suspend fun getAllReactions(): List<ReactionsVacancyDTO> = dbQuery {
         ReactionsVacancy.selectAll().map {
@@ -143,7 +210,6 @@ class DefaultMessagesService {
         newSuspendedTransaction(Dispatchers.IO) { block() }
 
     suspend fun create(defaultMessages: DefaultMessageDTO): ReactionsVacancyResultDTO = dbQuery {
-
         val insertStatement = DefaultMessages.insert {
             it[businessId] = defaultMessages.businessId
             it[name] = defaultMessages.name
@@ -153,7 +219,35 @@ class DefaultMessagesService {
         val id = result?.get(DefaultMessages.id) ?: throw Exception("Failed to retrieve inserted reaction ID")
         ReactionsVacancyResultDTO(
             id = id,
-            message = "Successfully reaction"
+            message = "Successfully created default message"
         )
+    }
+
+    suspend fun getByBusinessId(businessId: UUID): List<DefaultMessageDTO> = dbQuery {
+        DefaultMessages.select { DefaultMessages.businessId eq businessId }
+            .map {
+                DefaultMessageDTO(
+                    id = it[DefaultMessages.id],
+                    businessId = it[DefaultMessages.businessId],
+                    name = it[DefaultMessages.name],
+                    message = it[DefaultMessages.message],
+                    active = it[DefaultMessages.active]
+                )
+            }
+    }
+
+    suspend fun putById(id: UUID, updatedMessage: DefaultMessageDTO): Boolean = dbQuery {
+        val updatedRows = DefaultMessages.update({ DefaultMessages.id eq id }) {
+            it[businessId] = updatedMessage.businessId
+            it[name] = updatedMessage.name
+            it[message] = updatedMessage.message
+            it[active] = updatedMessage.active ?: false
+        }
+        updatedRows > 0
+    }
+
+    suspend fun deleteById(id: UUID): Boolean = dbQuery {
+        val deletedRows = DefaultMessages.deleteWhere { DefaultMessages.id eq id }
+        deletedRows > 0
     }
 }
