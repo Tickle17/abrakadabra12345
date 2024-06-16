@@ -60,37 +60,28 @@ export type ChatListStore = {
     businessId: string,
     vacancyId: string
   ) => void;
+  disconnectWebSocket: () => void;
+  websocketClient: W3CWebSocket | null;
 };
 
 export const useChatListStore = create<ChatListStore>((set, get) => ({
   profileData: [],
   setProfileData: (profileData: TChatList[]) => set({ profileData }),
   currentChatId: { reactionId: '', businessId: '', userId: '', vacancyId: '' },
-  setCurrentChat: (reactionId, businessId, userId, vacancyId) => {
-    set({ currentChatId: { reactionId, businessId, userId, vacancyId } });
-    // Fetch messages when the current chat is set
-    axios
-      .get<Messages[]>(
-        `https://backendhackaton.onrender.com/messages/${userId}/${businessId}/${vacancyId}`
-      )
-      .then((response: AxiosResponse<Messages[]>) => {
-        if (response.status === 200 || response.status === 201) {
-          set({ messages: response.data.filter(m => m.message.trim() !== '') });
-        } else {
-          toast('Something went wrong');
-          console.log(response.data);
-        }
-      })
-      .catch(error => {
-        toast('Something went wrong');
-        console.error(error);
-      });
-    // Connect to WebSocket
-    get().connectWebSocket(userId, businessId, vacancyId);
-  },
   messages: [],
   setMessages: (messages: Messages[]) => set({ messages }),
   getMessages: () => get().messages,
+  websocketClient: null,
+
+  disconnectWebSocket: () => {
+    const client = get().websocketClient;
+    if (client) {
+      client.close();
+      set({ websocketClient: null });
+      console.log('WebSocket connection closed');
+    }
+  },
+
   connectWebSocket: (userId, businessId, vacancyId) => {
     const url = `wss://backendhackaton.onrender.com/ws/${userId}/${businessId}/${vacancyId}`;
     console.log(`Connecting to WebSocket at ${url}`);
@@ -133,5 +124,31 @@ export const useChatListStore = create<ChatListStore>((set, get) => ({
     client.onclose = event => {
       console.log('WebSocket Client Disconnected:', event.reason);
     };
+
+    set({ websocketClient: client });
+  },
+
+  setCurrentChat: (reactionId, businessId, userId, vacancyId) => {
+    get().disconnectWebSocket();
+    set({ currentChatId: { reactionId, businessId, userId, vacancyId } });
+    // Fetch messages when the current chat is set
+    axios
+      .get<Messages[]>(
+        `https://backendhackaton.onrender.com/messages/${userId}/${businessId}/${vacancyId}`
+      )
+      .then((response: AxiosResponse<Messages[]>) => {
+        if (response.status === 200 || response.status === 201) {
+          set({ messages: response.data.filter(m => m.message.trim() !== '') });
+        } else {
+          toast('Something went wrong');
+          console.log(response.data);
+        }
+      })
+      .catch(error => {
+        toast('Something went wrong');
+        console.error(error);
+      });
+    // Connect to WebSocket
+    get().connectWebSocket(userId, businessId, vacancyId);
   },
 }));
