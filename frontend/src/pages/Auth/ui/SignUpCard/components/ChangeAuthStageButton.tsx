@@ -15,12 +15,12 @@ export const ChangeAuthStageButton = ({
     <>
       {signUpStep < 3 && (
         <p className="w-full text-xs font-thin text-slate-950 flex justify-center items-center gap-1">
-          Already have an account?
+          Уже есть аккаунт?
           <span
             onClick={() => handleClick()}
             className="text-slate-950 font-semibold hover:cursor-pointer hover:opacity-50 transition-all"
           >
-            Sign in
+            Войти
           </span>
         </p>
       )}

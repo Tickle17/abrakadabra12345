@@ -9,6 +9,7 @@ import clsx from 'clsx';
 import { EyeClosedIcon, EyeOpenIcon } from '@radix-ui/react-icons';
 import { UseFormReturn } from 'react-hook-form';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export const PasswordController = ({
   form,
@@ -32,7 +33,7 @@ export const PasswordController = ({
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-slate-950 text-sm font-light">
-                Password
+                Пароль
               </FormLabel>
               <FormControl>
                 <div
@@ -46,7 +47,7 @@ export const PasswordController = ({
                   <Input
                     type={showPassword ? 'text' : 'password'}
                     className="w-full border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-                    placeholder="Enter your password"
+                    placeholder="Введите ваш пароль"
                     {...field}
                   />
                   {showPassword && (
@@ -72,11 +73,14 @@ export const PasswordController = ({
       <div className="flex justify-between items-center">
         <div className="flex gap-1 items-center">
           <Checkbox defaultChecked className="w-4 h-4 rounded-[2px]" />
-          <p className="text-slate-950 text-xs font-light">Remember me</p>
+          <p className="text-slate-950 text-xs font-light">Запомнить меня</p>
         </div>
-        <p className="text-slate-950 text-xs font-thin hover:cursor-pointer hover:underline transition-all">
-          Forgot password?
-        </p>
+        <Link
+          to="/forgot-password"
+          className="text-slate-950 text-xs font-thin hover:cursor-pointer hover:underline transition-all"
+        >
+          Забыли пароль?
+        </Link>
       </div>
     </div>
   );

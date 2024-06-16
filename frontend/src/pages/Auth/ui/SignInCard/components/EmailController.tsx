@@ -38,7 +38,7 @@ export const EmailController = ({
                     ? 'border-red-700'
                     : 'border-slate-950'
                 )}
-                placeholder="Enter your email"
+                placeholder="Введите имейл"
                 {...field}
               />
             </FormControl>

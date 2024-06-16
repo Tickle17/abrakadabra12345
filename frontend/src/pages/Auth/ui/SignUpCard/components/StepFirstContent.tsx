@@ -79,7 +79,7 @@ export const StepFirstContent = ({
                               ? 'border-red-700'
                               : 'border-slate-950'
                           )}
-                          placeholder="Enter your email"
+                          placeholder="Введите ваш имейл"
                           {...field}
                         />
                       </FormControl>
@@ -105,7 +105,7 @@ export const StepFirstContent = ({
                                 ? 'border-red-700'
                                 : 'border-slate-950'
                             )}
-                            placeholder="Enter your usrname"
+                            placeholder="Введите ваш usrname"
                             {...field}
                           />
                         </FormControl>

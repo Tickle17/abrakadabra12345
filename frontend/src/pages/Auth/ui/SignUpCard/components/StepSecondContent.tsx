@@ -140,7 +140,7 @@ export const StepSecondContent = ({
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="text-slate-950 text-sm font-light">
-                          Password
+                          Пароль
                         </FormLabel>
                         <div
                           className={clsx(
@@ -155,7 +155,7 @@ export const StepSecondContent = ({
                               type={showPassword ? 'text' : 'password'}
                               {...field}
                               className="w-full h-11 border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-                              placeholder="Enter your password"
+                              placeholder="Введите пароль"
                             />
                           </FormControl>
                           {showPassword && (
@@ -185,7 +185,7 @@ export const StepSecondContent = ({
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className="text-slate-950 text-sm font-light">
-                            Repeat password
+                            Повторите пароль
                           </FormLabel>
                           <div
                             className={clsx(
@@ -200,7 +200,7 @@ export const StepSecondContent = ({
                                 type={showPassword ? 'text' : 'password'}
                                 {...field}
                                 className="w-full h-11 border-0 border-slate-950 focus-visible:ring-0 focus-visible:ring-offset-0"
-                                placeholder="Repeat your password"
+                                placeholder="Повторите ваш пароль"
                               />
                             </FormControl>
                             {showPassword && (

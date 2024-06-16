@@ -11,7 +11,7 @@ export const SubmitButton = ({
       {loginStage === 'loading' && (
         <VercelLogoIcon className="animate-spin w-5 h-5 mx-auto" />
       )}
-      {loginStage === 'none' && 'Sign in'}
+      {loginStage === 'none' && 'Войти'}
     </button>
   );
 };

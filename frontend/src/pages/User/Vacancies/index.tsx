@@ -40,28 +40,31 @@ export const Jobs = () => {
               .map(vacancy => (
                 <div
                   key={vacancy.id}
-                  className="bg-white p-2 shadow rounded-md gap-4 m-4 border border-black cursor-pointer hover:bg-gray-100 hover:border-gray-200"
+                  className="bg-white p-2 shadow rounded-[2px] gap-4 m-4 border border-slate-950 cursor-pointer hover:bg-gray-100 hover:border-gray-200"
                   onClick={() => openModal(vacancy)}
                 >
                   <div className="grid grid-cols-4 text-center items-center">
                     <div className="col-span-1">
-                      <h3 className="text-lg font-medium">
-                        {vacancy.position}
-                      </h3>
+                      <h3 className="font-light text-sm">{vacancy.position}</h3>
                       <p className="text-gray-600">{vacancy.specialization}</p>
                     </div>
                     <div className="col-span-1">
-                      <h3 className="text-lg font-medium">Зарплата</h3>
-                      <p className="text-gray-600">
+                      <h3 className="font-light text-sm">Зарплата</h3>
+                      <p className="font-medium text-sm">
                         {vacancy.salaryMin} - {vacancy.salaryMax}
                       </p>
                     </div>
                     <div className="col-span-1">
-                      <h3 className="text-lg font-medium">Опыт работы</h3>
-                      <p className="text-gray-600">{vacancy.experience}</p>
+                      <h3 className="font-light text-sm">Опыт работы</h3>
+                      <p className="font-medium text-sm">
+                        {vacancy.experience}
+                      </p>
                     </div>
                     <div className="col-span-1">
-                      <Button onClick={() => openModal(vacancy)}>
+                      <Button
+                        onClick={() => openModal(vacancy)}
+                        className="rounded-[2px] text-white py-1 px-2 w-full h-full"
+                      >
                         Открыть
                       </Button>
                     </div>

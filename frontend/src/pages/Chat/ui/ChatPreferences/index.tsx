@@ -75,7 +75,7 @@ export const Controlls = () => {
       <div className="w-full flex items-center gap-2 border border-slate-200 rounded-[2px] pl-3 pr-2">
         <MagnifyingGlassIcon />
         <Input
-          placeholder="find user"
+          placeholder="найти пользователя"
           className="w-full h-[33px] rounded-none text-xs border-0 p-0 focus-visible:ring-0 focus-visible:ring-offset-0"
         />
       </div>
@@ -89,7 +89,7 @@ export const AddChatUser = () => {
     <button className="w-full flex items-center gap-[2px]">
       <PlusIcon />
       <p className="text-slate-950 rounded-[2px] rounded-r-none px-1 py-[1px] text-xs">
-        добавить друга
+        добавить пользователя
       </p>
     </button>
   );

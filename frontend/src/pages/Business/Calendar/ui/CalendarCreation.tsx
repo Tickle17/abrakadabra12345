@@ -34,6 +34,27 @@ const days = [
   'SUNDAY',
 ] as const;
 
+const getDayInRussian = (day: string) => {
+  switch (day) {
+    case 'MONDAY':
+      return 'ПН';
+    case 'TUESDAY':
+      return 'ВТ';
+    case 'WEDNESDAY':
+      return 'СР';
+    case 'THURSDAY':
+      return 'ЧТ';
+    case 'FRIDAY':
+      return 'ПТ';
+    case 'SATURDAY':
+      return 'СБ';
+    case 'SUNDAY':
+      return 'ВС';
+    default:
+      return 'ПН';
+  }
+};
+
 // TODO add loader to the button
 const convertStringTimeToFloat = (timeString: string): number => {
   const [hours, minutes] = timeString.split(':').map(Number);
@@ -139,8 +160,11 @@ export const CalendarCreation = () => {
         >
           <Card className="w-full max-w-[750px]">
             <CardHeader>
-              <CardTitle>Calendar Setup</CardTitle>
-              <span>You need to setup calendar brefore you can use it</span>
+              <CardTitle>Настройка календаря</CardTitle>
+              <span className="text-xs font-extralight">
+                Для создания календаря потребуется указать дополнительную
+                информацию
+              </span>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 grid-rows-1 gap-7 my-3">
@@ -150,7 +174,7 @@ export const CalendarCreation = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Duration of one interview in minutes
+                        Длительность одного интервью в минутах
                       </FormLabel>
                       <FormControl>
                         <Input
@@ -161,7 +185,7 @@ export const CalendarCreation = () => {
                         />
                       </FormControl>
                       <FormDescription>
-                        Possible to setup later for individual cases
+                        Возможно настроить в будущем для отдельных событий
                       </FormDescription>
                     </FormItem>
                   )}
@@ -171,9 +195,7 @@ export const CalendarCreation = () => {
                   name="freeTime" // время отдыха между собеседованиями
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>
-                        Free time between interviews in minutes
-                      </FormLabel>
+                      <FormLabel>Промежуток между собеседованиями</FormLabel>
                       <FormControl>
                         <Input
                           {...field}
@@ -183,7 +205,7 @@ export const CalendarCreation = () => {
                         />
                       </FormControl>
                       <FormDescription>
-                        Possible to change later
+                        Возможно настроить в будущем для отдельных событий
                       </FormDescription>
                     </FormItem>
                   )}
@@ -193,7 +215,7 @@ export const CalendarCreation = () => {
                   name="dayStart" // начало рабочего дня
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Start of work day</FormLabel>
+                      <FormLabel>Начало рабочего дня</FormLabel>
                       <FormControl>
                         <Input
                           {...field}
@@ -202,7 +224,7 @@ export const CalendarCreation = () => {
                           placeholder="10:00"
                         />
                       </FormControl>
-                      <FormDescription>in format HH:MM</FormDescription>
+                      <FormDescription>в формате HH:MM</FormDescription>
                     </FormItem>
                   )}
                 />
@@ -211,7 +233,7 @@ export const CalendarCreation = () => {
                   name="dayEnd" // конец рабочего дня
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>End of work day</FormLabel>
+                      <FormLabel>Конец рабочего дня</FormLabel>
                       <FormControl>
                         <Input
                           {...field}
@@ -220,7 +242,7 @@ export const CalendarCreation = () => {
                           placeholder="23:00"
                         />
                       </FormControl>
-                      <FormDescription>in format HH:MM</FormDescription>
+                      <FormDescription>в формате HH:MM</FormDescription>
                     </FormItem>
                   )}
                 />
@@ -231,7 +253,9 @@ export const CalendarCreation = () => {
                   name="maxReservDays" // максимальное количество зарезервированных дней для ответа у кандидата
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Maximum number of reserved days</FormLabel>
+                      <FormLabel>
+                        Максимальное количество зарезервированных дней
+                      </FormLabel>
                       <FormControl>
                         <Input
                           {...field}
@@ -243,7 +267,7 @@ export const CalendarCreation = () => {
                         />
                       </FormControl>
                       <FormDescription>
-                        How many days a candidate have to answer
+                        Максимальное количество дней для ответа у кандидата
                       </FormDescription>
                     </FormItem>
                   )}
@@ -251,7 +275,7 @@ export const CalendarCreation = () => {
               </div>
               <div className="flex flex-col gap-3 my-10">
                 <p className="text-slate-950 font-light text-md">
-                  Select working days and weekends
+                  Выберете рабочие дни
                 </p>
                 <div className="flex flex-wrap items-center gap-3">
                   {days.map((day, index) => (
@@ -274,7 +298,7 @@ export const CalendarCreation = () => {
                                 field.onChange(!field.value);
                               }}
                             >
-                              {day.slice(0, 2)}
+                              {getDayInRussian(day)}
                             </Button>
                           </FormControl>
                         </FormItem>
@@ -286,7 +310,7 @@ export const CalendarCreation = () => {
             </CardContent>
             <CardFooter>
               <Button type="submit" className="w-full">
-                Create calendar
+                Создать календарь
               </Button>
             </CardFooter>
           </Card>

@@ -22,16 +22,17 @@ export function vacancyOffer(
 ) {
   return (
     <Modal onClose={closeModal}>
-      <div className="p-4 ">
+      <div className="p-4">
         <ScrollArea className="w-full hidden lg:block">
           <Card className="mx-auto max-h-max max-w-[500px] shadow-none border border-slate-950 rounded-[2px]">
             <CardHeader className="w-full flex flex-row justify-between gap-2">
               <div className="flex flex-col gap-1">
                 <p className="text-slate-950 font-thin underline">
-                  Vacancy Name
+                  Название вакансии
                 </p>
                 <h2 className="text-slate-950 text-3xl font-light">
-                  {selectedVacancy.position || 'Here will be your vacancy name'}
+                  {selectedVacancy.position ||
+                    'Здесь будет ваше название вакансии'}
                 </h2>
               </div>
               <div className="h-full flex items-start">
@@ -43,7 +44,7 @@ export function vacancyOffer(
             </CardHeader>
             <CardContent className="flex flex-col gap-3">
               <div>
-                <h3>Address</h3>
+                <h3>Адрес</h3>
                 <CardDescription>
                   {selectedVacancy.address ? (
                     <p className="text-slate-950 text-sm font-semibold">
@@ -55,7 +56,7 @@ export function vacancyOffer(
                 </CardDescription>
               </div>
               <div>
-                <h3>Experience</h3>
+                <h3>Требуемый опыт</h3>
                 <CardDescription>
                   {selectedVacancy.experience ? (
                     <p className="text-slate-950 text-sm font-semibold">
@@ -80,28 +81,28 @@ export function vacancyOffer(
                 </CardDescription>
               </div>
               <div>
-                <h3>Job Description</h3>
+                <h3>Описание вакансии</h3>
                 <CardDescription className="text-slate-950 text-sm font-thin break-words">
                   {selectedVacancy.description ||
                     'here will be vacancy description'}
                 </CardDescription>
               </div>
               <div>
-                <h3>Job Requirements</h3>
+                <h3>Требования к кандидату</h3>
                 <CardDescription className="text-slate-950 text-sm font-thin break-words">
                   {selectedVacancy.requirements ||
                     'here will be vacancy requirements'}
                 </CardDescription>
               </div>
               <div>
-                <h3>Job Ideal Candidate</h3>
+                <h3>Пожелания</h3>
                 <CardDescription className="text-slate-950 text-sm font-thin break-words">
                   {selectedVacancy.idealCandidate ||
                     'here will be vacancy ideal candidate'}
                 </CardDescription>
               </div>
               <div className="flex flex-col gap-1">
-                <h3>Work Format</h3>
+                <h3>Формат работы</h3>
                 <CardDescription className="flex flex-wrap gap-1">
                   {selectedVacancy.workFormat &&
                   selectedVacancy.workFormat.length
@@ -132,8 +133,9 @@ export function vacancyOffer(
                         <AvatarFallback>CN</AvatarFallback>
                       </Avatar>
                       <div className="flex flex-col">
+                        <p className="text-slate-950 font-thin text-sm">Hr</p>
                         <p className="text-slate-950 font-thin text-sm">
-                          Responsible hr
+                          Леонид Цыпкин
                         </p>
                       </div>
                     </div>
