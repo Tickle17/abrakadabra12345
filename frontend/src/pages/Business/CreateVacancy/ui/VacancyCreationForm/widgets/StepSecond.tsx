@@ -74,9 +74,11 @@ export const StepSecond = () => {
       >
         <div className="w-full flex flex-col md:flex-row md:items-center gap-5 md:gap-10">
           <div className="shrink-0 max-w-[175px]">
-            <h2 className="text-slate-950 font-light text-md">Job Address</h2>
+            <h2 className="text-slate-950 font-light text-md">
+              Адрес места работы
+            </h2>
             <p className="text-slate-950 font-thin text-xs">
-              The location of the position. Leave blank if remote
+              Адрес места работы (например, Москва, Россия)
             </p>
           </div>
           <div className="w-full flex flex-col md:flex-row md:items-center gap-5 md:gap-10">
@@ -87,7 +89,7 @@ export const StepSecond = () => {
                 <FormItem className="w-full">
                   <Input
                     {...field}
-                    placeholder="e.g. Mumbai, India"
+                    placeholder="e.g. Москва, Россия"
                     className="border rounded-[2px] border-slate-950 focus-visible:ring-0 focus-visible:ring-offset-0 px-3 py-2 text-xs resize-none"
                   />
                   <span className="text-slate-950 text-xs font-thin">
@@ -101,10 +103,10 @@ export const StepSecond = () => {
         <div className="w-full flex flex-col md:flex-row md:items-center gap-5 md:gap-10">
           <div className="shrink-0 max-w-[175px]">
             <h2 className="text-slate-950 font-light text-md">
-              Job Description
+              Описание вакансии
             </h2>
             <p className="text-slate-950 font-thin text-xs">
-              A short description of the position
+              Короткое описание вакансии
             </p>
           </div>
           <div className="w-full flex flex-col md:flex-row md:items-center gap-5 md:gap-10">
@@ -115,11 +117,11 @@ export const StepSecond = () => {
                 <FormItem className="w-full">
                   <Textarea
                     {...field}
-                    placeholder="e.g. The main objective of the position is to..."
+                    placeholder="e.g. Разработка мобильных приложений ..."
                     className="border rounded-[2px] border-slate-950 focus-visible:ring-0 focus-visible:ring-offset-0 px-3 py-2 text-xs resize-none"
                   />
                   <span className="text-slate-950 text-xs font-thin">
-                    At least 10 characters
+                    не менее 10-ти символов
                   </span>
                 </FormItem>
               )}
@@ -128,11 +130,9 @@ export const StepSecond = () => {
         </div>
         <div className="w-full flex flex-col md:flex-row md:items-center gap-5 md:gap-10">
           <div className="shrink-0 max-w-[175px]">
-            <h2 className="text-slate-950 font-light text-md">
-              Responsibilities
-            </h2>
+            <h2 className="text-slate-950 font-light text-md">Обязанности</h2>
             <p className="text-slate-950 font-thin text-xs">
-              e.g. The main responsibilities of the position
+              Описание обязанностей вакансии
             </p>
           </div>
           <div className="shrink-1 flex-grow flex flex-col gap-1">
@@ -143,11 +143,11 @@ export const StepSecond = () => {
                 <FormItem>
                   <Textarea
                     {...field}
-                    placeholder="e.g. The main objective of the position is to..."
+                    placeholder="e.g. Ключевой обязанностью соискателя является ..."
                     className="border rounded-[2px] border-slate-950 focus-visible:ring-0 focus-visible:ring-offset-0 px-3 py-2 text-xs resize-none"
                   />
                   <span className="text-slate-950 text-xs font-thin">
-                    At least 10 characters
+                    Минимум 10 символов
                   </span>
                 </FormItem>
               )}
@@ -157,10 +157,10 @@ export const StepSecond = () => {
         <div className="w-full flex flex-col md:flex-row md:items-center gap-5 md:gap-10">
           <div className="shrink-0 max-w-[175px]">
             <h2 className="text-slate-950 font-light text-md">
-              An ideal candidate
+              Пожелания для кандидата
             </h2>
             <p className="text-slate-950 font-thin text-xs">
-              e.g. The ideal candidate should be able to...
+              идеальный кандидат должен / должна
             </p>
           </div>
           <div className="shrink-1 flex-grow flex flex-col gap-1">
@@ -171,11 +171,11 @@ export const StepSecond = () => {
                 <FormItem>
                   <Textarea
                     {...field}
-                    placeholder="e.g. The main objective of the position is to..."
+                    placeholder="e.g. Идеальный кандидат должен / должна ..."
                     className="border rounded-[2px] border-slate-950 focus-visible:ring-0 focus-visible:ring-offset-0 px-3 py-2 text-xs resize-none"
                   />
                   <span className="text-slate-950 text-xs font-thin">
-                    At least 10 characters
+                    Минимум 10 символов
                   </span>
                 </FormItem>
               )}
@@ -191,28 +191,32 @@ export const StepSecond = () => {
                 <div className="w-full flex flex-col md:flex-row md:items-center gap-5 md:gap-10">
                   <div className="shrink-0 max-w-[175px] flex flex-col gap-1">
                     <h2 className="text-slate-950 font-light text-md">
-                      Responsible HR
+                      Hr, ответсвенный за вакансию
                     </h2>
                     <p className="text-slate-950 font-thin text-xs">
-                      Select a responsible HR for the position; he or she will
-                      be able to see and edit this position and edit their
-                      calendar for meetings
+                      Выберите ответсвенного Hr для вакансии. Все отклики по
+                      этой вакансии будут зафиксированы в слотах в календаре
+                      выбранного Hr
                     </p>
                   </div>
                   <div className="shrink-1 flex-grow flex flex-col gap-3">
                     <Select {...field} onValueChange={field.onChange}>
                       <SelectTrigger className="border rounded-[2px] border-slate-950 focus-visible:ring-0 focus-visible:ring-offset-0">
-                        <SelectValue placeholder="Select HR" />
+                        <SelectValue placeholder="Выберите ответсвенного Hr" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="Stephany Colins">
-                          Stephany Colins
+                        <SelectItem value="Leonard Cupkin">
+                          Леонид Цыпкин
                         </SelectItem>
-                        <SelectItem value="Mark Fisher">Mark Fisher</SelectItem>
-                        <SelectItem value="Liland Palmer">
-                          Liland Palmer
+                        <SelectItem value="Veneamin Erofeev">
+                          Венеамин Ерофеев
                         </SelectItem>
-                        <SelectItem value="Lora Palmer">Lora Palmer</SelectItem>
+                        <SelectItem value="Sergey Kurekin">
+                          Сергей Курехин
+                        </SelectItem>
+                        <SelectItem value="Vladimir Sirin">
+                          Владимир Сирин
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                   </div>

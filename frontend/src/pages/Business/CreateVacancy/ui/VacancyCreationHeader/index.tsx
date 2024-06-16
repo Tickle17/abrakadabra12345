@@ -179,7 +179,7 @@ export const VacancyCreationHeader = () => {
             ? 'Обновить'
             : 'Дальше'
           : ''}
-        {activeStep === 'Job Preferences' && 'Create Vacancy'}
+        {activeStep === 'Job Preferences' && 'Создать вакансию'}
       </Button>
     </div>
   );

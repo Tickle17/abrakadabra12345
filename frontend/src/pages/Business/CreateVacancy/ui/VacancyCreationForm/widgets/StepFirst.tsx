@@ -26,10 +26,10 @@ export const StepFirst = () => {
   const form = useForm<stepFirstValues>({
     resolver: zodResolver(stepFirstSchema),
     defaultValues: {
-      experience: firstStepData.experience,
+      experience: String(firstStepData.experience),
       position: firstStepData.position,
-      salaryMin: firstStepData.salaryMin,
-      salaryMax: firstStepData.salaryMax,
+      salaryMin: String(firstStepData.salaryMin),
+      salaryMax: String(firstStepData.salaryMax),
       workFormat: firstStepData.workFormat,
       hardSkills: firstStepData.hardSkills,
       softSkills: firstStepData.softSkills,
@@ -48,7 +48,13 @@ export const StepFirst = () => {
 
   const onSubmit = (data: stepFirstValues) => {
     setFirstStepFormValid(true);
-    setFirstStepData(data);
+    const result = {
+      ...data,
+      experience: Number(data.experience),
+      salaryMin: Number(data.salaryMin),
+      salaryMax: Number(data.salaryMax),
+    };
+    setFirstStepData(result);
     switch (activeStep) {
       case 'Job Information': {
         setActiveStep('Job Description');

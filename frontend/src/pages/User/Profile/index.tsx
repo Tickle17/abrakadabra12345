@@ -316,9 +316,9 @@ export const Profile = () => {
                               items={softSkillItems}
                               values={field.value || []}
                               setValues={field.onChange}
-                              triggerBtnLabel="+ Add Skills"
-                              searchInputPlaceholder="Search Skills..."
-                              searchEmptyPlaceholder="No Skills Found"
+                              triggerBtnLabel="+ Добавить Навыки"
+                              searchInputPlaceholder="Поиск по навыкам..."
+                              searchEmptyPlaceholder="Навыков не найдено"
                             />
                             <p className="text-slate-950 font-thin text-xs">
                               {field.value?.length || 0} of{' '}
@@ -387,9 +387,9 @@ export const Profile = () => {
                               items={hardSkillItems}
                               values={field.value || []}
                               setValues={field.onChange}
-                              triggerBtnLabel="+ Add Skills"
-                              searchInputPlaceholder="Search Skills..."
-                              searchEmptyPlaceholder="No Skills Found"
+                              triggerBtnLabel="+ Добавить навыки"
+                              searchInputPlaceholder="Поиск по навыкам..."
+                              searchEmptyPlaceholder="Навыков не найдено"
                             />
                             <p className="text-slate-950 font-thin text-xs">
                               {field.value?.length || 0} of{' '}

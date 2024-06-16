@@ -28,14 +28,16 @@ export const SalaryField = ({
             <FormItem>
               <div className="border md:border-0 md:border-b border-slate-950 rounded-[2px] md:rounded-none h-fit  flex items-center gap-1 pl-1 flex-grow shrink-0">
                 <SketchLogoIcon className="w-5 h-5" />
-                <span className="text-slate-950 text-xs font-thin">from</span>
+                <span className="text-slate-950 text-xs font-thin">от</span>
                 <Input
                   {...field}
                   value={field.value !== null ? field.value : ''}
-                  onChange={e => field.onChange(Number(e.target.value))}
-                  min={0}
+                  onChange={e =>
+                    field.onChange(
+                      !isNaN(Number(e.target.value)) ? e.target.value : 0
+                    )
+                  }
                   placeholder="e.g. 1000"
-                  type="number"
                   className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0 px-3 py-2 text-xs pl-0"
                 />
               </div>
@@ -49,13 +51,15 @@ export const SalaryField = ({
             <FormItem>
               <div className="border md:border-0 md:border-b border-slate-950 rounded-[2px] md:rounded-none h-fit  flex items-center gap-1 pl-1 flex-grow shrink-0">
                 <SketchLogoIcon className="w-5 h-5" />
-                <span className="text-slate-950 text-xs font-thin">to</span>
+                <span className="text-slate-950 text-xs font-thin">до</span>
                 <Input
                   {...field}
-                  onChange={e => field.onChange(Number(e.target.value))}
-                  min={0}
+                  onChange={e =>
+                    field.onChange(
+                      !isNaN(Number(e.target.value)) ? e.target.value : 0
+                    )
+                  }
                   placeholder="e.g. 2000"
-                  type="number"
                   className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0 px-3 py-2 text-xs pl-0"
                 />
               </div>

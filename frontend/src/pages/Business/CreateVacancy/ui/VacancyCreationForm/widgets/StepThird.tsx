@@ -144,28 +144,30 @@ export const StepThird = () => {
       )
       .then((response: AxiosResponse<ResponseData>) => {
         if (response.status === 200 || response.status === 201) {
-          toast('Vacancy created');
+          toast('Вакансия создана');
           console.log(response.data);
         } else {
-          toast('Something went wrong');
+          toast('Что-то пошло не так');
           console.log(response.data);
         }
       })
       .catch(err => {
-        toast('Something went wrong');
+        toast('Что-то пошло не так');
         console.error(err);
       });
   };
   return (
     <div className="w-full h-full flex max-w-[500px] mx-auto flex-col gap-5">
-      <h2 className="text-slate-950 text-xl font-light">Vacancy Details</h2>
+      <h2 className="text-slate-950 text-xl font-light">Детали вакансии</h2>
       <ScrollArea className="w-full hidden lg:block">
         <Card className="mx-auto max-h-max max-w-[500px] shadow-none border border-slate-950 rounded-[2px]">
           <CardHeader className="w-full flex flex-row justify-between gap-2">
             <div className="flex flex-col gap-1">
-              <p className="text-slate-950 font-thin underline">Vacancy Name</p>
+              <p className="text-slate-950 font-thin underline">
+                Название вакансии
+              </p>
               <h2 className="text-slate-950 text-3xl font-light">
-                {firstStepData.position || 'Here will be your vacancy name'}
+                {firstStepData.position || 'здесь будет название вакансии'}
               </h2>
             </div>
             <div className="h-full flex items-start">
@@ -177,64 +179,63 @@ export const StepThird = () => {
           </CardHeader>
           <CardContent className="flex flex-col gap-3">
             <div>
-              <h3>Address</h3>
+              <h3>Адрес</h3>
               <CardDescription>
                 {secondStepData.address ? (
                   <p className="text-slate-950 text-sm font-semibold">
                     {secondStepData.address}
                   </p>
                 ) : (
-                  'here will be address for the position'
+                  'здесь будет адрес вакансии'
                 )}
               </CardDescription>
             </div>
             <div>
-              <h3>Experience</h3>
+              <h3>Опыт</h3>
               <CardDescription>
                 {firstStepData.experience ? (
                   <p className="text-slate-950 text-sm font-semibold">
-                    from {firstStepData.experience} years of experience
+                    от {firstStepData.experience} лет опыта
                   </p>
                 ) : (
-                  'here will be min and max salary for the position'
+                  'здесь будет требуемый опыт для соискателя'
                 )}
               </CardDescription>
             </div>
             <div>
-              <h3>Оплата</h3>
+              <h3>Зарплата</h3>
               <CardDescription>
                 {firstStepData.salaryMin && firstStepData.salaryMax ? (
                   <p className="text-slate-950 text-sm font-semibold">
                     {firstStepData.salaryMin}$ - {firstStepData.salaryMax}$
                   </p>
                 ) : (
-                  'here will be min and max salary for the position'
+                  'здесь будут максимальная и минимальная зарплата'
                 )}
               </CardDescription>
             </div>
             <div>
-              <h3>Job Description</h3>
+              <h3>Описание вакансии</h3>
               <CardDescription className="text-slate-950 text-sm font-thin break-words">
-                {secondStepData.description ||
-                  'here will be vacancy description'}
+                {secondStepData.description || 'здесь будет описание вакансии'}
               </CardDescription>
             </div>
             <div>
-              <h3>Job Requirements</h3>
+              <h3>Требования</h3>
               <CardDescription className="text-slate-950 text-sm font-thin break-words">
                 {secondStepData.requirements ||
-                  'here will be vacancy requirements'}
+                  'здесь будут требования к соискателю'}
               </CardDescription>
             </div>
             <div>
-              <h3>Job Ideal Candidate</h3>
+              <h3>Пожелания к кандидату</h3>
               <CardDescription className="text-slate-950 text-sm font-thin break-words">
                 {secondStepData.idealCandidate ||
-                  'here will be vacancy ideal candidate'}
+                  'здесь будут пожелания к кандидату'}
               </CardDescription>
             </div>
             <div className="flex flex-col gap-1">
-              <h3>Work Format</h3>
+              <h3>Формат работы</h3>
               <CardDescription className="flex flex-wrap gap-1">
                 {firstStepData.workFormat && firstStepData.workFormat.length
                   ? firstStepData.workFormat.map((item, index) => {
@@ -295,7 +296,7 @@ export const StepThird = () => {
                   </Avatar>
                   <div className="flex flex-col">
                     <p className="text-slate-950 font-thin text-sm">
-                      Responsible hr
+                      Ответсвенный hr
                     </p>
                     <p className="text-slate-950 font-semibold text-md underline">
                       {secondStepData.businessId}
@@ -303,7 +304,7 @@ export const StepThird = () => {
                   </div>
                 </div>
               ) : (
-                'here will be hr responsible for the vacancy'
+                'Здесь будет ответсвенный за вакансию hr'
               )}
             </div>
           </CardFooter>

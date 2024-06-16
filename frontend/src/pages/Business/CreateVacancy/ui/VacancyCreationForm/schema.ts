@@ -57,9 +57,18 @@ export const stepFirstSchema = z
   .object({
     position: z.string().min(5, { message: 'Too short' }),
     workFormat: workFormatSchema.nullable(),
-    salaryMin: z.number().nonnegative(),
-    salaryMax: z.number().nonnegative(),
-    experience: z.number().nonnegative(),
+    salaryMin: z.string().refine(value => /^[1-9]\d*$/.test(value), {
+      message:
+        'Salary must contain only numbers and first symbol must not be 0',
+    }),
+    salaryMax: z.string().refine(value => /^[1-9]\d*$/.test(value), {
+      message:
+        'Salary must contain only numbers and first symbol must not be 0',
+    }),
+    experience: z.string().refine(value => /^[1-9]\d*$/.test(value), {
+      message:
+        'Experience must contain only numbers and first symbol must not be 0',
+    }),
     softSkills: softSkillsSchema.nullable(),
     hardSkills: hardSkillsSchema.nullable(),
   })

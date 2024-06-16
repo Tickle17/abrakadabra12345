@@ -28,7 +28,7 @@ export const PositionField = ({
               <Input
                 {...field}
                 type="text"
-                placeholder="e.g. Software Engineer"
+                placeholder="Веб разработчик"
                 className="md:border-0 md:border-b border-slate-950 rounded-[2px] md:rounded-none focus-visible:ring-0 focus-visible:ring-offset-0 px-1 py-2 text-xs"
               />
               <span className="text-slate-950 text-xs font-thin">

@@ -408,23 +408,41 @@ const areSameDayMonthYear = (date1: Date, date2: Date) => {
 
 localStorage.setItem('slot', '1');
 
-function getMonthName(monthNumber: number) {
+// function getMonthName(monthNumber: number) {
+//   const months = [
+//     'Jan',
+//     'Feb',
+//     'Mar',
+//     'Apr',
+//     'May',
+//     'Jun',
+//     'Jul',
+//     'Aug',
+//     'Sep',
+//     'Oct',
+//     'Nov',
+//     'Dec',
+//   ];
+//   return months[monthNumber];
+// }
+
+const getRussianMonthName = (monthNumber: number) => {
   const months = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec',
+    'Янв',
+    'Фев',
+    'Мар',
+    'Апр',
+    'Мая',
+    'Июн',
+    'Июл',
+    'Авг',
+    'Сен',
+    'Окт',
+    'Ноя',
+    'Дек',
   ];
   return months[monthNumber];
-}
+};
 
 type VacancyCalendarWorkingDay = {
   day:
@@ -483,14 +501,14 @@ const requestSlots = async (): Promise<ResponseSlotType[]> => {
       }
     );
     if (response.status === 200 || response.status === 201) {
-      toast('Sloats loaded');
+      toast('Слоты загружены');
       return response.data;
     } else {
-      toast('Something went wrong');
+      toast('Что-то пошло не так');
       // console.log(response.data);
     }
   } catch (err) {
-    toast('Something went wrong');
+    toast('Что-то пошло не так');
     console.error(err);
   }
   return [];
@@ -507,14 +525,14 @@ const requestCalendarPreferences = async (
       }
     );
     if (response.status === 200 || response.status === 201) {
-      toast('Calendar preferences loaded');
+      toast('Настройки календаря загружены');
       return response.data;
     } else {
-      toast('Something went wrong');
+      toast('Что-то пошло не так');
       // console.log(response.data);
     }
   } catch (err) {
-    toast('Something went wrong');
+    toast('Что-то пошло не так');
     console.error(err);
   }
   return {
@@ -567,14 +585,23 @@ export const CalendarPage = () => {
     setStartDate(subWeeks(startDate, 1));
     setEndDate(subWeeks(endDate, 1));
   };
-  const daysOfWeek = [
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-    'Sunday',
+  // const daysOfWeek = [
+  //   'Monday',
+  //   'Tuesday',
+  //   'Wednesday',
+  //   'Thursday',
+  //   'Friday',
+  //   'Saturday',
+  //   'Sunday',
+  // ];
+  const daysOfWeekRussian = [
+    'Понедельник',
+    'Вторник',
+    'Среда',
+    'Четверг',
+    'Пятница',
+    'Суббота',
+    'Воскресенье',
   ];
   // const workingDaysCount = CalendarPreferences.dayOfWeek
   //   .map(day => {
@@ -618,13 +645,13 @@ export const CalendarPage = () => {
         ) : (
           <>
             <div className="w-full h-full col-start-1 col-span-1 row-span-1 bg-slate-200 flex justify-center items-center text-md font-medium">
-              {getMonthName(startDate.getMonth())}
+              {getRussianMonthName(startDate.getMonth())}
             </div>
             <div
               className="w-full h-full col-start-2 col-span-1 row-span-1 grid"
               style={{ gridTemplateColumns: `repeat(7, 1fr)` }}
             >
-              {daysOfWeek.map((day, index, daysOfWeek) => {
+              {daysOfWeekRussian.map((day, index, daysOfWeek) => {
                 // const isWorkingDay =
                 //   CalendarPreferences.dayOfWeek.filter(
                 //     dayObj =>
@@ -737,7 +764,7 @@ export const CalendarPage = () => {
               })}
             </React.Fragment>
           ))} */}
-              {daysOfWeek.map((day, dayIndex, daysOfWeek) => {
+              {daysOfWeekRussian.map((day, dayIndex, daysOfWeek) => {
                 return (
                   <div
                     key={dayIndex}
@@ -839,7 +866,7 @@ export const CalendarPage = () => {
                                     : 'bg-slate-200 text-slate-950'
                                 )}
                               >
-                                Slot Place
+                                {isSelected ? 'Интервью' : 'Свободный Слот'}
                                 {responseSlots[slotIndex]?.free}
                                 <span className="text-xs font-thin">
                                   {convertToHumanReadableTime(

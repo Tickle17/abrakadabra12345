@@ -19,14 +19,14 @@ export const hardSkillItems = [
 ];
 
 export const softSkillItems = [
-  { value: 'Stress', label: 'Stress' },
-  { value: 'PRIDE', label: 'Pride' },
-  { value: 'GREED', label: 'Greed' },
-  { value: 'WRATH', label: 'Wrath' },
-  { value: 'ENVY', label: 'Envy' },
-  { value: 'LUST', label: 'Lust' },
-  { value: 'GLUTTONY', label: 'Gluttony' },
-  { value: 'SLOTH', label: 'Sloth' },
+  { value: 'Stress', label: 'Стрессоустойчивость' },
+  { value: 'PRIDE', label: 'Командная работа' },
+  { value: 'GREED', label: 'Адаптивность' },
+  { value: 'WRATH', label: 'Обучаемость' },
+  { value: 'ENVY', label: 'Терпение' },
+  { value: 'LUST', label: 'Эмпатия' },
+  { value: 'GLUTTONY', label: 'Мотивация' },
+  { value: 'SLOTH', label: 'Организованность' },
 ];
 
 export const workFormatItems = [
