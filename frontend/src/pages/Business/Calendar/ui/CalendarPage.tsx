@@ -516,7 +516,7 @@ export const CalendarPage = () => {
       setCalendarPreferences(vacancyCalendar);
       setSlotsRange(getSlotsRange(getCalendarPreferences()));
       setIsLoading(false);
-      console.log(response[0]);
+      // console.log(response[0]);
     };
     fetchSlots();
   }, []);
@@ -745,18 +745,20 @@ export const CalendarPage = () => {
                       //   }
                       // )}
                       slotsRange.map((slotObj, slotIndex, slotsRange) => {
-                        const isSelected = responseSlots.some(obj => {
+                        const post = responseSlots.filter(obj => {
                           const isSlot = slotIndex % 2 === 0;
                           const dateMatch = areSameDayMonthYear(
                             new Date(obj.date),
                             datesRange[dayIndex]
                           );
+                          const isNotFree = !obj.free;
                           const prevSlot = Number(localStorage.getItem('slot'));
                           const slotMatch = prevSlot === obj.slot;
 
                           // dateMatch && console.log(prevSlot, obj.slot);
-                          return isSlot && slotMatch && dateMatch;
+                          return isSlot && isNotFree && slotMatch && dateMatch;
                         });
+                        const isSelected = post.length > 0;
                         const result = (
                           <div
                             key={slotIndex}
@@ -803,6 +805,7 @@ export const CalendarPage = () => {
                                 )}
                               >
                                 Slot Place
+                                {responseSlots[slotIndex]?.free}
                                 <span className="text-xs font-thin">
                                   {convertToHumanReadableTime(
                                     slotObj.timeStart
