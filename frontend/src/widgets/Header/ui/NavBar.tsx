@@ -6,6 +6,7 @@ import {
   FileIcon,
   GearIcon,
   HomeIcon,
+  LayoutIcon,
   PersonIcon,
 } from '@radix-ui/react-icons';
 import { IconLinkWrapper } from '../components';
@@ -39,6 +40,9 @@ export const NavBar = () => {
           </IconLinkWrapper>
           <IconLinkWrapper path="/calendar">
             <CalendarIcon className="w-5 h-5 text-slate-900" />
+          </IconLinkWrapper>
+          <IconLinkWrapper path="/crm">
+            <LayoutIcon className="w-5 h-5 text-slate-900" />
           </IconLinkWrapper>
           <IconLinkWrapper path="/settings">
             <GearIcon className="w-5 h-5 text-slate-900" />

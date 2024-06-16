@@ -42,7 +42,8 @@ export function putReaction(
   selectedReaction: TReactions,
   commentary: string,
   invitation: boolean,
-  control: boolean
+  control: boolean,
+  closeModal: () => void
 ) {
   const handlePutReaction = async () => {
     try {
@@ -62,6 +63,7 @@ export function putReaction(
           senderType: 'business',
         });
       }
+      closeModal();
       console.log('Data updated successfully');
     } catch (error) {
       console.error('Failed to update data', error);

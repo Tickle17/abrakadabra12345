@@ -14,6 +14,7 @@ import { useFetchUserProfile } from '@/widgets/FetchData/fetchProfile';
 import { Statistic } from '@/pages/Business/Statistic';
 import Vacancies from '@/pages/Business/Vacancies';
 import React from 'react';
+import ChadCNComponent from '@/pages/Business/CRM/CRM.tsx';
 
 interface PrivateRouteProps {
   element: React.ComponentType;
@@ -112,5 +113,9 @@ export const router = createBrowserRouter([
   {
     path: 'vacancies',
     element: <PrivateRoute element={Vacancies} />,
+  },
+  {
+    path: 'crm',
+    element: <PrivateRoute element={ChadCNComponent} />,
   },
 ]);
