@@ -230,7 +230,8 @@ class DefaultMessagesService {
                     id = it[DefaultMessages.id],
                     businessId = it[DefaultMessages.businessId],
                     name = it[DefaultMessages.name],
-                    message = it[DefaultMessages.message]
+                    message = it[DefaultMessages.message],
+                    active = it[DefaultMessages.active]
                 )
             }
     }
@@ -240,6 +241,7 @@ class DefaultMessagesService {
             it[businessId] = updatedMessage.businessId
             it[name] = updatedMessage.name
             it[message] = updatedMessage.message
+            it[active] = updatedMessage.active ?: false
         }
         updatedRows > 0
     }

@@ -107,6 +107,7 @@ object DefaultMessages : Table() {
     val id = uuid("id").autoGenerate()
     val businessId = reference("business_id", Business.id).index()
     val name = varchar("name", 255)
+    val active = bool("active").default(false)
     val message = text("message")
     val createdAt = datetime("created_at").default(LocalDateTime.now())
     val updatedAt = datetime("updated_at").default(LocalDateTime.now())
@@ -120,6 +121,7 @@ data class DefaultMessageDTO(
     @Contextual val businessId: UUID,
     val name: String,
     val message: String,
+    val active: Boolean?,
     @Contextual val createdAt: LocalDateTime? = null,
     @Contextual val updatedAt: LocalDateTime? = null,
     @Contextual val deletedAt: LocalDateTime? = null
