@@ -116,9 +116,57 @@ suspend fun PipelineContext<Unit, ApplicationCall>.create(
     defaultMessagesService: DefaultMessagesService
 ) {
     try {
-        val user = call.receive<DefaultMessageDTO>()
-        val id = defaultMessagesService.create(user)
-        call.respond(HttpStatusCode.Created, id)
+        val defaultMessage = call.receive<DefaultMessageDTO>()
+        val result = defaultMessagesService.create(defaultMessage)
+        call.respond(HttpStatusCode.Created, result)
+    } catch (e: Throwable) {
+        val errorMessage = "Error occurred: ${e.message}"
+        call.respond(HttpStatusCode.BadRequest, errorMessage)
+    }
+}
+
+suspend fun PipelineContext<Unit, ApplicationCall>.getByBusinessId(
+    defaultMessagesService: DefaultMessagesService
+) {
+    try {
+        val businessId = UUID.fromString(call.parameters["businessId"])
+        val messages = defaultMessagesService.getByBusinessId(businessId)
+        call.respond(HttpStatusCode.OK, messages)
+    } catch (e: Throwable) {
+        val errorMessage = "Error occurred: ${e.message}"
+        call.respond(HttpStatusCode.BadRequest, errorMessage)
+    }
+}
+
+suspend fun PipelineContext<Unit, ApplicationCall>.putById(
+    defaultMessagesService: DefaultMessagesService
+) {
+    try {
+        val id = UUID.fromString(call.parameters["id"])
+        val updatedMessage = call.receive<DefaultMessageDTO>()
+        val success = defaultMessagesService.putById(id, updatedMessage)
+        if (success) {
+            call.respond(HttpStatusCode.OK, "Default message updated successfully.")
+        } else {
+            call.respond(HttpStatusCode.NotFound, "Default message not found.")
+        }
+    } catch (e: Throwable) {
+        val errorMessage = "Error occurred: ${e.message}"
+        call.respond(HttpStatusCode.BadRequest, errorMessage)
+    }
+}
+
+suspend fun PipelineContext<Unit, ApplicationCall>.deleteById(
+    defaultMessagesService: DefaultMessagesService
+) {
+    try {
+        val id = UUID.fromString(call.parameters["id"])
+        val success = defaultMessagesService.deleteById(id)
+        if (success) {
+            call.respond(HttpStatusCode.OK, "Default message deleted successfully.")
+        } else {
+            call.respond(HttpStatusCode.NotFound, "Default message not found.")
+        }
     } catch (e: Throwable) {
         val errorMessage = "Error occurred: ${e.message}"
         call.respond(HttpStatusCode.BadRequest, errorMessage)

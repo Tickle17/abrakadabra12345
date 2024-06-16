@@ -37,5 +37,16 @@ fun Application.chatRout(
         post("/defaultMessage") {
             create(defaultMessagesService)
         }
+        get("/defaultMessages/{businessId}") {
+            getByBusinessId(defaultMessagesService)
+        }
+
+        put("/defaultMessages/{id}") {
+            putById(defaultMessagesService)
+        }
+
+        delete("/defaultMessages/{id}") {
+            deleteById(defaultMessagesService)
+        }
     }
 }

@@ -4,6 +4,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json.Default.decodeFromString
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import simple_it.models.business.businessDTO.Business
 import simple_it.models.calendar.calendarDTO.VacancyCalendar
@@ -209,7 +210,6 @@ class DefaultMessagesService {
         newSuspendedTransaction(Dispatchers.IO) { block() }
 
     suspend fun create(defaultMessages: DefaultMessageDTO): ReactionsVacancyResultDTO = dbQuery {
-
         val insertStatement = DefaultMessages.insert {
             it[businessId] = defaultMessages.businessId
             it[name] = defaultMessages.name
@@ -219,7 +219,33 @@ class DefaultMessagesService {
         val id = result?.get(DefaultMessages.id) ?: throw Exception("Failed to retrieve inserted reaction ID")
         ReactionsVacancyResultDTO(
             id = id,
-            message = "Successfully reaction"
+            message = "Successfully created default message"
         )
+    }
+
+    suspend fun getByBusinessId(businessId: UUID): List<DefaultMessageDTO> = dbQuery {
+        DefaultMessages.select { DefaultMessages.businessId eq businessId }
+            .map {
+                DefaultMessageDTO(
+                    id = it[DefaultMessages.id],
+                    businessId = it[DefaultMessages.businessId],
+                    name = it[DefaultMessages.name],
+                    message = it[DefaultMessages.message]
+                )
+            }
+    }
+
+    suspend fun putById(id: UUID, updatedMessage: DefaultMessageDTO): Boolean = dbQuery {
+        val updatedRows = DefaultMessages.update({ DefaultMessages.id eq id }) {
+            it[businessId] = updatedMessage.businessId
+            it[name] = updatedMessage.name
+            it[message] = updatedMessage.message
+        }
+        updatedRows > 0
+    }
+
+    suspend fun deleteById(id: UUID): Boolean = dbQuery {
+        val deletedRows = DefaultMessages.deleteWhere { DefaultMessages.id eq id }
+        deletedRows > 0
     }
 }
