@@ -55,7 +55,7 @@ export function putReaction(
         }
       );
       if (invitation === true) {
-        await axios.put(`https://backendhackaton.onrender.com/message`, {
+        await axios.post(`https://backendhackaton.onrender.com/message`, {
           message: 'Выберите подходящую дату для собеседования:',
           reactionsVacancyId: selectedReaction.id,
           senderId: selectedReaction.businessId,
