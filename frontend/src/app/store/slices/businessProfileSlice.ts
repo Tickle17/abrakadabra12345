@@ -39,6 +39,7 @@ export type ProfileBusinessStore = {
   getCalendarPreferences: () => TCalendarPreferences;
   setCalendarId: (calendarId: string | null) => void;
   setBusinessProfileData: (profileData: Partial<ProfileState>) => void;
+  getBusinessProfileData: () => ProfileState;
 };
 
 export const useBusinessProfileStore = create<ProfileBusinessStore>(
@@ -89,6 +90,7 @@ export const useBusinessProfileStore = create<ProfileBusinessStore>(
         },
       ],
     },
+    getBusinessProfileData: () => get().businessProfileData,
     setCalendarPreferences: calendarPreferences =>
       set(state => ({
         calendarPreferences: {

@@ -1,16 +1,28 @@
 import { useEffect } from 'react';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { useProfileStore } from '@/app/store/slices/profileSlice.ts';
-// import { ResponseData } from '@/pages/User/Profile';
+// import {  } from '@/pages/User/Profile';
 import { toast } from 'sonner';
 import { useAuthStore, useBusinessProfileStore } from '@/app/store';
 
 export const useFetchUserProfile = () => {
   const { getLoggedInToken, getUserId } = useAuthStore();
-  const { setBusinessProfileData } = useBusinessProfileStore();
   const { setProfileData } = useProfileStore();
+  const { setBusinessProfileData } = useBusinessProfileStore();
   const token = getLoggedInToken();
   const id = getUserId();
+
+  type BusinessProfileData = {
+    id: string;
+    fullName: string;
+    photoUrl: string;
+    age: number;
+    stackTech: string;
+    gitlabUrl: string;
+    aboutUser: string;
+    price: number;
+    calendarId: string;
+  };
 
   useEffect(() => {
     const role = localStorage.getItem('role');
@@ -18,12 +30,15 @@ export const useFetchUserProfile = () => {
       switch (role) {
         case 'business':
           axios
-            .get(`/api/business/${id}`, {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            })
-            .then(res => {
+            .get<BusinessProfileData>(
+              `https://backendhackaton.onrender.com/business/${id}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            )
+            .then((res: AxiosResponse<BusinessProfileData>) => {
               if (res.data) {
                 setBusinessProfileData(res.data);
               }

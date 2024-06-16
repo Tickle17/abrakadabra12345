@@ -13,7 +13,7 @@ import { ScrollArea, ScrollBar } from '@/shared/ui';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import axios from 'axios';
 import { toast } from 'sonner';
-import { useProfileStore } from '@/app/store';
+import { useBusinessProfileStore, useProfileStore } from '@/app/store';
 
 const Spinner = () => {
   return (
@@ -496,11 +496,43 @@ const requestSlots = async (): Promise<ResponseSlotType[]> => {
   return [];
 };
 
+const requestCalendarPreferences = async (
+  calendarId: string
+): Promise<TCalendarPreferences> => {
+  try {
+    const response = await axios.get<TCalendarPreferences>(
+      `https://backendhackaton.onrender.com/calendar/${calendarId}`,
+      {
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
+    if (response.status === 200 || response.status === 201) {
+      toast('Calendar preferences loaded');
+      return response.data;
+    } else {
+      toast('Something went wrong');
+      // console.log(response.data);
+    }
+  } catch (err) {
+    toast('Something went wrong');
+    console.error(err);
+  }
+  return {
+    duration: 0,
+    freeTime: 0,
+    dayStart: 0,
+    dayEnd: 0,
+    workingDays: [],
+  };
+};
+
 export const CalendarPage = () => {
+  const { getBusinessProfileData } = useBusinessProfileStore();
   const [slotsRange, setSlotsRange] = useState<TSlot[]>([]);
   const [startDate, setStartDate] = useState<Date>(
     getThisWeeksMonday(new Date())
   );
+  const calendarId = getBusinessProfileData()?.calendarId;
   const [endDate, setEndDate] = useState<Date>(getThisWeeksSunday(new Date()));
   const [responseSlots, setSlots] = useState<ResponseSlotType[]>([]);
   const { getCalendarPreferences, setCalendarPreferences } = useProfileStore();
@@ -508,11 +540,14 @@ export const CalendarPage = () => {
 
   useEffect(() => {
     const fetchSlots = async () => {
+      if (!calendarId) return;
       setIsLoading(true);
-      const response = await requestSlots();
+      let response = await requestSlots();
+      response = response.filter(obj => obj.vacancyCalendar.id === calendarId);
       setSlots(response);
-      const vacancyCalendar = response[0]
-        .vacancyCalendar as TCalendarPreferences;
+      // const vacancyCalendar = response[0]
+      //   .vacancyCalendar as TCalendarPreferences;
+      const vacancyCalendar = await requestCalendarPreferences(calendarId);
       setCalendarPreferences(vacancyCalendar);
       setSlotsRange(getSlotsRange(getCalendarPreferences()));
       setIsLoading(false);
