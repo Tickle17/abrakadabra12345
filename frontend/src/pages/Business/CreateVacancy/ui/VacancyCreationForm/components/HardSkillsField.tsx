@@ -29,7 +29,8 @@ export const HardSkillsField = ({
             <div className="shrink-0 max-w-[175px] flex flex-col gap-1">
               <h2 className="text-slate-950 font-light text-md">Hard Skills</h2>
               <p className="text-slate-950 font-thin text-xs">
-                Add required hard skills for the position
+                Укажите необходимые Hard skills (на их основе будет
+                предоставляться % подходимости кандидата)
               </p>
             </div>
             <div className="shrink-1 flex-grow flex flex-col gap-3">

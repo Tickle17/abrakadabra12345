@@ -45,13 +45,13 @@ export const UserDetails = () => {
       </p>
       <div className="flex flex-col">
         <p className="text-xs text-slate-500 pb-3">
-          Following: <span>35</span>
+          Подписан: <span>35</span>
         </p>
         <p className="text-xs text-slate-500 pb-3">
-          Followers: <span>6549</span>
+          Подписчиков: <span>6549</span>
         </p>
         <p className="text-xs text-slate-500 pb-3">
-          Posts: <span>6549</span>
+          Постов: <span>6549</span>
         </p>
       </div>
     </div>

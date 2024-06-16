@@ -14,10 +14,10 @@ export const SalaryField = ({
   return (
     <div className="w-full flex flex-col md:flex-row md:items-center gap-5 md:gap-10">
       <div className="shrink-0 max-w-[60%] md:max-w-[175px] flex flex-col gap-1">
-        <h2 className="text-slate-950 font-light text-md">Salary</h2>
+        <h2 className="text-slate-950 font-light text-md">Оплата</h2>
         <p className="text-slate-950 font-thin text-xs">
-          Please, specify the estimated salary range for the position. You can
-          leave it blank
+          Пожалуйста, укажите минимальное и максимальную оплату по вакансии
+          (этот шаг можно пропустить)
         </p>
       </div>
       <div className="shrink-1 flex-grow grid grid-cols-2 gap-2">

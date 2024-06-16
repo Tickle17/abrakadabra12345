@@ -84,7 +84,7 @@ export const StepFirst = () => {
             Back
           </Button>
           <Button className="rounded-[2px]" type="submit" ref={submitButtonRef}>
-            Next
+            Дальше
           </Button>
         </div>
       </form>

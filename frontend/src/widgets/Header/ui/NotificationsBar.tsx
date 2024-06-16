@@ -34,7 +34,7 @@ export const NotificationsBar = () => {
             window.location.reload();
           }}
         >
-          logout
+          Выйти
         </Button>
       </div>
     </div>

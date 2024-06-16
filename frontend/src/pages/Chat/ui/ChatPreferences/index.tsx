@@ -59,7 +59,7 @@ export const UsersStatusDetails = () => {
   return (
     <div className="shring-0 flex gap-3 items-center w-full h-max">
       <p className="text-slate-950 text-xs font-thin">
-        <span className="font-normal">100</span> users
+        <span className="font-normal">100</span> пользователей
       </p>
       <p className="text-slate-950 text-xs font-thin">/</p>
       <p className="text-slate-950 text-xs font-thin">
@@ -89,7 +89,7 @@ export const AddChatUser = () => {
     <button className="w-full flex items-center gap-[2px]">
       <PlusIcon />
       <p className="text-slate-950 rounded-[2px] rounded-r-none px-1 py-[1px] text-xs">
-        add a user
+        добавить друга
       </p>
     </button>
   );

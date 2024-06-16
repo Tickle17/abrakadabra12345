@@ -67,7 +67,7 @@ export function vacancyOffer(
                 </CardDescription>
               </div>
               <div>
-                <h3>Salary</h3>
+                <h3>Оплата</h3>
                 <CardDescription>
                   {selectedVacancy.salaryMin && selectedVacancy.salaryMax ? (
                     <p className="text-slate-950 text-sm font-semibold">

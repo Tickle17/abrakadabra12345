@@ -201,7 +201,7 @@ export const StepThird = () => {
               </CardDescription>
             </div>
             <div>
-              <h3>Salary</h3>
+              <h3>Оплата</h3>
               <CardDescription>
                 {firstStepData.salaryMin && firstStepData.salaryMax ? (
                   <p className="text-slate-950 text-sm font-semibold">
@@ -351,7 +351,7 @@ export const StepThird = () => {
             </CardDescription>
           </div>
           <div>
-            <h3>Salary</h3>
+            <h3>Оплата</h3>
             <CardDescription>
               {firstStepData.salaryMin && firstStepData.salaryMax ? (
                 <p className="text-slate-950 text-sm font-semibold">

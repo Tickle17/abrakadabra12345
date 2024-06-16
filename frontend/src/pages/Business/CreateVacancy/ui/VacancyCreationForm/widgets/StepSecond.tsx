@@ -91,7 +91,7 @@ export const StepSecond = () => {
                     className="border rounded-[2px] border-slate-950 focus-visible:ring-0 focus-visible:ring-offset-0 px-3 py-2 text-xs resize-none"
                   />
                   <span className="text-slate-950 text-xs font-thin">
-                    At least 5 characters
+                    Не меньше 5 символов
                   </span>
                 </FormItem>
               )}
@@ -229,7 +229,7 @@ export const StepSecond = () => {
             Back
           </Button>
           <Button className="rounded-[2px]" type="submit" ref={submitButtonRef}>
-            Next
+            Дальше
           </Button>
         </div>
       </form>

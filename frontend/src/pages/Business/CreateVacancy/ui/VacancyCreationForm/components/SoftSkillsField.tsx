@@ -29,7 +29,7 @@ export const SoftSkillsField = ({
             <div className="shrink-0 max-w-[175px] flex flex-col gap-1">
               <h2 className="text-slate-950 font-light text-md">Soft Skills</h2>
               <p className="text-slate-950 font-thin text-xs">
-                Add required soft skills for the position
+                Укажите необходимые Soft skills
               </p>
             </div>
             <div className="shrink-1 flex-grow flex flex-col gap-3">

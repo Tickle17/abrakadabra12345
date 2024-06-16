@@ -125,7 +125,7 @@ export const StepFirstContent = ({
                 type="submit"
                 className="w-full bg-slate-900 text-slate-50 px-3 py-3 border border-slate-950 rounded-sm text-sm font-light hover:opacity-85 transition-all mb-3 shrink-0"
               >
-                Next
+                Дальше
               </button>
             )}
           </form>

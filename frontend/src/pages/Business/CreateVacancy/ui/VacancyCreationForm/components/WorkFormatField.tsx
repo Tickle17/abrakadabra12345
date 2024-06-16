@@ -16,11 +16,9 @@ export const WorkFormatField = ({
   return (
     <div className="w-full flex flex-col md:flex-row md:items-center gap-5 md:gap-10">
       <div className="shrink-0 md:max-w-[175px] flex flex-col gap-1">
-        <h2 className="text-slate-950 font-light text-md">
-          Type of Employment
-        </h2>
+        <h2 className="text-slate-950 font-light text-md">Формат работы</h2>
         <p className="text-slate-950 font-thin text-xs">
-          You can select multiple types of employment
+          Вы можете выбрать несколько вариантов
         </p>
       </div>
       <div className="shrink-1 flex-grow grid grid-rows-2 grid-cols-3 gap-2">

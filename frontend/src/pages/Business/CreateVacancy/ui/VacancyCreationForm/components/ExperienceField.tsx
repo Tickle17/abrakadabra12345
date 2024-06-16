@@ -1,5 +1,4 @@
-import { FormField, FormItem, Input } from '@/shared/ui';
-// import { SketchLogoIcon } from '@radix-ui/react-icons';
+import { FormField, FormItem, Input } from '@/shared/ui'; // import { SketchLogoIcon } from '@radix-ui/react-icons';
 import { Control, FieldErrors } from 'react-hook-form';
 import { stepFirstValues } from '../schema.ts';
 
@@ -14,10 +13,9 @@ export const ExperienceField = ({
   return (
     <div className="w-full flex flex-col md:flex-row md:items-center gap-5 md:gap-10">
       <div className="shrink-0 max-w-[60%] md:max-w-[175px] flex flex-col gap-1">
-        <h2 className="text-slate-950 font-light text-md">Experience</h2>
+        <h2 className="text-slate-950 font-light text-md">Опыт работы</h2>
         <p className="text-slate-950 font-thin text-xs">
-          Please, specify the minimal experience required for the position in
-          years
+          Пожалуйста, укажите минимальный опыт работы в годах
         </p>
       </div>
       <div className="shrink-1 flex-grow grid grid-cols-2 gap-2">

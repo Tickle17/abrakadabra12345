@@ -77,7 +77,7 @@ export const VacancyCreationHeader = () => {
 
   return (
     <div className="w-full flex flex-col gap-5">
-      <h1 className="text-md font-light text-slate-950">Vacancy Steps</h1>
+      <h1 className="text-md font-light text-slate-950">Этапы вакансии</h1>
       <div className="w-full flex flex-col gap-3">
         <div
           onClick={() => setActiveStep('Job Information')}
@@ -92,7 +92,9 @@ export const VacancyCreationHeader = () => {
           <p className="text-slate-950 font-thin text-xs shrink-0">1/3</p>
           <div className="flex-grow shrink flex justify-center items-center gap-2">
             <ComponentPlaceholderIcon className="w-5 h-5" />
-            <p className="text-slate-950 font-light text-xs">Job Information</p>
+            <p className="text-slate-950 font-light text-xs">
+              Основная информация
+            </p>
           </div>
         </div>
         <div
@@ -114,7 +116,9 @@ export const VacancyCreationHeader = () => {
           <p className="text-slate-950 font-thin text-xs shrink-0">2/3</p>
           <div className="flex-grow shrink flex justify-center items-center gap-2">
             <ComponentInstanceIcon className="w-5 h-5" />
-            <p className="text-slate-950 font-light text-xs">Job Description</p>
+            <p className="text-slate-950 font-light text-xs">
+              Описание вакансии
+            </p>
           </div>
         </div>
         <div
@@ -137,7 +141,9 @@ export const VacancyCreationHeader = () => {
           <p className="text-slate-950 font-thin text-xs shrink-0">3/3</p>
           <div className="flex-grow shrink flex justify-center items-center gap-2">
             <ComponentBooleanIcon className="w-5 h-5" />
-            <p className="text-slate-950 font-light text-xs">Job Preferences</p>
+            <p className="text-slate-950 font-light text-xs">
+              Подтверждение публикации
+            </p>
           </div>
         </div>
       </div>
@@ -165,13 +171,13 @@ export const VacancyCreationHeader = () => {
       >
         {activeStep === 'Job Information'
           ? firstStepFormValid
-            ? 'Update'
-            : 'Next'
+            ? 'Обновить'
+            : 'Дальше'
           : ''}
         {activeStep === 'Job Description'
           ? secondStepFormValid
-            ? 'Update'
-            : 'Next'
+            ? 'Обновить'
+            : 'Дальше'
           : ''}
         {activeStep === 'Job Preferences' && 'Create Vacancy'}
       </Button>

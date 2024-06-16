@@ -15,7 +15,7 @@ export function ChatInputBlock(
         value={message}
         onChange={e => setMessage(e.target.value)}
         className={`flex-grow p-2 border rounded-lg ${shouldDisable ? 'bg-gray-300' : 'bg-white'}`}
-        placeholder="Type your message..."
+        placeholder="Начните писать сообщение..."
         disabled={shouldDisable}
       />
       <Button
@@ -23,7 +23,7 @@ export function ChatInputBlock(
         className={shouldDisable ? 'bg-gray-300 cursor-not-allowed' : ''}
         disabled={shouldDisable}
       >
-        Send
+        Отправить
       </Button>
     </div>
   );
