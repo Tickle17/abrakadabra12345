@@ -18,10 +18,10 @@ class CalendarService {
         newSuspendedTransaction(Dispatchers.IO) { block() }
 
     suspend fun create(calendar: CreateVacancyCalendar): VacancyCalendarDTO = dbQuery {
-        val slotsMath = Math.floorDiv(
-            (calendar.dayEnd - calendar.dayStart).toInt(),
-            (calendar.duration + calendar.freeTime).toInt()
-        )
+        val totalDuration = calendar.duration + calendar.freeTime
+        require(totalDuration != 0.0) { "Total duration (duration + freeTime) must not be zero" }
+
+        val slotsMath = Math.floor((calendar.dayEnd - calendar.dayStart) / totalDuration).toInt()
 
         val insertStatement = VacancyCalendar.insert {
             it[duration] = BigDecimal.valueOf(calendar.duration)
