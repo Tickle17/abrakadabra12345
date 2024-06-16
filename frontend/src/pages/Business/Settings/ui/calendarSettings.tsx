@@ -9,6 +9,7 @@ import {
 } from '@/shared/ui';
 import { useCallback, useEffect, useState } from 'react';
 import FetchCalendarById from '@/widgets/FetchData/fetchCalendarById.ts';
+import { useBusinessProfileStore } from '@/app/store';
 
 export type Calendar = {
   duration: number;
@@ -21,12 +22,22 @@ export type Calendar = {
 };
 
 export function CalendarSettings() {
+  const { businessProfileData } = useBusinessProfileStore();
+  const calendarId = businessProfileData?.calendarId;
   const [calendar, setCalendar] = useState<Calendar | null>(null);
 
   const fetchCalendar = useCallback(async () => {
-    const calendarData = await FetchCalendarById();
-    setCalendar(calendarData);
-  }, []);
+    if (calendarId) {
+      const calendarData = await FetchCalendarById(calendarId);
+      setCalendar(calendarData);
+    }
+  }, [calendarId]);
+
+  useEffect(() => {
+    if (calendarId) {
+      fetchCalendar();
+    }
+  }, [calendarId, fetchCalendar]);
 
   useEffect(() => {
     fetchCalendar();

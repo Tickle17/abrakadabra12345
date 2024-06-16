@@ -11,24 +11,6 @@ export type ThemeState = {
   toggleTheme: () => void;
 };
 
-const setTheme = (theme: ThemeVariant) => {
-  const root = window.document.documentElement;
-  const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
-    ? 'dark'
-    : 'light';
-
-  root.classList.remove('light', 'dark');
-
-  // switch (theme) {
-  //   case 'system':
-  //     root.classList.add(systemTheme);
-  //     break;
-  //   default:
-  //     root.classList.add(theme);
-  //     break;
-  // }
-};
-
 export const useThemeStore = create<ThemeState>((set, get) => ({
   systemTheme: window.matchMedia('(prefers-color-scheme: dark)').matches
     ? 'dark'
@@ -39,11 +21,9 @@ export const useThemeStore = create<ThemeState>((set, get) => ({
     : 'light',
   setLight: () => {
     set({ theme: 'light', selectedTheme: 'light' });
-    setTheme('light');
   },
   setDark: () => {
     set({ theme: 'dark', selectedTheme: 'dark' });
-    setTheme('dark');
   },
   toggleTheme: () => {
     const currentTheme = get().theme;
@@ -54,6 +34,5 @@ export const useThemeStore = create<ThemeState>((set, get) => ({
       nextTheme = currentTheme === 'light' ? 'dark' : 'light';
     }
     set({ theme: nextTheme, selectedTheme: nextTheme });
-    setTheme(nextTheme);
   },
 }));

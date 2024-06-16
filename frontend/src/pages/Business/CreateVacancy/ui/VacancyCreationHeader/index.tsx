@@ -1,6 +1,5 @@
 import { useVacancyStore } from '@/app/store';
-import { Button } from '@/shared/ui';
-// import { Description } from '@radix-ui/react-dialog';
+import { Button } from '@/shared/ui'; // import { Description } from '@radix-ui/react-dialog';
 import {
   ComponentBooleanIcon,
   ComponentInstanceIcon,
@@ -62,8 +61,9 @@ export const VacancyCreationHeader = () => {
       )
       .then((response: AxiosResponse<ResponseData>) => {
         if (response.status === 200 || response.status === 201) {
-          toast('Vacancy created');
           console.log(response.data);
+          toast('Vacancy created');
+          window.location.reload();
         } else {
           toast('Something went wrong');
           console.log(response.data);

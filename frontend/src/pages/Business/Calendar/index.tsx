@@ -1,8 +1,7 @@
 import { AppLayout } from '@/shared/layouts';
-import { CalendarPage, CalendarCreation } from './ui';
+import { CalendarCreation, CalendarPage } from './ui';
 import { useAuthStore, useBusinessProfileStore } from '@/app/store';
 import { useEffect, useState } from 'react';
-import { useFetchUserProfile } from '@/widgets/FetchData/fetchProfile';
 import axios, { AxiosResponse } from 'axios';
 import { toast } from 'sonner';
 
@@ -121,6 +120,7 @@ export const Calendar = () => {
       setIsLoading(true);
       try {
         const response = await fetchProfile(token, setBusinessProfileData, id);
+        console.log(response);
         setIsLoading(false);
       } catch (err) {
         toast('Что-то пошло не так');

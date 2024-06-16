@@ -117,6 +117,8 @@ export const CalendarCreation = () => {
         if (response.status === 200 || response.status === 201) {
           setCalendarId(response.data.id);
           toast('Calendar created');
+          alert('Календарь успешно настроен');
+          window.location.reload();
         } else {
           toast('Something went wrong');
         }
@@ -261,6 +263,7 @@ export const CalendarCreation = () => {
                         <FormItem>
                           <FormControl>
                             <Button
+                              type="button"
                               className={clsx(
                                 'rounded-sm px-3 py-2 w-10 h-10',
                                 field.value

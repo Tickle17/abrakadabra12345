@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { VacancyDTO } from '@/app/store/slices/getVacancySlice.ts';
+import { toast } from 'sonner';
 
 export const sendReaction = async (vacancy: VacancyDTO) => {
   const userId = localStorage.getItem('id');
@@ -17,6 +18,8 @@ export const sendReaction = async (vacancy: VacancyDTO) => {
 
     if (response.status === 200) {
       console.log('Reaction sent successfully');
+      toast('Отклик уже передали сотрудникам');
+      window.location.reload();
     }
   } catch (error) {
     if (axios.isAxiosError(error)) {
