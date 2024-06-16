@@ -635,7 +635,7 @@ export const CalendarPage = () => {
       <div
         className={clsx(
           'min-w-fit w-full h-fit min-h-full grid grid-rows-[75px_1fr] grid-cols-[75px_1fr] rounded-[2px]',
-          isLoading && 'border border-slate-300'
+          !isLoading && 'border border-slate-300'
         )}
       >
         {isLoading ? (

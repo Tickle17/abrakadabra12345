@@ -11,7 +11,7 @@ export const Header = ({ className }: HeaderProps) => {
   return (
     <header
       className={clsx(
-        'shrink-0 grid grid-cols-12 grid-rows-1 gap-4 mb-3 w-full max-w-[1200px] mx-auto min-h-10 py-4 shadow-sm bg-card border-radius-default',
+        'shrink-0 grid grid-cols-12 grid-rows-1 gap-4 mb-3 w-full max-w-[1200px] mx-auto min-h-10 py-4 shadow-sm bg-card border-radius-default z-50',
         className
       )}
     >
