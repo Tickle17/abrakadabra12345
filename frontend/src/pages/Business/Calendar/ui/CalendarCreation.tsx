@@ -65,7 +65,7 @@ export const CalendarCreation = () => {
       SUNDAY: false,
       businessId: localStorage.getItem('id') || '',
     },
-    mode: 'all',
+    mode: 'onSubmit',
   });
   const {
     formState: { errors },
