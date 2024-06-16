@@ -110,7 +110,9 @@ export const Calendar = () => {
   const token = getLoggedInToken();
   const { getBusinessProfileData, setBusinessProfileData } =
     useBusinessProfileStore();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(
+    getBusinessProfileData().calendarId ? false : true
+  );
   const id = getUserId();
 
   useEffect(() => {
