@@ -19,21 +19,21 @@ const setTheme = (theme: ThemeVariant) => {
 
   root.classList.remove('light', 'dark');
 
-  switch (theme) {
-    case 'system':
-      root.classList.add(systemTheme);
-      break;
-    default:
-      root.classList.add(theme);
-      break;
-  }
+  // switch (theme) {
+  //   case 'system':
+  //     root.classList.add(systemTheme);
+  //     break;
+  //   default:
+  //     root.classList.add(theme);
+  //     break;
+  // }
 };
 
 export const useThemeStore = create<ThemeState>((set, get) => ({
   systemTheme: window.matchMedia('(prefers-color-scheme: dark)').matches
     ? 'dark'
     : 'light',
-  theme: 'dark',
+  theme: 'light',
   selectedTheme: window.matchMedia('(prefers-color-scheme: dark)').matches
     ? 'dark'
     : 'light',
