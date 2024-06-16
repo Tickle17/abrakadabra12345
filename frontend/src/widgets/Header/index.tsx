@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { NavBar, NotificationsBar, SearchBar } from './ui'; // import { useThemeStore } from '@/app/store';
+import { NavBar, NotificationsBar, MessagesNotifications } from './ui'; // import { useThemeStore } from '@/app/store';
 
 // import { useThemeStore } from '@/app/store';
 
@@ -15,7 +15,7 @@ export const Header = ({ className }: HeaderProps) => {
         className
       )}
     >
-      <SearchBar />
+      <MessagesNotifications />
       <NavBar />
       <NotificationsBar />
     </header>
