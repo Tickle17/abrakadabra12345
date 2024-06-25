@@ -16,7 +16,7 @@ object VacancySlot : Table() {
     val userId = uuid("user_id").references(Users.id).nullable()
     val communication = varchar("communication", 255)
     val acceptingByUser = bool("accepting_by_user").default(false)
-    val vacancyId = uuid("vacancy_id").references(Vacancy.id).nullable()
+    val vacancyId = uuid("vacancy_id").references(Vacancy.id)
     val dayOfWeek = varchar("day_of_week", length = 99999)
     val date = varchar("date", 99999)
     override val primaryKey = PrimaryKey(id)
