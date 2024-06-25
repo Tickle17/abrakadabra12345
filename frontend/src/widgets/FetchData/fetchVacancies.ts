@@ -16,7 +16,7 @@ export const sendReaction = async (vacancy: VacancyDTO) => {
       }
     );
 
-    if (response.status === 200) {
+    if (response.status === 201) {
       console.log('Reaction sent successfully');
       toast('Отклик уже передали сотрудникам');
       window.location.reload();
