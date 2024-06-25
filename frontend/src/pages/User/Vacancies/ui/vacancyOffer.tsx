@@ -15,10 +15,12 @@ import {
   ScrollBar,
 } from '@/shared/ui';
 import { sendReaction } from '@/widgets/FetchData/fetchVacancies.ts';
+import { TReactions } from '@/app/store/slices/getReactionsSlice.ts';
 
 export function vacancyOffer(
   closeModal: () => void,
-  selectedVacancy: VacancyDTO
+  selectedVacancy: VacancyDTO,
+  reactions: TReactions[]
 ) {
   return (
     <Modal onClose={closeModal}>
@@ -124,9 +126,23 @@ export function vacancyOffer(
               <div className="w-full flex items-end flex-col gap-1 ">
                 {selectedVacancy.businessId ? (
                   <div className="flex w-full justify-between items-center gap-1">
-                    <Button onClick={() => sendReaction(selectedVacancy)}>
-                      Откликнуться
-                    </Button>
+                    <div className="col-span-1">
+                      {reactions &&
+                      reactions.find(
+                        reaction => reaction.vacancyId === selectedVacancy.id
+                      ) ? (
+                        <Button
+                          className="rounded-[2px] text-gray-500 bg-gray-200 py-1 px-2 w-full h-full cursor-not-allowed"
+                          disabled
+                        >
+                          Вы уже откликнулись
+                        </Button>
+                      ) : (
+                        <Button onClick={() => sendReaction(selectedVacancy)}>
+                          Откликнуться
+                        </Button>
+                      )}
+                    </div>
                     <div className="flex items-center gap-1">
                       <Avatar className="w-12 h-12">
                         <AvatarImage src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fthelondonmagazine.org%2Fwp-content%2Fuploads%2F2019%2F11%2FFeature-Image-The-Brothers-Karamazov-2.jpg&f=1&nofb=1&ipt=421e8a95bd1ea4544f62bf2cf2514552447009adb800cceed49b7166b19a01c3&ipo=images" />

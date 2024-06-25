@@ -7,15 +7,22 @@ import { useEffect, useState } from 'react';
 import { UserDetails } from '@/widgets';
 import { vacancyOffer } from '@/pages/User/Vacancies/ui/vacancyOffer.tsx';
 import { Button } from '@/shared/ui';
+import { useReactionsStore } from '@/app/store/slices/getReactionsSlice.ts';
 
 export const Jobs = () => {
   const { vacancies, loading, error, fetchVacancies } = useGetVacancyStore();
+  const { reactions, fetchReactions } = useReactionsStore();
+  console.log(reactions);
+  console.log(vacancies);
+  const userId = localStorage.getItem('id');
+
   const [selectedVacancy, setSelectedVacancy] = useState<VacancyDTO | null>(
     null
   );
 
   useEffect(() => {
     fetchVacancies();
+    fetchReactions();
   }, [fetchVacancies]);
 
   const openModal = (vacancy: VacancyDTO) => {
@@ -24,6 +31,12 @@ export const Jobs = () => {
 
   const closeModal = () => {
     setSelectedVacancy(null);
+  };
+
+  const hasUserReactedToVacancy = (vacancyId: string) => {
+    return reactions.some(
+      reaction => reaction.vacancyId === vacancyId && reaction.userId === userId
+    );
   };
 
   if (error) return <div>Error: {error}</div>;
@@ -61,12 +74,21 @@ export const Jobs = () => {
                       </p>
                     </div>
                     <div className="col-span-1">
-                      <Button
-                        onClick={() => openModal(vacancy)}
-                        className="rounded-[2px] text-white py-1 px-2 w-full h-full"
-                      >
-                        Открыть
-                      </Button>
+                      {vacancy.id && hasUserReactedToVacancy(vacancy.id) ? (
+                        <Button
+                          className="rounded-[2px] text-gray-500 bg-gray-200 py-1 px-2 w-full h-full cursor-not-allowed whitespace-nowrap overflow-ellipsis"
+                          disabled
+                        >
+                          Уже откликнулись
+                        </Button>
+                      ) : (
+                        <Button
+                          onClick={() => openModal(vacancy)}
+                          className="rounded-[2px] text-white py-1 px-2 w-full h-full"
+                        >
+                          Открыть
+                        </Button>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -79,7 +101,7 @@ export const Jobs = () => {
         <div className="grid grid-cols-1 grid-rows-8 gap-4 bg-white shadow-sm p-5 overflow-y-hidden relative border-radius-default"></div>
       </div>
 
-      {selectedVacancy && vacancyOffer(closeModal, selectedVacancy)}
+      {selectedVacancy && vacancyOffer(closeModal, selectedVacancy, reactions)}
     </AppLayout>
   );
 };
