@@ -28,218 +28,6 @@ const Spinner = () => {
   );
 };
 
-// const CalendarPreferences = {
-//   duration: 0.75, // длительность одного собеседования в часах
-//   freeTime: 0.37, // время отдыха между собеседованиями
-//   dayStart: 10, // начало рабочего дня
-//   dayEnd: 18.25, // конец рабочего дня
-//   dayOfWeek: [
-//     {
-//       day: 'MONDAY',
-//       isWorking: true,
-//     },
-//     {
-//       day: 'TUESDAY',
-//       isWorking: true,
-//     },
-//     {
-//       day: 'WEDNESDAY',
-//       isWorking: true,
-//     },
-//     {
-//       day: 'THURSDAY',
-//       isWorking: true,
-//     },
-//     {
-//       day: 'FRIDAY',
-//       isWorking: true,
-//     },
-//     {
-//       day: 'SATURDAY',
-//       isWorking: true,
-//     },
-//     {
-//       day: 'SUNDAY',
-//       isWorking: false,
-//     },
-//   ],
-// };
-
-// type WorkingDaysArray = DayOfWeekType[];
-
-// type CalendarPreferencesType = typeof CalendarPreferences;
-
-// const getIsoTimeString = (hour: number) => {
-//   const gapDate = new Date();
-//   gapDate.setHours(hour);
-//   const gapDateString = gapDate.toISOString();
-//   return gapDateString;
-// };
-
-// const SLOTS = [
-//   {
-//     date: new Date(2024, 5, 10, 10, 0, 0),
-//     slot: 2,
-//     dayOfWeek: 'Monday',
-//   },
-//   {
-//     date: new Date(2024, 5, 10, 10, 0, 0),
-//     slot: 3,
-//     dayOfWeek: 'Monday',
-//   },
-//   {
-//     date: new Date(2024, 5, 10, 10, 0, 0),
-//     slot: 5,
-//     dayOfWeek: 'Monday',
-//   },
-//   {
-//     date: new Date(2024, 5, 11, 10, 0, 0),
-//     slot: 1,
-//     dayOfWeek: 'Monday',
-//   },
-//   {
-//     date: new Date(2024, 5, 11, 10, 0, 0),
-//     slot: 4,
-//     dayOfWeek: 'Monday',
-//   },
-//   {
-//     date: new Date(2024, 5, 17, 10, 0, 0),
-//     slot: 1,
-//     dayOfWeek: 'Monday',
-//   },
-//   {
-//     date: new Date(2024, 5, 18, 10, 0, 0),
-//     slot: 3,
-//     dayOfWeek: 'Monday',
-//   },
-// ];
-
-// function getToday() {
-//   const today = new Date();
-//   const day = String(today.getDate()).padStart(2, '0');
-//   const month = String(today.getMonth() + 1).padStart(2, '0'); // Январь это 0
-
-//   return `${month}/${day}`;
-// }
-
-// const CalendarSlot = {
-//   slot: 3,
-//   free: false,
-//   communication: 'zoom',
-//   acceptingByUser: false,
-//   date: getToday(),
-//   dayOfWeek: 'MONDAY',
-// };
-
-// export const CalendarPageRewrited = () => {
-//   const [currentWeek, setCurrentWeek] = useState(
-//     startOfWeek(new Date(), { weekStartsOn: 0 })
-//   );
-
-//   const daysOfWeek = [
-//     'Sunday',
-//     'Monday',
-//     'Tuesday',
-//     'Wednesday',
-//     'Thursday',
-//     'Friday',
-//     'Saturday',
-//   ];
-
-//   const generateWeekDays = (startDate: Date) => {
-//     return daysOfWeek.map((day, index) => {
-//       const date = addDays(startDate, index);
-//       return {
-//         day,
-//         date: format(date, 'MM/dd'),
-//       };
-//     });
-//   };
-
-//   const weekDays = generateWeekDays(currentWeek);
-
-//   const handlePrevWeek = () => {
-//     setCurrentWeek(subWeeks(currentWeek, 1));
-//   };
-
-//   const handleNextWeek = () => {
-//     setCurrentWeek(addWeeks(currentWeek, 1));
-//   };
-
-//   const hours = [];
-//   for (
-//     let i = CalendarPreferences.dayStart;
-//     i <= CalendarPreferences.dayEnd;
-//     i++
-//   ) {
-//     hours.push(i);
-//   }
-
-//   return (
-//     <div className="container mx-auto p-4">
-//       <div className="flex justify-between items-center mb-4">
-//         <button
-//           onClick={handlePrevWeek}
-//           className="bg-blue-500 text-white px-4 py-2 rounded"
-//         >
-//           Previous Week
-//         </button>
-//         <div className="text-xl font-bold">
-//           Week of {format(currentWeek, 'MM/dd/yyyy')}
-//         </div>
-//         <button
-//           onClick={handleNextWeek}
-//           className="bg-blue-500 text-white px-4 py-2 rounded"
-//         >
-//           Next Week
-//         </button>
-//       </div>
-//       <div className="grid grid-cols-8 gap-0">
-//         <div className="border-b border-gray-300"></div>
-//         {weekDays.map((weekDay, index) => (
-//           <div
-//             key={index}
-//             className="text-center font-bold border-b border-gray-300"
-//           >
-//             {weekDay.day} <br /> {weekDay.date}
-//           </div>
-//         ))}
-//       </div>
-//       <div className="grid grid-cols-8 gap-0">
-//         {hours.map((hour, hourIndex) => (
-//           <React.Fragment key={hourIndex}>
-//             <div className="border-r border-gray-300 text-right pr-2 font-bold h-[50px] flex items-center justify-end">
-//               {hour}:00
-//             </div>
-//             {weekDays.map((day, dayIndex) => {
-//               const isTargetSlot =
-//                 day.date === CalendarSlot.date &&
-//                 CalendarSlot.slot - 1 === hourIndex;
-
-//               return (
-//                 <div
-//                   key={dayIndex}
-//                   className="border border-gray-300 h-[50px] relative"
-//                 >
-//                   {isTargetSlot && (
-//                     <div
-//                       className="absolute left-0 right-0 bg-green-500"
-//                       style={{
-//                         height: `${CalendarPreferences.duration * 50}px`,
-//                         bottom: `${CalendarPreferences.freeTime * 50}px`,
-//                       }}
-//                     ></div>
-//                   )}
-//                 </div>
-//               );
-//             })}
-//           </React.Fragment>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
-
 type DayOfWeekType = {
   day:
     | 'MONDAY'
@@ -263,6 +51,27 @@ type TCalendarPreferences = {
 const generateNumberRange = (start: number, end: number) => {
   if (start >= end) return [];
   return Array.from({ length: end - start + 1 }, (_, i) => start + i);
+};
+
+const convertRussianDayToEnglish = (day: string) => {
+  switch (day.toLocaleLowerCase()) {
+    case 'понедельник':
+      return 'MONDAY';
+    case 'вторник':
+      return 'TUESDAY';
+    case 'среда':
+      return 'WEDNESDAY';
+    case 'четверг':
+      return 'THURSDAY';
+    case 'пятница':
+      return 'FRIDAY';
+    case 'суббота':
+      return 'SATURDAY';
+    case 'воскресенье':
+      return 'SUNDAY';
+    default:
+      return day;
+  }
 };
 
 const checkIfWorkingDay = (
@@ -346,16 +155,6 @@ const getSlotsRange = (calendarPreferences: TCalendarPreferences) => {
   return result;
 };
 
-// const getDatesRange = (startDate: Date, endDate: Date): Date[] => {
-//   const dates: Date[] = [];
-//   const currentDate = new Date(startDate); // Create a new Date instance
-//   while (currentDate <= endDate) {
-//     dates.push(new Date(currentDate));
-//     currentDate.setDate(currentDate.getDate() + 1);
-//   }
-//   return dates;
-// };
-
 // eslint-disable-next-line react-refresh/only-export-components
 export const convertToHumanReadableTime = (time: number) => {
   const hours = Math.floor(time);
@@ -366,27 +165,13 @@ export const convertToHumanReadableTime = (time: number) => {
 
 const getThisWeeksMonday = (today: Date) => {
   const startOfWeekDate = startOfWeek(today, { weekStartsOn: 1 });
-  // const formattedDate = format(startOfWeekDate, 'dd-MM-yyyy');
-  // return new Date(formattedDate);
   return new Date(startOfWeekDate);
 };
 
 const getThisWeeksSunday = (today: Date) => {
   const endOfWeekDate = endOfWeek(today, { weekStartsOn: 1 });
-  // const formattedDate = format(endOfWeekDate, 'dd-MM-yyyy');
-  // return new Date(formattedDate);
   return new Date(endOfWeekDate);
 };
-
-// export const getDatesBetween = (startDate: Date, endDate: Date): Date[] => {
-//   const dates: Date[] = [];
-//   const currentDate = new Date(startDate); // Create a new Date instance
-//   while (currentDate <= endDate) {
-//     dates.push(new Date(currentDate));
-//     currentDate.setDate(currentDate.getDate() + 1);
-//   }
-//   return dates;
-// };
 
 const getDatesRange = (startDate: Date, endDate: Date) => {
   const start = parseISO(startDate.toISOString());
@@ -407,24 +192,6 @@ const areSameDayMonthYear = (date1: Date, date2: Date) => {
 };
 
 localStorage.setItem('slot', '1');
-
-// function getMonthName(monthNumber: number) {
-//   const months = [
-//     'Jan',
-//     'Feb',
-//     'Mar',
-//     'Apr',
-//     'May',
-//     'Jun',
-//     'Jul',
-//     'Aug',
-//     'Sep',
-//     'Oct',
-//     'Nov',
-//     'Dec',
-//   ];
-//   return months[monthNumber];
-// }
 
 const getRussianMonthName = (monthNumber: number) => {
   const months = [
@@ -505,7 +272,6 @@ const requestSlots = async (): Promise<ResponseSlotType[]> => {
       return response.data;
     } else {
       toast('Что-то пошло не так');
-      // console.log(response.data);
     }
   } catch (err) {
     toast('Что-то пошло не так');
@@ -529,7 +295,6 @@ const requestCalendarPreferences = async (
       return response.data;
     } else {
       toast('Что-то пошло не так');
-      // console.log(response.data);
     }
   } catch (err) {
     toast('Что-то пошло не так');
@@ -558,23 +323,20 @@ export const CalendarPage = () => {
 
   useEffect(() => {
     const fetchSlots = async () => {
+      console.log(getBusinessProfileData());
       if (!calendarId) return;
       setIsLoading(true);
       let response = await requestSlots();
       response = response.filter(obj => obj.vacancyCalendar.id === calendarId);
       setSlots(response);
-      // const vacancyCalendar = response[0]
-      //   .vacancyCalendar as TCalendarPreferences;
       const vacancyCalendar = await requestCalendarPreferences(calendarId);
       setCalendarPreferences(vacancyCalendar);
       setSlotsRange(getSlotsRange(getCalendarPreferences()));
       setIsLoading(false);
-      // console.log(response[0]);
     };
     fetchSlots();
   }, []);
 
-  // const [currentSlot, setCurrentSlot] = useState<number>(1);
   const datesRange = getDatesRange(startDate, endDate);
 
   const moveWeekForward = () => {
@@ -585,15 +347,6 @@ export const CalendarPage = () => {
     setStartDate(subWeeks(startDate, 1));
     setEndDate(subWeeks(endDate, 1));
   };
-  // const daysOfWeek = [
-  //   'Monday',
-  //   'Tuesday',
-  //   'Wednesday',
-  //   'Thursday',
-  //   'Friday',
-  //   'Saturday',
-  //   'Sunday',
-  // ];
   const daysOfWeekRussian = [
     'Понедельник',
     'Вторник',
@@ -603,11 +356,6 @@ export const CalendarPage = () => {
     'Суббота',
     'Воскресенье',
   ];
-  // const workingDaysCount = CalendarPreferences.dayOfWeek
-  //   .map(day => {
-  //     return day.isWorking ? 1 : 0;
-  //   })
-  //   .reduce((a: number, b) => a + b, 0);
 
   const hoursObj = {
     totalWirkingHours:
@@ -621,17 +369,6 @@ export const CalendarPage = () => {
   };
   return (
     <ScrollArea>
-      {/* <div className="w-full flex justify-center items-center gap-3 mb-5">
-        <Button
-          className="w-[100px] bg-zinc-950 text-slate-50 rounded-[2px] flex justify-between items-center"
-          onClick={() => moveWeekBack()}
-        >
-          <ChevronLeftIcon className="w-5 h-5" /> Back
-        </Button>
-        <Button className="w-[100px]" onClick={() => moveWeekForward()}>
-          Forward <ChevronRightIcon className="w-5 h-5" />
-        </Button>
-      </div> */}
       <div
         className={clsx(
           'min-w-fit w-full h-fit min-h-full grid grid-rows-[75px_1fr] grid-cols-[75px_1fr] rounded-[2px]',
@@ -652,13 +389,6 @@ export const CalendarPage = () => {
               style={{ gridTemplateColumns: `repeat(7, 1fr)` }}
             >
               {daysOfWeekRussian.map((day, index, daysOfWeek) => {
-                // const isWorkingDay =
-                //   CalendarPreferences.dayOfWeek.filter(
-                //     dayObj =>
-                //       dayObj.day.toLocaleLowerCase() === day.toLocaleLowerCase() &&
-                //       dayObj.isWorking
-                //   ).length > 0;
-                // if (!isWorkingDay) return null;
                 return (
                   <div
                     key={index}
@@ -726,13 +456,6 @@ export const CalendarPage = () => {
                             : '100px',
                     }}
                   >
-                    {/* {index === 0 &&
-                  `${Math.round(hoursObj.start)}:${(Math.round(hoursObj.start) - hoursObj.start) * 60}`} */}
-                    {/* {index === hoursObj.range.length - 1 &&
-                  `${Math.round(hoursObj.end)}:${Math.abs((Math.round(hoursObj.end) - hoursObj.end) * 60)}`} */}
-                    {/* {index !== 0 &&
-                  index !== hoursObj.range.length - 1 &&
-                  `${Math.round(hour)}:00`} */}
                     {index === 0 && convertToHumanReadableTime(hoursObj.start)}
                     {index !== 0 &&
                       index !== hoursObj.range.length - 1 &&
@@ -750,31 +473,17 @@ export const CalendarPage = () => {
                 gridTemplateRows: `repeat(${hoursObj.totalWirkingHours}, 1fr)`,
               }}
             >
-              {/* {hoursObj.range.map((hour, hourIndex) => (
-            <React.Fragment key={hourIndex}>
-              {daysOfWeek.map((day, dayIndex) => {
-                return (
-                  <div
-                    key={dayIndex}
-                    className="bg-slate-200 text-slate-950 flex justify-center items-center w-full h-[100px]"
-                  >
-                    {day} {hour}:00
-                  </div>
-                );
-              })}
-            </React.Fragment>
-          ))} */}
               {daysOfWeekRussian.map((day, dayIndex, daysOfWeek) => {
+                const dayIsWorking = checkIfWorkingDay(
+                  convertRussianDayToEnglish(day),
+                  getCalendarPreferences()
+                );
                 return (
                   <div
                     key={dayIndex}
                     className={clsx(
-                      'w-full h-full col-span-1 row-span-full flex flex-col min-w-[100px] bg-slate-100 relative',
-                      checkIfWorkingDay(day, getCalendarPreferences()) && ''
+                      'w-full h-full col-span-1 row-span-full flex flex-col min-w-[100px] bg-slate-100 relative'
                     )}
-                    // style={{
-                    //   gridTemplateRows: `repeat(${CalendarPreferences.slots}, 100px)`,
-                    // }}
                   >
                     {true && (
                       <div className="w-full h-full flex flex-col absolute">
@@ -793,19 +502,7 @@ export const CalendarPage = () => {
                       </div>
                     )}
 
-                    {checkIfWorkingDay(day, getCalendarPreferences()) &&
-                      // generateNumberRange(1, CalendarPreferences.slots).map(
-                      //   (slot, slotIndex) => {
-                      //     return (
-                      //       <div
-                      //         key={slotIndex}
-                      //         className="border border-slate-950 w-full h-[100px]"
-                      //       >
-                      //         {slot}
-                      //       </div>
-                      //     );
-                      //   }
-                      // )}
+                    {dayIsWorking &&
                       slotsRange.map((slotObj, slotIndex, slotsRange) => {
                         const post = responseSlots.filter(obj => {
                           const isSlot = slotIndex % 2 === 0;
@@ -817,7 +514,6 @@ export const CalendarPage = () => {
                           const prevSlot = Number(localStorage.getItem('slot'));
                           const slotMatch = prevSlot === obj.slot;
 
-                          // dateMatch && console.log(prevSlot, obj.slot);
                           return isSlot && isNotFree && slotMatch && dateMatch;
                         });
                         const isSelected = post.length > 0;
@@ -826,34 +522,6 @@ export const CalendarPage = () => {
                             key={slotIndex}
                             className={clsx(
                               'w-full flex justify-center items-center h-full min-w-[100px] z-10 p-[5px]'
-                              // slotIndex % 2 === 0 &&
-                              // SLOTS.some(obj => {
-                              //   // areSameDayMonthYear(
-                              //   //   obj.date,
-                              //   //   datesRange[dayIndex]
-                              //   // ) && console.log(obj.slot);
-                              //   const isSlot = slotIndex % 2 === 0;
-                              //   const dateMatch = areSameDayMonthYear(
-                              //     obj.date,
-                              //     datesRange[dayIndex]
-                              //   );
-                              //   const prevSlot = Number(
-                              //     localStorage.getItem('slot')
-                              //   );
-                              //   const slotMatch = prevSlot === obj.slot;
-
-                              //   dateMatch && console.log(prevSlot, obj.slot);
-                              //   // console.log(
-                              //   //   prevSlot,
-                              //   //   obj.slot,
-                              //   //   slotMatch,
-                              //   //   dateMatch
-                              //   // );
-                              //   return isSlot && slotMatch && dateMatch;
-                              //   // setCurrentSlot(prev => prev + 1);
-                              // })
-                              // ? 'bg-slate-950 text-white'
-                              // : 'bg-slate-300 text-slate-950'
                             )}
                             style={{ height: slotObj.height }}
                           >
@@ -878,13 +546,6 @@ export const CalendarPage = () => {
                               </div>
                             ) : (
                               <div className="w-full h-full"></div>
-                              // <div className="text-slate-950 text-xs font-thin flex flex-col justify-center items-center w-full h-full bg-slate-200">
-                              //   {/* Gap
-                              //   <span className="text-slate-950 text-xs font-thin">
-                              //     {convertToHumanReadableTime(slotObj.timeStart)} -{' '}
-                              //     {convertToHumanReadableTime(slotObj.timeEnd)}
-                              //   </span> */}
-                              // </div>
                             )}
                           </div>
                         );
@@ -896,7 +557,7 @@ export const CalendarPage = () => {
                         }
                         return result;
                       })}
-                    {!checkIfWorkingDay(day, getCalendarPreferences()) && (
+                    {checkIfWorkingDay(day, getCalendarPreferences()) && (
                       <div className="w-full h-full bg-slate-100"></div>
                     )}
                   </div>
