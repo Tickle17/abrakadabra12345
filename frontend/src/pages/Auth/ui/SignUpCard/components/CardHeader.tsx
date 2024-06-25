@@ -3,7 +3,7 @@ export const CardHeader = ({ signUpStep }: { signUpStep: 1 | 2 | 3 }) => {
     <div className="w-full h-[75px] flex flex-col justify-center gap-2 flex-shrink-0">
       {signUpStep < 3 && (
         <h1 className="text-2xl font-light text-slate-950 shrink-0">
-          Зарегестрируйтесь, чтобы продолжить
+          Зарегистрируйтесь, чтобы продолжить
         </h1>
       )}
       {signUpStep === 3 && (
@@ -23,7 +23,7 @@ export const CardHeader = ({ signUpStep }: { signUpStep: 1 | 2 | 3 }) => {
       )}
       {signUpStep === 3 && (
         <p className="text-xs font-light text-slate-950 shrink-1 flex-grow">
-          Вы успешно зарегестрировались
+          Вы успешно зарегистрировались
         </p>
       )}
     </div>

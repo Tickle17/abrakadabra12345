@@ -10,7 +10,7 @@ export const SignInControlls = ({
         className="text-slate-950 font-semibold hover:cursor-pointer hover:opacity-50 transition-all"
         onClick={() => setAuthStage('signUp')}
       >
-        Зарегестрироваться
+        Зарегистрироваться
       </span>
     </p>
   );
